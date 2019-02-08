@@ -1,5 +1,6 @@
 namespace ZetaShortPaths.UnitTests
 {
+    using Helper;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.IO;
@@ -20,14 +21,7 @@ namespace ZetaShortPaths.UnitTests
                 var f1 = p1.CombineFile("1.txt");
                 f1.WriteAllText("1");
 
-                try
-                {
-                    p1.MoveTo(p2);
-                }
-                catch (Exception e)
-                {
-                    Assert.Fail(e.Message);
-                }
+                    AssertOwn.DoesNotThrow(()=>p1.MoveTo(p2));
             }
             finally
             {

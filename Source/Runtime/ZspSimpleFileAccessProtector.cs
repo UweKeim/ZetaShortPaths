@@ -13,7 +13,7 @@
     // ReSharper disable once UnusedMember.Global
     public static class ZspSimpleFileAccessProtector
     {
-        private const string PassThroughProtector = @"zlp-pass-through-protector";
+        private const string PassThroughProtector = @"zsp-pass-through-protector";
 
         /// <summary>
         /// Call on an exception instance that you do NOT want to retry in this class but immediately

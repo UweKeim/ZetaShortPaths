@@ -12,12 +12,12 @@
             return i.GetFileSystemInfos(@"*", searchOption);
         }
 
-        public static void MoveTo(this DirectoryInfo i, DirectoryInfo to)
+        public static void MoveTo(this DirectoryInfo i, DirectoryInfo to, bool ovewriteExisting = true)
         {
-            doCopyDir(i.FullName, to.FullName);
+            doCopyDir(i.FullName, to.FullName, ovewriteExisting);
         }
 
-        private static void doCopyDir(string sourceFolder, string destFolder)
+        private static void doCopyDir(string sourceFolder, string destFolder, bool ovewriteExisting)
         {
             // https://stackoverflow.com/a/3911658/107625
 
@@ -30,9 +30,9 @@
             {
                 var name = Path.GetFileName(file);
 
-                // ADD Unique File Name Check to Below!!!!
-                var dest = Path.Combine(destFolder, name);
-                File.Copy(file, dest);
+                // ADD Unique File Name Check to Below.
+                var dest = ZspPathHelper.Combine(destFolder, name);
+                File.Copy(file, dest, ovewriteExisting);
             }
 
             // Get dirs recursively and copy files
@@ -40,8 +40,8 @@
             foreach (var folder in folders)
             {
                 var name = Path.GetFileName(folder);
-                var dest = Path.Combine(destFolder, name);
-                doCopyDir(folder, dest);
+                var dest = ZspPathHelper.Combine(destFolder, name);
+                doCopyDir(folder, dest, ovewriteExisting);
             }
         }
     }

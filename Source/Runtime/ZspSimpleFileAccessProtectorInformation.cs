@@ -6,11 +6,11 @@
     {
         [UsedImplicitly]
         public static int DefaultRetryCount =>
-            ZspSimpleFileAccessProtector.GetConfigIntOrDef(@"zlp.sfap.retryCount", 3);
+            ZspSimpleFileAccessProtector.GetConfigIntOrDef(@"zsp.sfap.retryCount", 3);
 
         [UsedImplicitly]
         public static int DefaultSleepDelaySeconds =>
-            ZspSimpleFileAccessProtector.GetConfigIntOrDef(@"zlp.sfap.sleepDelaySeconds", 2);
+            ZspSimpleFileAccessProtector.GetConfigIntOrDef(@"zsp.sfap.sleepDelaySeconds", 2);
 
         [UsedImplicitly] public bool Use { get; set; } = true;
 
