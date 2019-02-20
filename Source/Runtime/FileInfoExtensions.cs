@@ -2,6 +2,7 @@
 {
     using JetBrains.Annotations;
     using System.IO;
+    using System.Text;
 
     [UsedImplicitly]
     public static class FileInfoExtensions
@@ -10,6 +11,36 @@
         public static void WriteAllText(this FileInfo i, string text)
         {
             File.WriteAllText(i.FullName, text);
+        }
+
+        [UsedImplicitly]
+        public static void WriteAllText(this FileInfo i, string text, Encoding encoding)
+        {
+            File.WriteAllText(i.FullName, text, encoding);
+        }
+
+        [UsedImplicitly]
+        public static string ReadAllText(this FileInfo i)
+        {
+            return File.ReadAllText(i.FullName);
+        }
+
+        [UsedImplicitly]
+        public static string ReadAllText(this FileInfo i, Encoding encoding)
+        {
+            return File.ReadAllText(i.FullName, encoding);
+        }
+
+        [UsedImplicitly]
+        public static void WriteAllBytes(this FileInfo i, byte[] bytes)
+        {
+            File.WriteAllBytes(i.FullName, bytes);
+        }
+
+        [UsedImplicitly]
+        public static byte[] ReadAllBytes(this FileInfo i)
+        {
+            return File.ReadAllBytes(i.FullName);
         }
 
         [UsedImplicitly]
