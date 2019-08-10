@@ -7,6 +7,50 @@ namespace ZetaShortPaths.UnitTests
     public class PathHelperTest
     {
         [TestMethod]
+        public void TestGeneral4()
+        {
+            var s1 = @"a";
+            var s2 = @"b";
+
+            Assert.AreEqual(s1.NullOrEmptyOther(s2), s1);
+
+            s1 = null;
+            s2 = @"b";
+
+            Assert.AreEqual(s1.NullOrEmptyOther(s2), s2);
+
+            s1 = null;
+            s2 = null;
+
+            Assert.AreEqual(s1.NullOrEmptyOther(s2), s2);
+
+            s1 = @"a";
+            s2 = null;
+
+            Assert.AreEqual(s1.NullOrEmptyOther(s2), s1);
+
+            s1 = string.Empty;
+            s2 = @"b";
+
+            Assert.AreEqual(s1.NullOrEmptyOther(s2), s2);
+
+            s1 = string.Empty;
+            s2 = string.Empty;
+
+            Assert.AreEqual(s1.NullOrEmptyOther(s2), s2);
+
+            s1 = @"a";
+            s2 = string.Empty;
+
+            Assert.AreEqual(s1.NullOrEmptyOther(s2), s1);
+
+            s1 = null;
+            s2 = string.Empty;
+
+            Assert.AreEqual(s1.NullOrEmptyOther(s2), s2);
+        }
+
+        [TestMethod]
         public void TestGeneral2()
         {
             var s1 =
