@@ -5,6 +5,7 @@
     using System;
     using System.Configuration;
     using System.Diagnostics;
+    using System.Runtime.InteropServices;
     using System.Threading;
 
     /// <summary>
@@ -176,6 +177,8 @@
         [UsedImplicitly]
         public static void DoGarbageCollect(bool waitForPendingFinalizers = true)
         {
+            minimizeFootprint();
+
             GC.Collect();
 
             /*
@@ -191,7 +194,26 @@
                 GC.Collect();
             }
 
+            minimizeFootprint();
             GC.WaitForFullGCComplete(1000);
+
+            minimizeFootprint();
+        }
+
+        [DllImport(@"psapi.dll")]
+        private static extern int EmptyWorkingSet(IntPtr hwProc);
+
+        // http://stackoverflow.com/questions/223283/net-exe-memory-footprint
+        private static void minimizeFootprint()
+        {
+            try
+            {
+                EmptyWorkingSet(Process.GetCurrentProcess().Handle);
+            }
+            catch
+            {
+                // ignored
+            }
         }
 
         internal static int GetConfigIntOrDef(string key, int def)
