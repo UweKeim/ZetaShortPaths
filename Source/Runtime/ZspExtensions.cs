@@ -365,6 +365,18 @@
         }
 
         [UsedImplicitly]
+        public static bool IsNullOrEmpty(this string s)
+        {
+            return string.IsNullOrEmpty(s);
+        }
+
+        [UsedImplicitly]
+        public static bool IsNullOrWhiteSpace(this string s)
+        {
+            return string.IsNullOrWhiteSpace(s);
+        }
+
+        [UsedImplicitly]
         public static int CompareNoCase(this string s1, string s2)
         {
             if (s1 == null && s2 == null) return 0;
