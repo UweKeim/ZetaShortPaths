@@ -13,9 +13,6 @@
             Directory
         }
 
-        private readonly string _fullPath;
-        private readonly string _originalPath;
-
         private PreferedType _preferedType;
 
         [UsedImplicitly]
@@ -28,8 +25,8 @@
             string fullPath)
         {
             _preferedType = PreferedType.Unspecified;
-            _fullPath = fullPath;
-            _originalPath = fullPath;
+            FullName = fullPath;
+            OriginalPath = fullPath;
         }
 
         [UsedImplicitly]
@@ -37,8 +34,8 @@
             string fullPath,
             bool detectTypeFromFileSystem)
         {
-            _fullPath = fullPath;
-            _originalPath = fullPath;
+            FullName = fullPath;
+            OriginalPath = fullPath;
 
             if (detectTypeFromFileSystem)
             {
@@ -60,16 +57,16 @@
             PreferedType preferedType)
         {
             _preferedType = preferedType;
-            _fullPath = fullPath;
-            _originalPath = fullPath;
+            FullName = fullPath;
+            OriginalPath = fullPath;
         }
 
         public ZspFileOrDirectoryInfo(
             ZspFileOrDirectoryInfo info)
         {
             _preferedType = info._preferedType;
-            _fullPath = info.FullName;
-            _originalPath = info._originalPath;
+            FullName = info.FullName;
+            OriginalPath = info.OriginalPath;
         }
 
         public ZspFileOrDirectoryInfo(
@@ -78,8 +75,8 @@
         // ReSharper restore SuggestBaseTypeForParameter
         {
             _preferedType = PreferedType.File;
-            _fullPath = info.FullName;
-            _originalPath = info.ToString();
+            FullName = info.FullName;
+            OriginalPath = info.ToString();
         }
 
         public ZspFileOrDirectoryInfo(
@@ -88,8 +85,8 @@
         // ReSharper restore SuggestBaseTypeForParameter
         {
             _preferedType = PreferedType.Directory;
-            _fullPath = info.FullName;
-            _originalPath = info.ToString();
+            FullName = info.FullName;
+            OriginalPath = info.ToString();
         }
 
         [UsedImplicitly]
@@ -98,11 +95,11 @@
             return new ZspFileOrDirectoryInfo(this);
         }
 
-        public bool IsEmpty => string.IsNullOrEmpty(_fullPath);
+        public bool IsEmpty => string.IsNullOrEmpty(FullName);
 
-        public FileInfo File => new FileInfo(_fullPath);
+        public FileInfo File => new FileInfo(FullName);
 
-        public DirectoryInfo Directory => new DirectoryInfo(_fullPath);
+        public DirectoryInfo Directory => new DirectoryInfo(FullName);
 
         [UsedImplicitly]
         public DirectoryInfo EffectiveDirectory
@@ -139,7 +136,7 @@
         {
             get
             {
-                if (string.IsNullOrEmpty(_fullPath))
+                if (string.IsNullOrEmpty(FullName))
                 {
                     return false;
                 }
@@ -156,10 +153,10 @@
             }
         }
 
-        public string FullName => _fullPath;
+        public string FullName { get; }
 
         [UsedImplicitly]
-        public string OriginalPath => _originalPath;
+        public string OriginalPath { get; }
 
         public ZspSplittedPath ZspSplittedPath => new ZspSplittedPath(this);
 
@@ -471,9 +468,9 @@
 
         public override string ToString()
         {
-            return string.IsNullOrEmpty(_originalPath)
-                ? _fullPath
-                : _originalPath;
+            return string.IsNullOrEmpty(OriginalPath)
+                ? FullName
+                : OriginalPath;
         }
     }
 }

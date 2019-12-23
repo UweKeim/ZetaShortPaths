@@ -447,10 +447,10 @@
         [UsedImplicitly]
         public static string GetTempFilePath(string extension)
         {
-            if (string.IsNullOrEmpty(extension)) return GetTempFilePath();
-
-            // https://stackoverflow.com/a/581574/107625
-            return $@"{Path.GetTempPath()}{Guid.NewGuid()}.{extension.TrimStart('.')}";
+            return IsNullOrEmpty(extension)
+                // https://stackoverflow.com/a/581574/107625
+                ? GetTempFilePath()
+                : $@"{Path.GetTempPath()}{Guid.NewGuid()}.{extension.TrimStart('.')}";
         }
 
         [UsedImplicitly]
@@ -921,7 +921,7 @@
                 // with three slashes.
                 if (path2.Length >= 3)
                 {
-                    if (path2[0] == '/' && path2[2] == ':' && Char.IsLetter(path2[1]))
+                    if (path2[0] == '/' && path2[2] == ':' && char.IsLetter(path2[1]))
                     {
                         // Is OK to have a leading slash.
                     }

@@ -38,7 +38,7 @@
             Action action,
             ZspSimpleFileAccessProtectorInformation info = null)
         {
-            info = info ?? new ZspSimpleFileAccessProtectorInformation();
+            info ??= new ZspSimpleFileAccessProtectorInformation();
 
             if (info.Use)
             {
@@ -109,7 +109,7 @@
             Func<T> func,
             ZspSimpleFileAccessProtectorInformation info = null)
         {
-            info = info ?? new ZspSimpleFileAccessProtectorInformation();
+            info ??= new ZspSimpleFileAccessProtectorInformation();
 
             if (info.Use)
             {

@@ -379,10 +379,18 @@
         [UsedImplicitly]
         public static int CompareNoCase(this string s1, string s2)
         {
-            if (s1 == null && s2 == null) return 0;
-            else if (s1 == null) return 1;
-            else if (s2 == null) return -1;
-            else return string.Compare(s1, s2, StringComparison.OrdinalIgnoreCase);
+            switch (s1)
+            {
+                case null when s2 == null:
+                    return 0;
+                case null:
+                    return 1;
+                default:
+                {
+                    if (s2 == null) return -1;
+                    else return string.Compare(s1, s2, StringComparison.OrdinalIgnoreCase);
+                }
+            }
         }
 
         [UsedImplicitly]
