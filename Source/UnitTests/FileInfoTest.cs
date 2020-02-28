@@ -8,6 +8,17 @@ namespace ZetaShortPaths.UnitTests
     public class FileInfoTest
     {
         [TestMethod]
+        public void TestExtensions()
+        {
+            var a = new FileInfo(@"C:\ablage\test.txt");
+
+            var x = a.NameWithoutExtension();
+            var y = @"test";
+
+            Assert.AreEqual(x, y);
+        }
+
+        [TestMethod]
         public void TestToString()
         {
             var a = new FileInfo(@"C:\ablage\test.txt");

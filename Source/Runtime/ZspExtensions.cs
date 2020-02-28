@@ -21,6 +21,13 @@
         }
 
         [UsedImplicitly]
+        public static string NameWithoutExtension(
+            this FileInfo filePath)
+        {
+            return Path.GetFileNameWithoutExtension(filePath.Name);
+        }
+
+        [UsedImplicitly]
         public static string MakeRelativeTo(
             this DirectoryInfo pathToMakeRelative,
             string pathToWhichToMakeRelativeTo)
