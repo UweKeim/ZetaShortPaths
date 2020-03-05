@@ -11,12 +11,14 @@
     <Copyright>© 1999-2020 Zeta Software GmbH</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/UweKeim/ZetaShortPaths</PackageProjectUrl>
-    <PackageIconUrl>https://i.imgur.com/539uNiV.png</PackageIconUrl>
+    <PackageIconUrl></PackageIconUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl>https://github.com/UweKeim/ZetaShortPaths</RepositoryUrl>
-    <AssemblyVersion>1.0.0.10</AssemblyVersion>
-    <FileVersion>1.0.0.10</FileVersion>
-    <Version>1.0.0.10</Version>
+    <AssemblyVersion>1.0.0.11</AssemblyVersion>
+    <FileVersion>1.0.0.11</FileVersion>
+    <Version>1.0.0.11</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>nuget-icon.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -41,6 +43,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\nuget-icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
