@@ -2,7 +2,6 @@
 {
     using JetBrains.Annotations;
     using System;
-    using System.Diagnostics;
     using System.IO;
 
     /// <summary>
@@ -31,7 +30,9 @@
         public static void SafeDeleteFile(
             string filePath)
         {
+#if WANT_TRACE
             Trace.TraceInformation(@"About to safe-delete file '{0}'.", filePath);
+#endif
 
             if (!string.IsNullOrEmpty(filePath) &&
                 SafeFileExists(filePath))
@@ -55,8 +56,10 @@
                     var newFilePath =
                         $@"{filePath}.{Guid.NewGuid():N}.deleted";
 
+#if WANT_TRACE
                     Trace.TraceWarning(@"Caught UnauthorizedAccessException while deleting file '{0}'. " +
                                        @"Renaming now to '{1}'. {2}", filePath, newFilePath, x.Message);
+#endif
 
                     try
                     {
@@ -66,8 +69,10 @@
                     }
                     catch (Exception x2)
                     {
+#if WANT_TRACE
                         Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting file '{0}'. " +
                                            @"Renaming now to '{1}'. {2}", filePath, newFilePath, x2.Message);
+#endif
                     }
                 }
                 catch (Exception x)
@@ -75,8 +80,10 @@
                     var newFilePath =
                         $@"{filePath}.{Guid.NewGuid():N}.deleted";
 
+#if WANT_TRACE
                     Trace.TraceWarning(@"Caught IOException while deleting file '{0}'. " +
                                        @"Renaming now to '{1}'. {2}", filePath, newFilePath, x.Message);
+#endif
 
                     try
                     {
@@ -85,15 +92,19 @@
                     }
                     catch (Exception x2)
                     {
+#if WANT_TRACE
                         Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting file '{0}'. " +
                                            @"Renaming now to '{1}'. {2}", filePath, newFilePath, x2.Message);
+#endif
                     }
                 }
             }
             else
             {
+#if WANT_TRACE
                 Trace.TraceInformation(@"Not safe-deleting file '{0}', " +
                                        @"because the file does not exist.", filePath);
+#endif
             }
         }
 
@@ -129,7 +140,9 @@
         public static void SafeDeleteDirectory(
             string folderPath)
         {
+#if WANT_TRACE
             Trace.TraceInformation(@"About to safe-delete directory '{0}'.", folderPath);
+#endif
 
             if (!string.IsNullOrEmpty(folderPath) && SafeDirectoryExists(folderPath))
             {
@@ -141,8 +154,10 @@
                 {
                     var newFilePath = $@"{folderPath}.{Guid.NewGuid():B}.deleted";
 
+#if WANT_TRACE
                     Trace.TraceWarning(@"Caught IOException while deleting directory '{0}'. " +
                                        @"Renaming now to '{1}'. {2}", folderPath, newFilePath, x.Message);
+#endif
 
                     try
                     {
@@ -150,15 +165,19 @@
                     }
                     catch (Exception x2)
                     {
+#if WANT_TRACE
                         Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting directory '{0}'. " +
                                            @"Renaming now to '{1}'. {2}", folderPath, newFilePath, x2.Message);
+#endif
                     }
                 }
             }
             else
             {
+#if WANT_TRACE
                 Trace.TraceInformation(@"Not safe-deleting directory '{0}', " +
                                        @"because the directory does not exist.", folderPath);
+#endif
             }
         }
 
@@ -208,15 +227,19 @@
             string sourcePath,
             string dstFilePath)
         {
+#if WANT_TRACE
             Trace.TraceInformation(@"About to safe-move file from '{0}' to '{1}'.", sourcePath, dstFilePath);
+#endif
 
             if (sourcePath == null || dstFilePath == null)
             {
+#if WANT_TRACE
                 Trace.TraceInformation(
                     string.Format(
                         @"Source file path or destination file path does not exist. " +
                         @"Not moving."
                     ));
+#endif
             }
             else
             {
@@ -228,7 +251,9 @@
 
                     if (!Directory.Exists(d))
                     {
+#if WANT_TRACE
                         Trace.TraceInformation(@"Creating non-existing folder '{0}'.", d);
+#endif
                         Directory.CreateDirectory(d);
                     }
 
@@ -237,7 +262,9 @@
                 }
                 else
                 {
+#if WANT_TRACE
                     Trace.TraceInformation(@"Source file path to move does not exist: '{0}'.", sourcePath);
+#endif
                 }
             }
         }
@@ -276,23 +303,29 @@
             string dstFilePath,
             bool overwrite = true)
         {
+#if WANT_TRACE
             Trace.TraceInformation(@"About to safe-copy file from '{0}' to '{1}' " +
                                    @"with overwrite = '{2}'.", sourcePath, dstFilePath, overwrite);
+#endif
 
             if (sourcePath == null || dstFilePath == null)
             {
+#if WANT_TRACE
                 Trace.TraceInformation(
                     string.Format(
                         @"Source file path or destination file path does not exist. " +
                         @"Not copying."
                     ));
+#endif
             }
             else
             {
                 if (string.Compare(sourcePath, dstFilePath, StringComparison.OrdinalIgnoreCase) == 0)
                 {
+#if WANT_TRACE
                     Trace.TraceInformation(@"Source path and destination path are the same: " +
                                            @"'{0}' is '{1}'. Not copying.", sourcePath, dstFilePath);
+#endif
                 }
                 else
                 {
@@ -307,7 +340,9 @@
 
                         if (!Directory.Exists(d))
                         {
+#if WANT_TRACE
                             Trace.TraceInformation(@"Creating non-existing folder '{0}'.", d);
+#endif
                             Directory.CreateDirectory(d);
                         }
 
@@ -315,7 +350,9 @@
                     }
                     else
                     {
+#if WANT_TRACE
                         Trace.TraceInformation(@"Source file path to copy does not exist: '{0}'.", sourcePath);
+#endif
                     }
                 }
             }
@@ -371,7 +408,9 @@
         public static void SafeCheckCreateDirectory(
             string folderPath)
         {
+#if WANT_TRACE
             Trace.TraceInformation(@"About to safe check-create folder '{0}'.", folderPath);
+#endif
 
             if (!string.IsNullOrEmpty(folderPath) && !SafeDirectoryExists(folderPath))
             {
@@ -381,20 +420,26 @@
                 }
                 catch (UnauthorizedAccessException x)
                 {
+#if WANT_TRACE
                     Trace.TraceWarning(
                         @"Caught UnauthorizedAccessException while safe check-creating folder '{0}'. {1}", folderPath,
                         x.Message);
+#endif
                 }
                 catch (Exception x)
                 {
+#if WANT_TRACE
                     Trace.TraceWarning(@"Caught IOException while safe check-creating folder '{0}'. {1}", folderPath,
                         x.Message);
+#endif
                 }
             }
             else
             {
+#if WANT_TRACE
                 Trace.TraceInformation(
                     @"Not safe check-creating folder '{0}', because the folder is null or already exists.", folderPath);
+#endif
             }
         }
     }

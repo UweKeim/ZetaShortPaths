@@ -52,7 +52,9 @@
                     }
                     catch (Exception x)
                     {
+#if WANT_TRACE
                         Trace.TraceWarning($@"Error during file operation. ('{info.Info}'): {x.Message}");
+#endif
 
                         if (count++ > info.RetryCount)
                         {
@@ -78,18 +80,22 @@
 
                             if (info.DoGarbageCollectBeforeSleep)
                             {
+#if WANT_TRACE
                                 Trace.TraceInformation(
                                     $@"Error '{x}' during file operation, tried {
                                             count
                                         } times, doing a garbage collect now.");
+#endif
                                 DoGarbageCollect();
                             }
 
+#if WANT_TRACE
                             Trace.TraceInformation(
                                 $@"Error '{x}' during file operation, tried {count} times, sleeping for {
                                         info
                                             .SleepDelaySeconds
                                     } seconds and retry again.");
+#endif
                             Thread.Sleep(TimeSpan.FromSeconds(info.SleepDelaySeconds));
                         }
                     }
@@ -122,7 +128,9 @@
                     }
                     catch (Exception x)
                     {
+#if WANT_TRACE
                         Trace.TraceWarning($@"Error during file operation. ('{info.Info}'): {x.Message}");
+#endif
 
                         // Bestimmte Fehler direkt durchlassen.
                         if (x.Data[PassThroughProtector] is bool b && b) throw;
@@ -151,18 +159,22 @@
 
                             if (info.DoGarbageCollectBeforeSleep)
                             {
+#if WANT_TRACE
                                 Trace.TraceInformation(
                                     $@"Error '{x}' during file operation, tried {
                                             count
                                         } times, doing a garbage collect now.");
+#endif
                                 DoGarbageCollect();
                             }
 
+#if WANT_TRACE
                             Trace.TraceInformation(
                                 $@"Error '{x}' during file operation, tried {count} times, sleeping for {
                                         info
                                             .SleepDelaySeconds
                                     } seconds and retry again.");
+#endif
                             Thread.Sleep(TimeSpan.FromSeconds(info.SleepDelaySeconds));
                         }
                     }

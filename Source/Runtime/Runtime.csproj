@@ -14,9 +14,9 @@
     <PackageIconUrl></PackageIconUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl>https://github.com/UweKeim/ZetaShortPaths</RepositoryUrl>
-    <AssemblyVersion>1.0.0.11</AssemblyVersion>
-    <FileVersion>1.0.0.11</FileVersion>
-    <Version>1.0.0.11</Version>
+    <AssemblyVersion>1.0.0.12</AssemblyVersion>
+    <FileVersion>1.0.0.12</FileVersion>
+    <Version>1.0.0.12</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>nuget-icon.png</PackageIcon>
   </PropertyGroup>
