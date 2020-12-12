@@ -5,13 +5,13 @@
     using System.ComponentModel;
 
     [UsedImplicitly]
-    public class HandleExceptionInfo
+    public class ZspHandleExceptionInfo
     {
         [UsedImplicitly] public Exception Exception { get; }
 
         [UsedImplicitly] public int CurrentRetryCount { get; }
 
-        public HandleExceptionInfo(Exception exception, int currentRetryCount)
+        public ZspHandleExceptionInfo(Exception exception, int currentRetryCount)
         {
             Exception = exception;
             CurrentRetryCount = currentRetryCount;

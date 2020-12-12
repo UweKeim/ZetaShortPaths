@@ -5,6 +5,10 @@
     public class ZspSimpleFileAccessProtectorInformation
     {
         [UsedImplicitly]
+        public static ZspSimpleFileAccessProtectorInformation Default =>
+            new ZspSimpleFileAccessProtectorInformation();
+
+        [UsedImplicitly]
         public static int DefaultRetryCount =>
             ZspSimpleFileAccessProtector.GetConfigIntOrDef(@"zsp.sfap.retryCount", 3);
 
@@ -22,6 +26,6 @@
 
         [UsedImplicitly] public bool DoGarbageCollectBeforeSleep { get; set; } = true;
 
-        [UsedImplicitly] public HandleExceptionDelegate HandleException { get; set; }
+        [UsedImplicitly] public ZspHandleExceptionDelegate HandleException { get; set; }
     }
 }
