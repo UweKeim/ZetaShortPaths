@@ -5,8 +5,7 @@
     public class ZspSimpleFileAccessProtectorInformation
     {
         [UsedImplicitly]
-        public static ZspSimpleFileAccessProtectorInformation Default =>
-            new ZspSimpleFileAccessProtectorInformation();
+        public static ZspSimpleFileAccessProtectorInformation Default => new();
 
         [UsedImplicitly]
         public static int DefaultRetryCount =>

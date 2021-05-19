@@ -72,6 +72,8 @@
 #if WANT_TRACE
                         Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting file '{0}'. " +
                                            @"Renaming now to '{1}'. {2}", filePath, newFilePath, x2.Message);
+#else 
+                        // Ignore.
 #endif
                     }
                 }
@@ -83,6 +85,8 @@
 #if WANT_TRACE
                     Trace.TraceWarning(@"Caught IOException while deleting file '{0}'. " +
                                        @"Renaming now to '{1}'. {2}", filePath, newFilePath, x.Message);
+#else
+                    // Ignore.
 #endif
 
                     try
@@ -95,6 +99,8 @@
 #if WANT_TRACE
                         Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting file '{0}'. " +
                                            @"Renaming now to '{1}'. {2}", filePath, newFilePath, x2.Message);
+#else 
+                        // Ignore.
 #endif
                     }
                 }
@@ -375,7 +381,7 @@
         public static void SafeDeleteDirectoryContents(
             DirectoryInfo folderPath)
         {
-            if (folderPath != null && folderPath.Exists)
+            if (folderPath is {Exists: true})
             {
                 foreach (var filePath in folderPath.GetFiles())
                 {

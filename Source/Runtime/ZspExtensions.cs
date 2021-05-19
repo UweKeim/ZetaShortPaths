@@ -209,7 +209,7 @@
             this FileInfo o,
             string extension)
         {
-            return new FileInfo(ZspPathHelper.ChangeExtension(o.FullName, extension));
+            return new(ZspPathHelper.ChangeExtension(o.FullName, extension));
         }
 
         [UsedImplicitly]

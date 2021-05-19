@@ -392,7 +392,7 @@
             string path1,
             string path2)
         {
-            return new DirectoryInfo(Combine(path1, path2));
+            return new(Combine(path1, path2));
         }
 
         [UsedImplicitly]
@@ -400,7 +400,7 @@
             string path1,
             string path2)
         {
-            return new FileInfo(Combine(path1, path2));
+            return new(Combine(path1, path2));
         }
 
         public static string Combine(
@@ -460,7 +460,7 @@
             string path3,
             params string[] paths)
         {
-            return new DirectoryInfo(Combine(path1, path2, path3, paths));
+            return new(Combine(path1, path2, path3, paths));
         }
 
         [UsedImplicitly]
@@ -470,7 +470,7 @@
             string path3,
             params string[] paths)
         {
-            return new FileInfo(Combine(path1, path2, path3, paths));
+            return new(Combine(path1, path2, path3, paths));
         }
 
         [UsedImplicitly]

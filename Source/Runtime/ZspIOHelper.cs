@@ -11,7 +11,7 @@
         [UsedImplicitly]
         public static DirectoryInfo GetTempDirectory()
         {
-            return new DirectoryInfo(Path.GetTempPath());
+            return new(Path.GetTempPath());
         }
 
         [UsedImplicitly]

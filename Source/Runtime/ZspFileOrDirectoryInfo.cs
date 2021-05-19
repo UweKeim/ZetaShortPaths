@@ -92,14 +92,14 @@
         [UsedImplicitly]
         public ZspFileOrDirectoryInfo Clone()
         {
-            return new ZspFileOrDirectoryInfo(this);
+            return new(this);
         }
 
         public bool IsEmpty => string.IsNullOrEmpty(FullName);
 
-        public FileInfo File => new FileInfo(FullName);
+        public FileInfo File => new(FullName);
 
-        public DirectoryInfo Directory => new DirectoryInfo(FullName);
+        public DirectoryInfo Directory => new(FullName);
 
         [UsedImplicitly]
         public DirectoryInfo EffectiveDirectory
@@ -158,7 +158,7 @@
         [UsedImplicitly]
         public string OriginalPath { get; }
 
-        public ZspSplittedPath ZspSplittedPath => new ZspSplittedPath(this);
+        public ZspSplittedPath ZspSplittedPath => new(this);
 
         [UsedImplicitly]
         public string Name => IsFile ? File?.Name : Directory?.Name;
@@ -405,7 +405,7 @@
             ZspFileOrDirectoryInfo info)
         {
             return
-                new ZspFileOrDirectoryInfo(
+                new(
                     ZspPathHelper.Combine(
                         EffectiveDirectory.FullName,
                         info.FullName));
@@ -416,7 +416,7 @@
             string path)
         {
             return
-                new ZspFileOrDirectoryInfo(
+                new(
                     ZspPathHelper.Combine(
                         EffectiveDirectory.FullName,
                         path));
@@ -427,7 +427,7 @@
             FileInfo info)
         {
             return
-                new ZspFileOrDirectoryInfo(
+                new(
                     ZspPathHelper.Combine(
                         EffectiveDirectory.FullName,
                         // According to Reflector, "ToString()" returns the 
@@ -440,7 +440,7 @@
             DirectoryInfo info)
         {
             return
-                new ZspFileOrDirectoryInfo(
+                new(
                     ZspPathHelper.Combine(
                         EffectiveDirectory.FullName,
                         // According to Reflector, "ToString()" returns the 
