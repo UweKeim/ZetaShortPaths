@@ -35,7 +35,7 @@
         {
             // https://stackoverflow.com/a/10520086/107625
 
-            using var fs =new FileStream(path,FileMode.Open, FileAccess.Read);
+            using var fs = new FileStream(path, FileMode.Open, FileAccess.Read);
             using var md5 = MD5.Create();
 
             var hash = md5.ComputeHash(fs);
@@ -134,6 +134,42 @@
             if (string.IsNullOrEmpty(filePath)) return 0;
             else if (!File.Exists(filePath)) return 0;
             else return new FileInfo(filePath).Length;
+        }
+
+        public static FileInfo[] GetFiles(string directoryPath, string pattern = @"*.*")
+        {
+            return GetFiles(directoryPath, pattern, SearchOption.TopDirectoryOnly);
+        }
+
+        public static FileInfo[] GetFiles(string directoryPath, SearchOption searchOption)
+        {
+            return GetFiles(directoryPath, @"*.*", searchOption);
+        }
+
+        public static FileInfo[] GetFiles(string directoryPath, string pattern, SearchOption searchOption)
+        {
+            if (directoryPath == null) throw new ArgumentNullException(nameof(directoryPath));
+            if (pattern == null) throw new ArgumentNullException(nameof(pattern));
+
+            return new DirectoryInfo(directoryPath).GetFiles(pattern, searchOption);
+        }
+
+        public static DirectoryInfo[] GetDirectories(string directoryPath, string pattern = @"*")
+        {
+            return GetDirectories(directoryPath, pattern, SearchOption.TopDirectoryOnly);
+        }
+
+        public static DirectoryInfo[] GetDirectories(string directoryPath, SearchOption searchOption)
+        {
+            return GetDirectories(directoryPath, @"*", searchOption);
+        }
+
+        public static DirectoryInfo[] GetDirectories(string directoryPath, string pattern, SearchOption searchOption)
+        {
+            if (directoryPath == null) throw new ArgumentNullException(nameof(directoryPath));
+            if (pattern == null) throw new ArgumentNullException(nameof(pattern));
+
+            return new DirectoryInfo(directoryPath).GetDirectories(pattern, searchOption);
         }
     }
 }
