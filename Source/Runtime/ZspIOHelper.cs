@@ -136,16 +136,19 @@
             else return new FileInfo(filePath).Length;
         }
 
+        [UsedImplicitly]
         public static FileInfo[] GetFiles(string directoryPath, string pattern = @"*.*")
         {
             return GetFiles(directoryPath, pattern, SearchOption.TopDirectoryOnly);
         }
 
+        [UsedImplicitly]
         public static FileInfo[] GetFiles(string directoryPath, SearchOption searchOption)
         {
             return GetFiles(directoryPath, @"*.*", searchOption);
         }
 
+        [UsedImplicitly]
         public static FileInfo[] GetFiles(string directoryPath, string pattern, SearchOption searchOption)
         {
             if (directoryPath == null) throw new ArgumentNullException(nameof(directoryPath));
@@ -154,16 +157,19 @@
             return new DirectoryInfo(directoryPath).GetFiles(pattern, searchOption);
         }
 
+        [UsedImplicitly]
         public static DirectoryInfo[] GetDirectories(string directoryPath, string pattern = @"*")
         {
             return GetDirectories(directoryPath, pattern, SearchOption.TopDirectoryOnly);
         }
 
+        [UsedImplicitly]
         public static DirectoryInfo[] GetDirectories(string directoryPath, SearchOption searchOption)
         {
             return GetDirectories(directoryPath, @"*", searchOption);
         }
 
+        [UsedImplicitly]
         public static DirectoryInfo[] GetDirectories(string directoryPath, string pattern, SearchOption searchOption)
         {
             if (directoryPath == null) throw new ArgumentNullException(nameof(directoryPath));
