@@ -16,6 +16,13 @@
 
         [UsedImplicitly]
         public static bool IsDirectoryEmpty(
+            DirectoryInfo directoryPath)
+        {
+            return directoryPath == null || IsDirectoryEmpty(directoryPath.FullName);
+        }
+
+        [UsedImplicitly]
+        public static bool IsDirectoryEmpty(
             string directoryPath)
         {
             return

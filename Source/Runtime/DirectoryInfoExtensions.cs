@@ -12,9 +12,16 @@
             return i.GetFileSystemInfos(@"*", searchOption);
         }
 
+        [UsedImplicitly]
         public static void MoveTo(this DirectoryInfo i, DirectoryInfo to, bool ovewriteExisting = true)
         {
             doCopyDir(i.FullName, to.FullName, ovewriteExisting);
+        }
+
+        [UsedImplicitly]
+        public static bool IsEmpty(this DirectoryInfo i)
+        {
+            return ZspIOHelper.IsDirectoryEmpty(i);
         }
 
         private static void doCopyDir(string sourceFolder, string destFolder, bool ovewriteExisting)
