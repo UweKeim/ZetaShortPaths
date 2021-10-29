@@ -1,9 +1,5 @@
 namespace ZetaShortPaths.UnitTests
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System;
-    using System.IO;
-
     [TestClass]
     public class FileInfoTest
     {

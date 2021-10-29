@@ -1,4 +1,3 @@
-﻿namespace ZetaShortPaths
-{
-    public delegate void ZspHandleExceptionDelegate(ZspHandleExceptionInfo hei);
-}
+﻿namespace ZetaShortPaths;
+
+public delegate void ZspHandleExceptionDelegate(ZspHandleExceptionInfo hei);

@@ -1,24 +1,20 @@
-﻿namespace ZetaShortPaths
+﻿namespace ZetaShortPaths;
+
+public class ZspSimpleFileAccessProtectorException :
+    Exception
 {
-    using System;
-    using JetBrains.Annotations;
-
-    public class ZspSimpleFileAccessProtectorException :
-        Exception
+    [UsedImplicitly]
+    public ZspSimpleFileAccessProtectorException()
     {
-        [UsedImplicitly]
-        public ZspSimpleFileAccessProtectorException()
-        {
-        }
+    }
 
-        [UsedImplicitly]
-        public ZspSimpleFileAccessProtectorException(string message) : base(message)
-        {
-        }
+    [UsedImplicitly]
+    public ZspSimpleFileAccessProtectorException(string message) : base(message)
+    {
+    }
 
-        [UsedImplicitly]
-        public ZspSimpleFileAccessProtectorException(string message, Exception inner) : base(message, inner)
-        {
-        }
+    [UsedImplicitly]
+    public ZspSimpleFileAccessProtectorException(string message, Exception inner) : base(message, inner)
+    {
     }
 }

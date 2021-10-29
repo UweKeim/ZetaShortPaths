@@ -14,11 +14,14 @@
     <PackageIconUrl></PackageIconUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl>https://github.com/UweKeim/ZetaShortPaths</RepositoryUrl>
-    <AssemblyVersion>1.0.0.16</AssemblyVersion>
-    <FileVersion>1.0.0.16</FileVersion>
-    <Version>1.0.0.16</Version>
+    <AssemblyVersion>1.0.0.17</AssemblyVersion>
+    <FileVersion>1.0.0.17</FileVersion>
+    <Version>1.0.0.17</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>nuget-icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>file;io</PackageTags>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -47,6 +50,10 @@
 
   <ItemGroup>
     <None Include="..\..\nuget-icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\README.md">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

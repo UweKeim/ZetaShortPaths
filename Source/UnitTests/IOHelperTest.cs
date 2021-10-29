@@ -1,10 +1,6 @@
 namespace ZetaShortPaths.UnitTests
 {
     using Helper;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System;
-    using System.IO;
-    using System.Linq;
 
     [TestClass]
     public class IOHelperTest
