@@ -6,7 +6,7 @@ _Global/
 .idea/
 .svn/
 Deploy/
-Source/Runtime/bin/
+Externals/
 
 TestResult.xml
 ZetaLongPaths.zreproj
@@ -15,6 +15,7 @@ NuGet.exe
 build-all.cmd
 build-all-unoptimized.cmd
 do-build-all.cs
+*.afxbuildkey
 
 Source/TestConsole/Bin/
 Source/TestConsole2/Bin/
