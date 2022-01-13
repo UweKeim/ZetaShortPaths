@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ZetaLongPaths.Properties {
+namespace ZetaShortPaths.Properties {
     using System;
     
     
@@ -19,7 +19,7 @@ namespace ZetaLongPaths.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -39,7 +39,7 @@ namespace ZetaLongPaths.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ZetaLongPaths.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ZetaShortPaths.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,178 +61,7 @@ namespace ZetaLongPaths.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error connecting to remote share “{0}”: {1}.
-        /// </summary>
-        internal static string ErrorConnectingToRemoteShare {
-            get {
-                return ResourceManager.GetString("ErrorConnectingToRemoteShare", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} copying file “{1}” to “{2}”: {3}.
-        /// </summary>
-        internal static string ErrorCopyingFile {
-            get {
-                return ResourceManager.GetString("ErrorCopyingFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} creating directory “{1}”: {2}.
-        /// </summary>
-        internal static string ErrorCreatingDirectory {
-            get {
-                return ResourceManager.GetString("ErrorCreatingDirectory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} creating file handle for file path “{1}”: {2}.
-        /// </summary>
-        internal static string ErrorCreatingFileHandle {
-            get {
-                return ResourceManager.GetString("ErrorCreatingFileHandle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} deleting file “{1}”: {2}.
-        /// </summary>
-        internal static string ErrorDeletingFile {
-            get {
-                return ResourceManager.GetString("ErrorDeletingFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} deleting folder “{1}”: {2}.
-        /// </summary>
-        internal static string ErrorDeletingFolder {
-            get {
-                return ResourceManager.GetString("ErrorDeletingFolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File does not exist..
-        /// </summary>
-        internal static string ErrorFileDoesNotExist {
-            get {
-                return ResourceManager.GetString("ErrorFileDoesNotExist", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} getting names security info while getting file owner for file “{1}”: {2}.
-        /// </summary>
-        internal static string ErrorGettingSecurityInfo {
-            get {
-                return ResourceManager.GetString("ErrorGettingSecurityInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} looking up account SID while getting file owner for file “{1}”: {2}.
-        /// </summary>
-        internal static string ErrorLookingUpSid {
-            get {
-                return ResourceManager.GetString("ErrorLookingUpSid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} marking file “{1}” for deletion after reboot: {2}.
-        /// </summary>
-        internal static string ErrorMarkingFileForDeletion {
-            get {
-                return ResourceManager.GetString("ErrorMarkingFileForDeletion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} moving file “{1}” to “{2}”: {3}.
-        /// </summary>
-        internal static string ErrorMovingFile {
-            get {
-                return ResourceManager.GetString("ErrorMovingFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} moving directory “{1}” to “{2}”: {3}.
-        /// </summary>
-        internal static string ErrorMovingFolder {
-            get {
-                return ResourceManager.GetString("ErrorMovingFolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} reading from file: {1}.
-        /// </summary>
-        internal static string ErrorReadFile {
-            get {
-                return ResourceManager.GetString("ErrorReadFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} seeking in file: {1}.
-        /// </summary>
-        internal static string ErrorSeek {
-            get {
-                return ResourceManager.GetString("ErrorSeek", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} setting file last access time “{1}”: {2}.
-        /// </summary>
-        internal static string ErrorSettingAccessTime {
-            get {
-                return ResourceManager.GetString("ErrorSettingAccessTime", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} setting file attribute of file “{1}” to “{2}”: {3}.
-        /// </summary>
-        internal static string ErrorSettingAttributes {
-            get {
-                return ResourceManager.GetString("ErrorSettingAttributes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} setting file creation time “{1}”: {2}.
-        /// </summary>
-        internal static string ErrorSettingCreationTime {
-            get {
-                return ResourceManager.GetString("ErrorSettingCreationTime", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} setting file last write time “{1}”: {2}.
-        /// </summary>
-        internal static string ErrorSettingsWriteTime {
-            get {
-                return ResourceManager.GetString("ErrorSettingsWriteTime", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error {0} writing to file: {1}.
-        /// </summary>
-        internal static string ErrorWriteFile {
-            get {
-                return ResourceManager.GetString("ErrorWriteFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File “{0}” does not exist..
+        ///   Looks up a localized string similar to File &apos;{0}&apos; does not exist..
         /// </summary>
         internal static string FileNotFound {
             get {
@@ -241,20 +70,11 @@ namespace ZetaLongPaths.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Folder “{0}” does not exist..
+        ///   Looks up a localized string similar to Folder &apos;{0}&apos; does not exist..
         /// </summary>
         internal static string FolderNotFound {
             get {
                 return ResourceManager.GetString("FolderNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid paths characters..
-        /// </summary>
-        internal static string InvalidPathsCharacters {
-            get {
-                return ResourceManager.GetString("InvalidPathsCharacters", resourceCulture);
             }
         }
         

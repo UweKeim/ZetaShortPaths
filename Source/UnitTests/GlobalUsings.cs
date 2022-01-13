@@ -1,7 +1,7 @@
-﻿global using NUnit.Framework;
-global using JetBrains.Annotations;
-global using System;
-global using System.ComponentModel;
-global using System.IO;
+﻿global using System;
+global using System.Collections.Generic;
 global using System.Linq;
-global using System.Reflection;
+global using System.Text;
+global using System.Threading.Tasks;
+global using System.IO;
+global using Microsoft.VisualStudio.TestTools.UnitTesting;
