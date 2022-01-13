@@ -14,9 +14,9 @@
     <PackageIconUrl></PackageIconUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl>https://github.com/UweKeim/ZetaShortPaths</RepositoryUrl>
-    <AssemblyVersion>1.0.8.17</AssemblyVersion>
-    <FileVersion>1.0.8.17</FileVersion>
-    <Version>1.0.8.17</Version>
+    <AssemblyVersion>1.0.9.17</AssemblyVersion>
+    <FileVersion>1.0.9.17</FileVersion>
+    <Version>1.0.9.17</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
