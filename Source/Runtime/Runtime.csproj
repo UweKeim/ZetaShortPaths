@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -8,17 +8,17 @@
     <Authors>Zeta Software GmbH</Authors>
     <Product>Zeta Short Paths</Product>
     <Description>A .NET Standard library with all the goodies from ZetaLongPaths to work with files and folders for paths with less than 260 characters.</Description>
-    <Copyright>© 1999-2021 Zeta Software GmbH</Copyright>
+    <Copyright>© 1999-2022 Zeta Software GmbH</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/UweKeim/ZetaShortPaths</PackageProjectUrl>
     <PackageIconUrl></PackageIconUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl>https://github.com/UweKeim/ZetaShortPaths</RepositoryUrl>
-    <AssemblyVersion>1.0.0.17</AssemblyVersion>
-    <FileVersion>1.0.0.17</FileVersion>
-    <Version>1.0.0.17</Version>
+    <AssemblyVersion>1.0.8.17</AssemblyVersion>
+    <FileVersion>1.0.8.17</FileVersion>
+    <Version>1.0.8.17</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageIcon>nuget-icon.png</PackageIcon>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>file;io</PackageTags>
     <NeutralLanguage>en</NeutralLanguage>
@@ -29,8 +29,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,11 +49,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\nuget-icon.png">
+    <None Include="..\..\Deploy\Build\ForClientLibNuGet\icon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="..\..\README.md">
+    <None Include="..\..\Deploy\Build\ForClientLibNuGet\README.md">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
