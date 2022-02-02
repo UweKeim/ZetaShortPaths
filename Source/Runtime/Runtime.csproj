@@ -14,14 +14,16 @@
     <PackageIconUrl></PackageIconUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl>https://github.com/UweKeim/ZetaShortPaths</RepositoryUrl>
-    <AssemblyVersion>1.0.13.17</AssemblyVersion>
-    <FileVersion>1.0.13.17</FileVersion>
-    <Version>1.0.13.17</Version>
+    <AssemblyVersion>1.0.14.17</AssemblyVersion>
+    <FileVersion>1.0.14.17</FileVersion>
+    <Version>1.0.14.17</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>file;io</PackageTags>
     <NeutralLanguage>en</NeutralLanguage>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>ZetaShortPaths.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
