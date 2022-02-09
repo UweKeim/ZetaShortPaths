@@ -1,7 +1,7 @@
 ﻿namespace ZetaShortPaths;
 
 [Serializable]
-[UsedImplicitly]
+[PublicAPI]
 public class ZspException : Exception
 {
     public ZspException()

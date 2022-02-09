@@ -22,7 +22,7 @@ public static class ZspSafeFileOperations
         }
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void SafeDeleteFile(
         string filePath)
     {
@@ -116,7 +116,7 @@ public static class ZspSafeFileOperations
         return filePath != null && SafeFileExists(filePath.FullName);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static bool SafeFileExists(
         string filePath)
     {
@@ -138,7 +138,7 @@ public static class ZspSafeFileOperations
     /// <summary>
     /// Deep-deletes the contents, as well as the folder itself.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public static void SafeDeleteDirectory(
         string folderPath)
     {
@@ -189,7 +189,7 @@ public static class ZspSafeFileOperations
         return folderPath != null && SafeDirectoryExists(folderPath.FullName);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static bool SafeDirectoryExists(
         string folderPath)
     {
@@ -205,7 +205,7 @@ public static class ZspSafeFileOperations
             dstFilePath);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void SafeMoveFile(
         string sourcePath,
         FileInfo dstFilePath)
@@ -224,7 +224,7 @@ public static class ZspSafeFileOperations
             dstFilePath?.FullName);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void SafeMoveFile(
         string sourcePath,
         string dstFilePath)
@@ -279,7 +279,7 @@ public static class ZspSafeFileOperations
         SafeCopyFile(sourcePath?.FullName, dstFilePath, overwrite);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void SafeCopyFile(
         string sourcePath,
         FileInfo dstFilePath,
@@ -299,7 +299,7 @@ public static class ZspSafeFileOperations
             overwrite);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void SafeCopyFile(
         string sourcePath,
         string dstFilePath,
@@ -363,7 +363,7 @@ public static class ZspSafeFileOperations
     /// <summary>
     /// Deep-deletes the contents, but not the folder itself.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public static void SafeDeleteDirectoryContents(
         string folderPath)
     {
@@ -406,7 +406,7 @@ public static class ZspSafeFileOperations
         SafeCheckCreateDirectory(folderPath?.FullName);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void SafeCheckCreateDirectory(
         string folderPath)
     {

@@ -2,20 +2,20 @@
 
 public static class ZspIOHelper
 {
-    [UsedImplicitly]
+    [PublicAPI]
     public static DirectoryInfo GetTempDirectory()
     {
         return new(Path.GetTempPath());
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static bool IsDirectoryEmpty(
         DirectoryInfo directoryPath)
     {
         return directoryPath == null || IsDirectoryEmpty(directoryPath.FullName);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static bool IsDirectoryEmpty(
         string directoryPath)
     {
@@ -30,7 +30,7 @@ public static class ZspIOHelper
     /// Returns the same MD5 hash as the PHP function call http://php.net/manual/de/function.hash-file.php 
     /// with 'md5' as the first parameter.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public static string CalculateMD5Hash(
         string path)
     {
@@ -43,7 +43,7 @@ public static class ZspIOHelper
         return BitConverter.ToString(hash).Replace(@"-", string.Empty).ToLowerInvariant();
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void CopyFileExact(
         string sourceFilePath,
         string destinationFilePath,
@@ -53,7 +53,7 @@ public static class ZspIOHelper
         CloneDates(sourceFilePath, destinationFilePath);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     private static void CloneDates(string sourceFilePath, string destinationFilePath)
     {
         var s = new FileInfo(sourceFilePath);
@@ -68,14 +68,14 @@ public static class ZspIOHelper
         if (sw > DateTime.MinValue) d.LastWriteTime = sw;
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static bool DriveExists(char driveLetter)
     {
         return DriveInfo.GetDrives().Any(di =>
             di.Name.StartsWith($@"{driveLetter}:", StringComparison.InvariantCultureIgnoreCase));
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void Touch(string filePath)
     {
         var now = DateTime.Now;
@@ -85,7 +85,7 @@ public static class ZspIOHelper
         File.SetLastWriteTime(filePath, now);
     }
 
-    //[UsedImplicitly]
+    //[PublicAPI]
     //public static void MoveDirectory(
     //    string sourceFolderPath,
     //    string destinationFolderPath)
@@ -106,7 +106,7 @@ public static class ZspIOHelper
     //    }
     //}
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void DeleteDirectoryContents(string folderPath, bool recursive)
     {
         if (Directory.Exists(folderPath))
@@ -129,7 +129,7 @@ public static class ZspIOHelper
         }
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static long GetFileLength(string filePath)
     {
         if (string.IsNullOrEmpty(filePath)) return 0;
@@ -137,19 +137,19 @@ public static class ZspIOHelper
         else return new FileInfo(filePath).Length;
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static FileInfo[] GetFiles(string directoryPath, string pattern = @"*.*")
     {
         return GetFiles(directoryPath, pattern, SearchOption.TopDirectoryOnly);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static FileInfo[] GetFiles(string directoryPath, SearchOption searchOption)
     {
         return GetFiles(directoryPath, @"*.*", searchOption);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static FileInfo[] GetFiles(string directoryPath, string pattern, SearchOption searchOption)
     {
         if (directoryPath == null) throw new ArgumentNullException(nameof(directoryPath));
@@ -158,19 +158,19 @@ public static class ZspIOHelper
         return new DirectoryInfo(directoryPath).GetFiles(pattern, searchOption);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static DirectoryInfo[] GetDirectories(string directoryPath, string pattern = @"*")
     {
         return GetDirectories(directoryPath, pattern, SearchOption.TopDirectoryOnly);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static DirectoryInfo[] GetDirectories(string directoryPath, SearchOption searchOption)
     {
         return GetDirectories(directoryPath, @"*", searchOption);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static DirectoryInfo[] GetDirectories(string directoryPath, string pattern, SearchOption searchOption)
     {
         if (directoryPath == null) throw new ArgumentNullException(nameof(directoryPath));

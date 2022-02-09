@@ -1,9 +1,9 @@
 ﻿namespace ZetaShortPaths;
 
-[UsedImplicitly]
+[PublicAPI]
 public sealed class ZspSplittedPath
 {
-    [UsedImplicitly]
+    [PublicAPI]
     public ZspSplittedPath(
         string path)
     {
@@ -16,30 +16,30 @@ public sealed class ZspSplittedPath
         Info = new ZspFileOrDirectoryInfo(path);
     }
 
-    [UsedImplicitly] public string FullPath => Info.FullName;
+    [PublicAPI] public string FullPath => Info.FullName;
 
-    [UsedImplicitly] public ZspFileOrDirectoryInfo Info { get; }
+    [PublicAPI] public ZspFileOrDirectoryInfo Info { get; }
 
-    [UsedImplicitly] public string Drive => ZspPathHelper.GetDrive(Info.FullName);
+    [PublicAPI] public string Drive => ZspPathHelper.GetDrive(Info.FullName);
 
-    [UsedImplicitly] public string Share => ZspPathHelper.GetShare(Info.FullName);
+    [PublicAPI] public string Share => ZspPathHelper.GetShare(Info.FullName);
 
-    [UsedImplicitly] public string DriveOrShare => ZspPathHelper.GetDriveOrShare(Info.FullName);
+    [PublicAPI] public string DriveOrShare => ZspPathHelper.GetDriveOrShare(Info.FullName);
 
-    [UsedImplicitly] public string Directory => ZspPathHelper.GetDirectory(Info.FullName);
+    [PublicAPI] public string Directory => ZspPathHelper.GetDirectory(Info.FullName);
 
-    [UsedImplicitly] public string NameWithoutExtension => ZspPathHelper.GetNameWithoutExtension(Info.FullName);
+    [PublicAPI] public string NameWithoutExtension => ZspPathHelper.GetNameWithoutExtension(Info.FullName);
 
-    [UsedImplicitly] public string NameWithExtension => ZspPathHelper.GetNameWithExtension(Info.FullName);
+    [PublicAPI] public string NameWithExtension => ZspPathHelper.GetNameWithExtension(Info.FullName);
 
-    [UsedImplicitly] public string Extension => ZspPathHelper.GetExtension(Info.FullName);
+    [PublicAPI] public string Extension => ZspPathHelper.GetExtension(Info.FullName);
 
-    [UsedImplicitly] public string DriveOrShareAndDirectory => ZspPathHelper.Combine(DriveOrShare, Directory);
+    [PublicAPI] public string DriveOrShareAndDirectory => ZspPathHelper.Combine(DriveOrShare, Directory);
 
-    [UsedImplicitly]
+    [PublicAPI]
     public string DriveOrShareAndDirectoryAndNameWithoutExtension =>
         ZspPathHelper.Combine(ZspPathHelper.Combine(DriveOrShare, Directory), NameWithoutExtension);
 
-    [UsedImplicitly]
+    [PublicAPI]
     public string DirectoryAndNameWithExtension => ZspPathHelper.Combine(Directory, NameWithExtension);
 }

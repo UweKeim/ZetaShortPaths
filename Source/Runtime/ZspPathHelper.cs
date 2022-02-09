@@ -2,16 +2,16 @@
 
 using static String;
 
-[UsedImplicitly]
+[PublicAPI]
 public static class ZspPathHelper
 {
-    [UsedImplicitly]
+    [PublicAPI]
     public static string GetPathRoot(string path)
     {
         return IsNullOrEmpty(path) ? path : GetDriveOrShare(path);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string ChangeExtension(string path, string extension)
     {
         if (path != null)
@@ -46,7 +46,7 @@ public static class ZspPathHelper
         return null;
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string ChangeFileNameWithoutExtension(string path, string fileNameWithoutExtension)
     {
         var dir = GetDirectoryPathNameFromFilePath(path);
@@ -55,14 +55,14 @@ public static class ZspPathHelper
         return Combine(dir, fileNameWithoutExtension + ext);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string ChangeFileName(string path, string fileName)
     {
         var dir = GetDirectoryPathNameFromFilePath(path);
         return Combine(dir, fileName);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string GetFileNameFromFilePath(string filePath)
     {
         if (filePath == null) return null;
@@ -72,7 +72,7 @@ public static class ZspPathHelper
         return ls < 0 ? filePath : filePath.Substring(ls + 1);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string GetFileNameWithoutExtension(string filePath)
     {
         if (filePath == null) return null;
@@ -83,7 +83,7 @@ public static class ZspPathHelper
         return ls < 0 ? fn : fn.Substring(0, ls);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string GetDirectoryNameOnlyFromFilePath(string filePath)
     {
         // https://referencesource.microsoft.com/#mscorlib/system/io/directoryinfo.cs,e3b20cb1c28ea93f,references
@@ -381,7 +381,7 @@ public static class ZspPathHelper
         }
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static DirectoryInfo CombineDirectory(
         string path1,
         string path2)
@@ -389,7 +389,7 @@ public static class ZspPathHelper
         return new(Combine(path1, path2));
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static FileInfo CombineFile(
         string path1,
         string path2)
@@ -418,27 +418,27 @@ public static class ZspPathHelper
         }
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static char DirectorySeparatorChar => Path.DirectorySeparatorChar;
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static char AltDirectorySeparatorChar => Path.AltDirectorySeparatorChar;
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string GetTempDirectoryPath()
     {
         // Simply redirect.
         return Path.GetTempPath();
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string GetTempFilePath()
     {
         // Simply redirect.
         return Path.GetTempFileName();
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string GetTempFilePath(string extension)
     {
         return IsNullOrEmpty(extension)
@@ -447,7 +447,7 @@ public static class ZspPathHelper
             : $@"{Path.GetTempPath()}{Guid.NewGuid()}.{extension.TrimStart('.')}";
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static DirectoryInfo CombineDirectory(
         string path1,
         string path2,
@@ -457,7 +457,7 @@ public static class ZspPathHelper
         return new(Combine(path1, path2, path3, paths));
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static FileInfo CombineFile(
         string path1,
         string path2,
@@ -467,7 +467,7 @@ public static class ZspPathHelper
         return new(Combine(path1, path2, path3, paths));
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string Combine(
         string path1,
         string path2,
@@ -485,14 +485,14 @@ public static class ZspPathHelper
         return resultPath;
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string ConvertBackSlashsToForwardSlashs(
         string text)
     {
         return IsNullOrEmpty(text) ? text : text.Replace('\\', '/');
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string ConvertForwardSlashsToBackSlashs(
         string text)
     {
@@ -636,7 +636,7 @@ public static class ZspPathHelper
     /// <summary>
     /// Gets the drive or share and directory.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public static string GetDriveOrShareAndDirectory(
         string path)
     {
@@ -711,7 +711,7 @@ public static class ZspPathHelper
     /// "C:\Team\Text\Test.Txt" would return "Test.Txt".
     /// "C:\Team\Text\Test" would return "Test".
     /// </remarks>
-    [UsedImplicitly]
+    [PublicAPI]
     public static string GetNameWithExtension(
         FileInfo path)
     {
@@ -732,35 +732,35 @@ public static class ZspPathHelper
         return IsNullOrEmpty(path) ? path : GetFileNameFromFilePath(path);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static ZspSplittedPath SplitPath(
         string path)
     {
         return new ZspFileOrDirectoryInfo(path).ZspSplittedPath;
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static ZspSplittedPath SplitPath(
         FileInfo path)
     {
         return new ZspFileOrDirectoryInfo(path).ZspSplittedPath;
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static ZspSplittedPath SplitPath(
         DirectoryInfo path)
     {
         return new ZspFileOrDirectoryInfo(path).ZspSplittedPath;
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static ZspSplittedPath SplitPath(
         ZspFileOrDirectoryInfo path)
     {
         return path.ZspSplittedPath;
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static bool IsDriveLetterPath(
         string filePath)
     {
@@ -774,7 +774,7 @@ public static class ZspPathHelper
         }
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static bool IsUncPath(
         string filePath)
     {
@@ -808,7 +808,7 @@ public static class ZspPathHelper
         }
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string SetBackSlashEnd(
         string path,
         bool setSlash)
@@ -816,7 +816,7 @@ public static class ZspPathHelper
         return setSlashEnd(path, setSlash, '\\');
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string SetForwardSlashEnd(
         string path,
         bool setSlash)
@@ -824,7 +824,7 @@ public static class ZspPathHelper
         return setSlashEnd(path, setSlash, '/');
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string SetBackSlashBegin(
         string path,
         bool setSlash)
@@ -832,7 +832,7 @@ public static class ZspPathHelper
         return setSlashBegin(path, setSlash, '\\');
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string SetForwardSlashBegin(
         string path,
         bool setSlash)
@@ -840,7 +840,7 @@ public static class ZspPathHelper
         return setSlashBegin(path, setSlash, '/');
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string GetParentPath(
         string text)
     {
@@ -854,7 +854,7 @@ public static class ZspPathHelper
     /// No disk-access is performed, only the syntax of the given string
     /// is checked.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public static bool IsAbsolutePath(
         string path)
     {
@@ -884,7 +884,7 @@ public static class ZspPathHelper
     /// A "less intelligent" Combine (in contrast to to Path.Combine).
     /// For paths with forward slash.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public static string CombineVirtual(
         string path1,
         string path2)
@@ -937,7 +937,7 @@ public static class ZspPathHelper
     /// A "less intelligent" Combine (in contrast to to Path.Combine).
     /// For paths with forward slash.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public static string CombineVirtual(
         string path1,
         string path2,
@@ -1027,9 +1027,39 @@ public static class ZspPathHelper
         }
     }
 
-    public static bool AreSameFolders(string folder1, string folder2)
+    public static bool AreSameFilePaths(string filePath1, string filePath2)
+    {
+        if (IsNullOrEmpty(filePath1) || IsNullOrEmpty(filePath2))
+        {
+            return false;
+        }
+        else
+        {
+            filePath1 = Path.GetFullPath(filePath1);
+            filePath2 = Path.GetFullPath(filePath2);
+
+            var folder1 = Path.GetDirectoryName(filePath1);
+            var folder2 = Path.GetDirectoryName(filePath2);
+
+            if (AreSameFolderPaths(folder1, folder2))
+            {
+                var file1 = Path.GetFileName(filePath1);
+                var file2 = Path.GetFileName(filePath2);
+
+                return file1.Equals(file2, StringComparison.OrdinalIgnoreCase);
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    public static bool AreSameFolderPaths(string folder1, string folder2)
     {
         return !IsNullOrEmpty(folder1) && !IsNullOrEmpty(folder2) &&
-               folder1.TrimEnd('\\').ToLowerInvariant().Equals(folder2.TrimEnd('\\').ToLowerInvariant());
+               Path.GetFullPath(folder1).TrimEnd('\\')
+                   .Equals(Path.GetFullPath(folder2).TrimEnd('\\').ToLowerInvariant(),
+                       StringComparison.OrdinalIgnoreCase);
     }
 }

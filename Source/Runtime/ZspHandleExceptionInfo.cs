@@ -1,11 +1,11 @@
 ﻿namespace ZetaShortPaths;
 
-[UsedImplicitly]
+[PublicAPI]
 public class ZspHandleExceptionInfo
 {
-    [UsedImplicitly] public Exception Exception { get; }
+    [PublicAPI] public Exception Exception { get; }
 
-    [UsedImplicitly] public int CurrentRetryCount { get; }
+    [PublicAPI] public int CurrentRetryCount { get; }
 
     public ZspHandleExceptionInfo(Exception exception, int currentRetryCount)
     {
@@ -17,6 +17,6 @@ public class ZspHandleExceptionInfo
     /// Return value. Set optionally to TRUE to force premature throwing.
     /// </summary>
     [DefaultValue(false)]
-    [UsedImplicitly]
+    [PublicAPI]
     public bool WantThrow { get; set; }
 }

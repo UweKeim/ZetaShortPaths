@@ -1,58 +1,58 @@
 ﻿namespace ZetaShortPaths;
 
-[UsedImplicitly]
+[PublicAPI]
 public static class FileInfoExtensions
 {
-    [UsedImplicitly]
+    [PublicAPI]
     public static void WriteAllText(this FileInfo i, string text)
     {
         File.WriteAllText(i.FullName, text);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void WriteAllText(this FileInfo i, string text, Encoding encoding)
     {
         File.WriteAllText(i.FullName, text, encoding);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string ReadAllText(this FileInfo i)
     {
         return File.ReadAllText(i.FullName);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string ReadAllText(this FileInfo i, Encoding encoding)
     {
         return File.ReadAllText(i.FullName, encoding);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void WriteAllBytes(this FileInfo i, byte[] bytes)
     {
         File.WriteAllBytes(i.FullName, bytes);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static byte[] ReadAllBytes(this FileInfo i)
     {
         return File.ReadAllBytes(i.FullName);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void MoveTo(this FileInfo i, FileInfo dst)
     {
         i.MoveTo(dst.FullName);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void MoveTo(this FileInfo i, string dst, bool overwriteExisting)
     {
         if(overwriteExisting&&File.Exists(dst))File.Delete(dst);
         i.MoveTo(dst);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static string MD5Hash(this FileInfo i)
     {
         return ZspIOHelper.CalculateMD5Hash(i.FullName);

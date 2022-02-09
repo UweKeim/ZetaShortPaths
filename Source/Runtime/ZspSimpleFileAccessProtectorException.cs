@@ -3,17 +3,17 @@
 public class ZspSimpleFileAccessProtectorException :
     Exception
 {
-    [UsedImplicitly]
+    [PublicAPI]
     public ZspSimpleFileAccessProtectorException()
     {
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public ZspSimpleFileAccessProtectorException(string message) : base(message)
     {
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public ZspSimpleFileAccessProtectorException(string message, Exception inner) : base(message, inner)
     {
     }

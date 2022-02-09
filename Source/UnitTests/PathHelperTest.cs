@@ -324,5 +324,58 @@ namespace ZetaShortPaths.UnitTests
 
             Assert.AreEqual(s2, @"c:\folder1\folder2\folder3\file2.md");
         }
+
+        [TestMethod]
+        public void TestGeneral5()
+        {
+            var s1 = @"c:\folder1\folder2\folder3\file1.txt";
+            var s2 = @"c:\folder1\folder2\folder3\file1.txt";
+
+            Assert.IsTrue(ZspPathHelper.AreSameFilePaths(s1, s2));
+
+            s1 = @"c:\folder1\folder2\folder3\file1.txt";
+            s2 = @"c:\folder1\folder2\folder3\file2.txt";
+
+            Assert.IsFalse(ZspPathHelper.AreSameFilePaths(s1, s2));
+
+            s1 = @"c:\folder1\folder2\folder3\file1.txt";
+            s2 = @"c:\folder1\folder2\folder4\file1.txt";
+
+            Assert.IsFalse(ZspPathHelper.AreSameFilePaths(s1, s2));
+
+            s1 = @"c:\folder1\folder2\folder3\folder4\..\file1.txt";
+            s2 = @"c:\folder1\folder2\folder3\file1.txt";
+
+            Assert.IsTrue(ZspPathHelper.AreSameFilePaths(s1, s2));
+
+            s1 = @"c:\folder1\folder2\folder3\folder4\..\..\folder3\file1.txt";
+            s2 = @"c:\folder1\folder2\folder3\file1.txt";
+
+            Assert.IsTrue(ZspPathHelper.AreSameFilePaths(s1, s2));
+        }
+
+        [TestMethod]
+        public void TestGeneral6()
+        {
+            var s1 = @"c:\folder1\folder2\folder3";
+            var s2 = @"c:\folder1\folder2\folder3";
+
+            Assert.IsTrue(ZspPathHelper.AreSameFolderPaths(s1, s2));
+
+            s1 = @"c:\folder1\folder2\folder3";
+            s2 = @"c:\folder1\folder2\folder4";
+
+            Assert.IsFalse(ZspPathHelper.AreSameFolderPaths(s1, s2));
+
+            s1 = @"c:\folder1\folder2\folder3\folder4\..";
+            s2 = @"c:\folder1\folder2\folder3";
+
+            Assert.IsTrue(ZspPathHelper.AreSameFolderPaths(s1, s2));
+
+            s1 = @"c:\folder1\folder2\folder3\folder4\..\..\folder3";
+            s2 = @"c:\folder1\folder2\folder3";
+
+            Assert.IsTrue(ZspPathHelper.AreSameFolderPaths(s1, s2));
+        }
     }
 }

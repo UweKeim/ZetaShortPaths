@@ -14,7 +14,7 @@ public static class ZspSimpleFileAccessProtector
     /// Call on an exception instance that you do NOT want to retry in this class but immediately
     /// throw it.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public static Exception MarkAsPassThroughZspProtector(this Exception x)
     {
         if (x == null) return null;
@@ -27,7 +27,7 @@ public static class ZspSimpleFileAccessProtector
     /// <summary>
     /// Execute an action. On error retry multiple times, sleep between the retries.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public static void Protect(
         Action action,
         ZspSimpleFileAccessProtectorInformation info = null)
@@ -104,7 +104,7 @@ public static class ZspSimpleFileAccessProtector
     /// <summary>
     /// Execute an action. On error retry multiple times, sleep between the retries.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public static T Protect<T>(
         Func<T> func,
         ZspSimpleFileAccessProtectorInformation info = null)
@@ -180,7 +180,7 @@ public static class ZspSimpleFileAccessProtector
         }
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void DoGarbageCollect(bool waitForPendingFinalizers = true)
     {
         minimizeFootprint();

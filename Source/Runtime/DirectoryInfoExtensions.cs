@@ -1,21 +1,21 @@
 ﻿namespace ZetaShortPaths;
 
-[UsedImplicitly]
+[PublicAPI]
 public static class DirectoryInfoExtensions
 {
-    [UsedImplicitly]
+    [PublicAPI]
     public static FileSystemInfo[] GetFileSystemInfos(this DirectoryInfo i, SearchOption searchOption)
     {
         return i.GetFileSystemInfos(@"*", searchOption);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static void MoveTo(this DirectoryInfo i, DirectoryInfo to, bool ovewriteExisting = true)
     {
         doCopyDir(i.FullName, to.FullName, ovewriteExisting);
     }
 
-    [UsedImplicitly]
+    [PublicAPI]
     public static bool IsEmpty(this DirectoryInfo i)
     {
         return ZspIOHelper.IsDirectoryEmpty(i);

@@ -1,9 +1,9 @@
 ﻿namespace ZetaShortPaths;
 
-[UsedImplicitly]
+[PublicAPI]
 public static class ZspFileOrDirectoryInfoExtensions
 {
-    [UsedImplicitly]
+    [PublicAPI]
     public static bool SafeExists(this ZspFileOrDirectoryInfo i)
     {
         if (i == null || i.IsEmpty) return false;
