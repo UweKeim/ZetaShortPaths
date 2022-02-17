@@ -319,6 +319,22 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
+    public static int IndexOfNoCase(this string s1, string s2, int startIndex)
+    {
+        if (s1 == null && s2 == null) return 0;
+        else if (s1 == null || s2 == null) return -1;
+        else return s1.IndexOf(s2, startIndex, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [PublicAPI]
+    public static int IndexOfNoCase(this string s1, string s2, int startIndex, int count)
+    {
+        if (s1 == null && s2 == null) return 0;
+        else if (s1 == null || s2 == null) return -1;
+        else return s1.IndexOf(s2, startIndex, count, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [PublicAPI]
     public static int LastIndexOfNoCase(this string s1, string s2)
     {
         if (s1 == null && s2 == null) return 0;
