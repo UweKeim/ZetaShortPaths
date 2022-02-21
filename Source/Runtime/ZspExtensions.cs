@@ -299,6 +299,30 @@ public static class ZspExtensions
         return sb.ToString();
     }
 
+    [PublicAPI]
+    public static string IfNullOrEmpty(this string s, string fallBack)
+    {
+        return string.IsNullOrEmpty(s) ? fallBack : s;
+    }
+
+    [PublicAPI]
+    public static string IfNullOrEmpty(this string s, Func<string> fallBack)
+    {
+        return string.IsNullOrEmpty(s) ? fallBack?.Invoke() : s;
+    }
+
+    [PublicAPI]
+    public static string IfNullOrWhiteSpace(this string s, string fallBack)
+    {
+        return string.IsNullOrWhiteSpace(s) ? fallBack : s;
+    }
+
+    [PublicAPI]
+    public static string IfNullOrWhiteSpace(this string s, Func<string> fallBack)
+    {
+        return string.IsNullOrWhiteSpace(s) ? fallBack?.Invoke() : s;
+    }
+
     /// <summary>
     /// Similar to "S1 ?? S2", this simulates an operator that not only
     /// checks for NULL but also for an empty string.
