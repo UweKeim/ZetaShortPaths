@@ -6,13 +6,13 @@ using static String;
 public static class ZspPathHelper
 {
     [PublicAPI]
-    public static string GetPathRoot(string path)
+    public static string? GetPathRoot(string? path)
     {
         return IsNullOrEmpty(path) ? path : GetDriveOrShare(path);
     }
 
     [PublicAPI]
-    public static string ChangeExtension(string path, string extension)
+    public static string? ChangeExtension(string? path, string? extension)
     {
         if (path != null)
         {
@@ -27,27 +27,32 @@ public static class ZspPathHelper
                     text = path.Substring(0, num);
                     break;
                 }
+
                 if (c == Path.DirectorySeparatorChar || c == Path.AltDirectorySeparatorChar ||
                     c == Path.VolumeSeparatorChar)
                 {
                     break;
                 }
             }
+
             if (extension != null && path.Length != 0)
             {
                 if (extension.Length == 0 || extension[0] != '.')
                 {
                     text += ".";
                 }
+
                 text += extension;
             }
+
             return text;
         }
+
         return null;
     }
 
     [PublicAPI]
-    public static string ChangeFileNameWithoutExtension(string path, string fileNameWithoutExtension)
+    public static string? ChangeFileNameWithoutExtension(string? path, string? fileNameWithoutExtension)
     {
         var dir = GetDirectoryPathNameFromFilePath(path);
         var ext = GetExtension(path);
@@ -56,35 +61,35 @@ public static class ZspPathHelper
     }
 
     [PublicAPI]
-    public static string ChangeFileName(string path, string fileName)
+    public static string? ChangeFileName(string? path, string? fileName)
     {
         var dir = GetDirectoryPathNameFromFilePath(path);
         return Combine(dir, fileName);
     }
 
     [PublicAPI]
-    public static string GetFileNameFromFilePath(string filePath)
+    public static string? GetFileNameFromFilePath(string? filePath)
     {
         if (filePath == null) return null;
 
         var ls = filePath.LastIndexOfAny(new[]
-            {Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar, Path.VolumeSeparatorChar});
+            { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar, Path.VolumeSeparatorChar });
         return ls < 0 ? filePath : filePath.Substring(ls + 1);
     }
 
     [PublicAPI]
-    public static string GetFileNameWithoutExtension(string filePath)
+    public static string? GetFileNameWithoutExtension(string? filePath)
     {
         if (filePath == null) return null;
 
         var fn = GetFileNameFromFilePath(filePath);
-        var ls = fn.LastIndexOf('.');
+        var ls = fn?.LastIndexOf('.') ?? -1;
 
-        return ls < 0 ? fn : fn.Substring(0, ls);
+        return ls < 0 ? fn : fn?.Substring(0, ls);
     }
 
     [PublicAPI]
-    public static string GetDirectoryNameOnlyFromFilePath(string filePath)
+    public static string? GetDirectoryNameOnlyFromFilePath(string? filePath)
     {
         // https://referencesource.microsoft.com/#mscorlib/system/io/directoryinfo.cs,e3b20cb1c28ea93f,references
 
@@ -99,6 +104,7 @@ public static class ZspPathHelper
             {
                 s = filePath.Substring(0, filePath.Length - 1);
             }
+
             dirName = Path.GetFileName(s);
         }
         else
@@ -116,13 +122,13 @@ public static class ZspPathHelper
     /// <summary>
     /// Returns the full path.
     /// </summary>
-    public static string GetDirectoryPathNameFromFilePath(string filePath)
+    public static string? GetDirectoryPathNameFromFilePath(string? filePath)
     {
         if (filePath == null) return null;
         //filePath = filePath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
 
         var ls = filePath.LastIndexOfAny(new[]
-            {Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar /*, Path.VolumeSeparatorChar*/});
+            { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar /*, Path.VolumeSeparatorChar*/ });
 
         if (ls < 0)
         {
@@ -132,7 +138,7 @@ public static class ZspPathHelper
         {
             var result = ConvertForwardSlashsToBackSlashs(filePath.Substring(0, ls));
 
-            if (result.EndsWith(@":"))
+            if (result?.EndsWith(@":") ?? false)
             {
                 return result + @"\";
             }
@@ -211,16 +217,22 @@ public static class ZspPathHelper
     /// <param name="basePathToWhichToMakeAbsoluteTo">The base path to use when making an
     /// absolute path.</param>
     /// <returns>Returns the absolute path.</returns>
-    public static string GetAbsolutePath(
-        string pathToMakeAbsolute,
-        string basePathToWhichToMakeAbsoluteTo)
+    public static string? GetAbsolutePath(
+        string? pathToMakeAbsolute,
+        string? basePathToWhichToMakeAbsoluteTo)
     {
-        return IsAbsolutePath(pathToMakeAbsolute)
-            ? pathToMakeAbsolute
-            : Path.GetFullPath(
-                Combine(
-                    basePathToWhichToMakeAbsoluteTo,
-                    pathToMakeAbsolute));
+        if (IsAbsolutePath(pathToMakeAbsolute))
+        {
+            return pathToMakeAbsolute;
+        }
+        else
+        {
+            var r = Combine(
+                basePathToWhichToMakeAbsoluteTo,
+                pathToMakeAbsolute);
+
+            return r == null ? null : Path.GetFullPath(r);
+        }
     }
 
     /// <summary>
@@ -241,9 +253,9 @@ public static class ZspPathHelper
     /// If not possible (i.e. no same parts in PATH2 and the PATH1),
     /// returns the complete PATH2.
     /// </returns>
-    public static string GetRelativePath(
-        string pathToWhichToMakeRelativeTo,
-        string pathToMakeRelative)
+    public static string? GetRelativePath(
+        string? pathToWhichToMakeRelativeTo,
+        string? pathToMakeRelative)
     {
         if (IsNullOrEmpty(pathToWhichToMakeRelativeTo) ||
             IsNullOrEmpty(pathToMakeRelative))
@@ -252,8 +264,8 @@ public static class ZspPathHelper
         }
         else
         {
-            var o = pathToWhichToMakeRelativeTo.ToLowerInvariant().Replace('/', '\\').TrimEnd('\\');
-            var t = pathToMakeRelative.ToLowerInvariant().Replace('/', '\\');
+            var o = pathToWhichToMakeRelativeTo?.ToLowerInvariant().Replace('/', '\\').TrimEnd('\\');
+            var t = pathToMakeRelative?.ToLowerInvariant().Replace('/', '\\');
 
             // --
             // Handle special cases for Driveletters and UNC shares.
@@ -261,11 +273,11 @@ public static class ZspPathHelper
             var td = GetDriveOrShare(t);
             var od = GetDriveOrShare(o);
 
-            td = td.Trim();
-            td = td.Trim('\\', '/');
+            td = td?.Trim();
+            td = td?.Trim('\\', '/');
 
-            od = od.Trim();
-            od = od.Trim('\\', '/');
+            od = od?.Trim();
+            od = od?.Trim('\\', '/');
 
             // Different drive or share, i.e. nothing common, skip.
             if (td != od)
@@ -274,15 +286,16 @@ public static class ZspPathHelper
             }
             else
             {
-                var ol = o.Length;
-                var tl = t.Length;
+                var ol = o?.Length ?? 0;
+                var tl = t?.Length ?? 0;
 
                 // compare each one, until different.
                 var pos = 0;
-                while (pos < ol && pos < tl && o[pos] == t[pos])
+                while (pos < ol && pos < tl && o?[pos] == t?[pos])
                 {
                     pos++;
                 }
+
                 if (pos < ol)
                 {
                     pos--;
@@ -301,9 +314,9 @@ public static class ZspPathHelper
                 else
                 {
                     // If not matching at a slash-boundary, navigate back until slash.
-                    if (!(pos == ol || o[pos] == '\\' || o[pos] == '/'))
+                    if (!(pos == ol || o?[pos] == '\\' || o?[pos] == '/'))
                     {
-                        while (pos > 0 && o[pos] != '\\' && o[pos] != '/')
+                        while (pos > 0 && o?[pos] != '\\' && o?[pos] != '/')
                         {
                             pos--;
                         }
@@ -319,26 +332,29 @@ public static class ZspPathHelper
                         // --
                         // grab and split the reminders.
 
-                        var oRemaining = o.Substring(pos);
-                        oRemaining = oRemaining.Trim('\\', '/');
+                        var oRemaining = o?.Substring(pos);
+                        oRemaining = oRemaining?.Trim('\\', '/');
 
                         // Count how many folders are following in 'path1'.
                         // Count by splitting.
-                        var oRemainingParts = oRemaining.Split('\\');
+                        var oRemainingParts = oRemaining?.Split('\\');
 
-                        var tRemaining = t.Substring(pos);
-                        tRemaining = tRemaining.Trim('\\', '/');
+                        var tRemaining = t?.Substring(pos);
+                        tRemaining = tRemaining?.Trim('\\', '/');
 
                         // --
 
                         var result = new StringBuilder();
 
                         // Path from path1 to common root.
-                        foreach (var oRemainingPart in oRemainingParts)
+                        if (oRemainingParts != null)
                         {
-                            if (!IsNullOrEmpty(oRemainingPart))
+                            foreach (var oRemainingPart in oRemainingParts)
                             {
-                                result.Append(@"..\");
+                                if (!IsNullOrEmpty(oRemainingPart))
+                                {
+                                    result.Append(@"..\");
+                                }
                             }
                         }
 
@@ -354,7 +370,7 @@ public static class ZspPathHelper
         }
     }
 
-    public static string GetExtension(string path)
+    public static string? GetExtension(string? path)
     {
         if (IsNullOrEmpty(path))
         {
@@ -362,12 +378,12 @@ public static class ZspPathHelper
         }
         else
         {
-            var splitted = path.Split(
+            var splitted = path?.Split(
                 Path.DirectorySeparatorChar,
                 Path.AltDirectorySeparatorChar,
                 Path.VolumeSeparatorChar);
 
-            if (splitted.Length > 0)
+            if (splitted?.Length > 0)
             {
                 var p = splitted[splitted.Length - 1];
 
@@ -382,24 +398,26 @@ public static class ZspPathHelper
     }
 
     [PublicAPI]
-    public static DirectoryInfo CombineDirectory(
-        string path1,
-        string path2)
+    public static DirectoryInfo? CombineDirectory(
+        string? path1,
+        string? path2)
     {
-        return new(Combine(path1, path2));
+        var r = Combine(path1, path2);
+        return r == null ? null : new(r);
     }
 
     [PublicAPI]
-    public static FileInfo CombineFile(
-        string path1,
-        string path2)
+    public static FileInfo? CombineFile(
+        string? path1,
+        string? path2)
     {
-        return new(Combine(path1, path2));
+        var r = Combine(path1, path2);
+        return r == null ? null : new(r);
     }
 
-    public static string Combine(
-        string path1,
-        string path2)
+    public static string? Combine(
+        string? path1,
+        string? path2)
     {
         if (IsNullOrEmpty(path1))
         {
@@ -411,18 +429,16 @@ public static class ZspPathHelper
         }
         else
         {
-            path1 = path1.TrimEnd('\\', '/').Replace('/', '\\');
-            path2 = path2.TrimStart('\\', '/').Replace('/', '\\');
+            path1 = path1?.TrimEnd('\\', '/').Replace('/', '\\');
+            path2 = path2?.TrimStart('\\', '/').Replace('/', '\\');
 
             return path1 + @"\" + path2;
         }
     }
 
-    [PublicAPI]
-    public static char DirectorySeparatorChar => Path.DirectorySeparatorChar;
+    [PublicAPI] public static char DirectorySeparatorChar => Path.DirectorySeparatorChar;
 
-    [PublicAPI]
-    public static char AltDirectorySeparatorChar => Path.AltDirectorySeparatorChar;
+    [PublicAPI] public static char AltDirectorySeparatorChar => Path.AltDirectorySeparatorChar;
 
     [PublicAPI]
     public static string GetTempDirectoryPath()
@@ -439,68 +455,67 @@ public static class ZspPathHelper
     }
 
     [PublicAPI]
-    public static string GetTempFilePath(string extension)
+    public static string GetTempFilePath(string? extension)
     {
         return IsNullOrEmpty(extension)
             // https://stackoverflow.com/a/581574/107625
             ? GetTempFilePath()
-            : $@"{Path.GetTempPath()}{Guid.NewGuid()}.{extension.TrimStart('.')}";
+            : $@"{Path.GetTempPath()}{Guid.NewGuid()}.{extension?.TrimStart('.')}";
     }
 
     [PublicAPI]
-    public static DirectoryInfo CombineDirectory(
-        string path1,
-        string path2,
-        string path3,
-        params string[] paths)
+    public static DirectoryInfo? CombineDirectory(
+        string? path1,
+        string? path2,
+        string? path3,
+        params string?[] paths)
     {
-        return new(Combine(path1, path2, path3, paths));
+        var r = Combine(path1, path2, path3, paths);
+        return r == null ? null : new(r);
     }
 
     [PublicAPI]
-    public static FileInfo CombineFile(
-        string path1,
-        string path2,
-        string path3,
-        params string[] paths)
+    public static FileInfo? CombineFile(
+        string? path1,
+        string? path2,
+        string? path3,
+        params string?[] paths)
     {
-        return new(Combine(path1, path2, path3, paths));
+        var r = Combine(path1, path2, path3, paths);
+        return r == null ? null : new(r);
     }
 
     [PublicAPI]
-    public static string Combine(
-        string path1,
-        string path2,
-        string path3,
-        params string[] paths)
+    public static string? Combine(
+        string? path1,
+        string? path2,
+        string? path3,
+        params string?[] paths)
     {
         var resultPath = Combine(path1, path2);
         resultPath = Combine(resultPath, path3);
 
-        if (paths != null)
-        {
-            resultPath = paths.Aggregate(resultPath, Combine);
-        }
+        resultPath = paths.Aggregate(resultPath, Combine);
 
         return resultPath;
     }
 
     [PublicAPI]
-    public static string ConvertBackSlashsToForwardSlashs(
-        string text)
+    public static string? ConvertBackSlashsToForwardSlashs(
+        string? text)
     {
-        return IsNullOrEmpty(text) ? text : text.Replace('\\', '/');
+        return IsNullOrEmpty(text) ? text : text?.Replace('\\', '/');
     }
 
     [PublicAPI]
-    public static string ConvertForwardSlashsToBackSlashs(
-        string text)
+    public static string? ConvertForwardSlashsToBackSlashs(
+        string? text)
     {
-        return IsNullOrEmpty(text) ? text : text.Replace('/', '\\');
+        return IsNullOrEmpty(text) ? text : text?.Replace('/', '\\');
     }
 
-    public static string GetDrive(
-        string path)
+    public static string? GetDrive(
+        string? path)
     {
         if (IsNullOrEmpty(path))
         {
@@ -510,8 +525,8 @@ public static class ZspPathHelper
         {
             path = ConvertForwardSlashsToBackSlashs(path);
 
-            var colonPos = path.IndexOf(':');
-            var slashPos = path.IndexOf('\\');
+            var colonPos = path?.IndexOf(':') ?? -1;
+            var slashPos = path?.IndexOf('\\');
 
             if (colonPos <= 0)
             {
@@ -521,7 +536,7 @@ public static class ZspPathHelper
             {
                 if (slashPos < 0 || slashPos > colonPos)
                 {
-                    return path.Substring(0, colonPos + 1);
+                    return path?.Substring(0, colonPos + 1);
                 }
                 else
                 {
@@ -545,8 +560,8 @@ public static class ZspPathHelper
     /// a share looks like: "\\Server\Share\Dir1\Dir2\Dir3". The backslash
     /// after "Share" MUST be present to be detected successfully as a share.
     /// </remarks>
-    public static string GetShare(
-        string path)
+    public static string? GetShare(
+        string? path)
     {
         if (IsNullOrEmpty(path))
         {
@@ -560,7 +575,7 @@ public static class ZspPathHelper
             // Kann z.B. "\\server\share\" sein,
             // aber auch "http:\\www.xyz.com\".
             const string dblslsh = @"\\";
-            var n = str.IndexOf(dblslsh, StringComparison.Ordinal);
+            var n = str?.IndexOf(dblslsh, StringComparison.Ordinal) ?? -1;
             if (n < 0)
             {
                 return Empty;
@@ -569,12 +584,12 @@ public static class ZspPathHelper
             {
                 // Übernehme links von Doppel-Slash alles in Rückgabe
                 // (inkl. Doppel-Slash selbst).
-                var ret = str.Substring(0, n + dblslsh.Length);
-                str = str.Remove(0, n + dblslsh.Length);
+                var ret = str?.Substring(0, n + dblslsh.Length);
+                str = str?.Remove(0, n + dblslsh.Length);
 
                 // Jetzt nach Slash nach Server-Name suchen.
                 // Dieser Slash darf nicht unmittelbar nach den 2 Anfangsslash stehen.
-                n = str.IndexOf('\\');
+                n = str?.IndexOf('\\') ?? -1;
                 if (n <= 0)
                 {
                     return Empty;
@@ -582,17 +597,17 @@ public static class ZspPathHelper
                 else
                 {
                     // Wiederum übernehmen in Rückgabestring.
-                    ret += str.Substring(0, n + 1);
-                    str = str.Remove(0, n + 1);
+                    ret += str?.Substring(0, n + 1);
+                    str = str?.Remove(0, n + 1);
 
                     // Jetzt nach Slash nach Share-Name suchen.
                     // Dieser Slash darf ebenfalls nicht unmittelbar
                     // nach dem jetzigen Slash stehen.
-                    n = str.IndexOf('\\');
+                    n = str?.IndexOf('\\') ?? -1;
                     switch (n)
                     {
                         case < 0:
-                            n = str.Length;
+                            n = str?.Length ?? 0;
                             break;
                         case 0:
                             return Empty;
@@ -600,7 +615,7 @@ public static class ZspPathHelper
 
                     // Wiederum übernehmen in Rückgabestring,
                     // aber ohne letzten Slash.
-                    ret += str.Substring(0, n);
+                    ret += str?.Substring(0, n);
 
                     // The last item must not be a slash.
                     return ret[ret.Length - 1] == '\\' ? Empty : ret;
@@ -609,8 +624,8 @@ public static class ZspPathHelper
         }
     }
 
-    public static string GetDriveOrShare(
-        string path)
+    public static string? GetDriveOrShare(
+        string? path)
     {
         if (IsNullOrEmpty(path))
         {
@@ -637,8 +652,8 @@ public static class ZspPathHelper
     /// Gets the drive or share and directory.
     /// </summary>
     [PublicAPI]
-    public static string GetDriveOrShareAndDirectory(
-        string path)
+    public static string? GetDriveOrShareAndDirectory(
+        string? path)
     {
         return IsNullOrEmpty(path)
             ? path
@@ -655,8 +670,8 @@ public static class ZspPathHelper
     /// If not present, the path is not treated as a directory.
     /// (E.g.. "C:\Test\MyDir" would return "\Test" only as the directory).
     /// </remarks>
-    public static string GetDirectory(
-        string path)
+    public static string? GetDirectory(
+        string? path)
     {
         if (IsNullOrEmpty(path))
         {
@@ -671,14 +686,14 @@ public static class ZspPathHelper
             // ReSharper disable InvocationIsSkipped
             Debug.Assert(
                 IsNullOrEmpty(driveOrShare) ||
-                dir.StartsWith(driveOrShare),
+                (dir?.StartsWith(driveOrShare) ?? false),
                 $@"Variable 'dir' ('{dir}') must start with drive or share '{driveOrShare}'.");
             // ReSharper restore InvocationIsSkipped
 
             if (!IsNullOrEmpty(driveOrShare) &&
-                dir.StartsWith(driveOrShare))
+                (dir?.StartsWith(driveOrShare) ?? false))
             {
-                return dir.Substring(driveOrShare.Length);
+                return dir.Substring(driveOrShare?.Length ?? 0);
             }
             else
             {
@@ -695,8 +710,8 @@ public static class ZspPathHelper
     /// "C:\Team\Text\Test.Txt" would return "Test".
     /// "C:\Team\Text\Test" would also return "Test".
     /// </remarks>
-    public static string GetNameWithoutExtension(
-        string path)
+    public static string? GetNameWithoutExtension(
+        string? path)
     {
         return IsNullOrEmpty(path)
             ? path
@@ -712,10 +727,10 @@ public static class ZspPathHelper
     /// "C:\Team\Text\Test" would return "Test".
     /// </remarks>
     [PublicAPI]
-    public static string GetNameWithExtension(
-        FileInfo path)
+    public static string? GetNameWithExtension(
+        FileInfo? path)
     {
-        return GetNameWithExtension(path.FullName);
+        return GetNameWithExtension(path?.FullName);
     }
 
     /// <summary>
@@ -726,43 +741,43 @@ public static class ZspPathHelper
     /// "C:\Team\Text\Test.Txt" would return "Test.Txt".
     /// "C:\Team\Text\Test" would return "Test".
     /// </remarks>
-    public static string GetNameWithExtension(
-        string path)
+    public static string? GetNameWithExtension(
+        string? path)
     {
         return IsNullOrEmpty(path) ? path : GetFileNameFromFilePath(path);
     }
 
     [PublicAPI]
-    public static ZspSplittedPath SplitPath(
-        string path)
+    public static ZspSplittedPath? SplitPath(
+        string? path)
     {
-        return new ZspFileOrDirectoryInfo(path).ZspSplittedPath;
+        return path == null ? null : new ZspFileOrDirectoryInfo(path).ZspSplittedPath;
     }
 
     [PublicAPI]
-    public static ZspSplittedPath SplitPath(
-        FileInfo path)
+    public static ZspSplittedPath? SplitPath(
+        FileInfo? path)
     {
-        return new ZspFileOrDirectoryInfo(path).ZspSplittedPath;
+        return path == null ? null : new ZspFileOrDirectoryInfo(path).ZspSplittedPath;
     }
 
     [PublicAPI]
-    public static ZspSplittedPath SplitPath(
-        DirectoryInfo path)
+    public static ZspSplittedPath? SplitPath(
+        DirectoryInfo? path)
     {
-        return new ZspFileOrDirectoryInfo(path).ZspSplittedPath;
+        return path == null ? null : new ZspFileOrDirectoryInfo(path).ZspSplittedPath;
     }
 
     [PublicAPI]
-    public static ZspSplittedPath SplitPath(
-        ZspFileOrDirectoryInfo path)
+    public static ZspSplittedPath? SplitPath(
+        ZspFileOrDirectoryInfo? path)
     {
-        return path.ZspSplittedPath;
+        return path?.ZspSplittedPath;
     }
 
     [PublicAPI]
     public static bool IsDriveLetterPath(
-        string filePath)
+        string? filePath)
     {
         if (IsNullOrEmpty(filePath))
         {
@@ -770,13 +785,13 @@ public static class ZspPathHelper
         }
         else
         {
-            return filePath.IndexOf(':') == 1;
+            return filePath?.IndexOf(':') == 1;
         }
     }
 
     [PublicAPI]
     public static bool IsUncPath(
-        string filePath)
+        string? filePath)
     {
         if (IsNullOrEmpty(filePath))
         {
@@ -786,7 +801,7 @@ public static class ZspPathHelper
         {
             var s = ConvertForwardSlashsToBackSlashs(filePath);
 
-            if (s.StartsWith(@"\\"))
+            if (s?.StartsWith(@"\\") ?? false)
             {
                 if (s.StartsWith(@"\\?\UNC\"))
                 {
@@ -809,44 +824,50 @@ public static class ZspPathHelper
     }
 
     [PublicAPI]
-    public static string SetBackSlashEnd(
-        string path,
+    public static string? SetBackSlashEnd(
+        string? path,
         bool setSlash)
     {
         return setSlashEnd(path, setSlash, '\\');
     }
 
     [PublicAPI]
-    public static string SetForwardSlashEnd(
-        string path,
+    public static string? SetForwardSlashEnd(
+        string? path,
         bool setSlash)
     {
         return setSlashEnd(path, setSlash, '/');
     }
 
     [PublicAPI]
-    public static string SetBackSlashBegin(
-        string path,
+    public static string? SetBackSlashBegin(
+        string? path,
         bool setSlash)
     {
         return setSlashBegin(path, setSlash, '\\');
     }
 
     [PublicAPI]
-    public static string SetForwardSlashBegin(
-        string path,
+    public static string? SetForwardSlashBegin(
+        string? path,
         bool setSlash)
     {
         return setSlashBegin(path, setSlash, '/');
     }
 
     [PublicAPI]
-    public static string GetParentPath(
-        string text)
+    public static string? GetParentPath(
+        string? text)
     {
-        return IsNullOrEmpty(text)
-            ? text
-            : Path.GetFullPath(Combine(text, @".."));
+        if (text == null || IsNullOrEmpty(text))
+        {
+            return text;
+        }
+        else
+        {
+            var r = Combine(text, @"..");
+            return r == null ? null : Path.GetFullPath(r);
+        }
     }
 
     /// <summary>
@@ -856,8 +877,10 @@ public static class ZspPathHelper
     /// </summary>
     [PublicAPI]
     public static bool IsAbsolutePath(
-        string path)
+        string? path)
     {
+        if (path == null || IsNullOrEmpty(path)) return false;
+
         path = path.Replace('/', '\\');
 
         if (path.Length < 2)
@@ -885,15 +908,15 @@ public static class ZspPathHelper
     /// For paths with forward slash.
     /// </summary>
     [PublicAPI]
-    public static string CombineVirtual(
-        string path1,
-        string path2)
+    public static string? CombineVirtual(
+        string? path1,
+        string? path2)
     {
-        if (IsNullOrEmpty(path1))
+        if (path1 == null || IsNullOrEmpty(path1))
         {
             return path2;
         }
-        else if (IsNullOrEmpty(path2))
+        else if (path2 == null || IsNullOrEmpty(path2))
         {
             return path1;
         }
@@ -938,16 +961,16 @@ public static class ZspPathHelper
     /// For paths with forward slash.
     /// </summary>
     [PublicAPI]
-    public static string CombineVirtual(
-        string path1,
-        string path2,
-        string path3,
-        params string[] paths)
+    public static string? CombineVirtual(
+        string? path1,
+        string? path2,
+        string? path3,
+        params string?[] paths)
     {
         var resultPath = CombineVirtual(path1, path2);
         resultPath = CombineVirtual(resultPath, path3);
 
-        if (paths != null)
+        if (paths.Length <= 0)
         {
             resultPath = paths.Aggregate(resultPath, CombineVirtual);
         }
@@ -955,8 +978,8 @@ public static class ZspPathHelper
         return resultPath;
     }
 
-    private static string setSlashBegin(
-        string path,
+    private static string? setSlashBegin(
+        string? path,
         bool setSlash,
         char directorySeparatorChar)
     {
@@ -968,7 +991,7 @@ public static class ZspPathHelper
             }
             else
             {
-                if (path[0] == directorySeparatorChar)
+                if (path?[0] == directorySeparatorChar)
                 {
                     return path;
                 }
@@ -986,13 +1009,13 @@ public static class ZspPathHelper
             }
             else
             {
-                return path[0] == directorySeparatorChar ? path.Substring(1) : path;
+                return path?[0] == directorySeparatorChar ? path.Substring(1) : path;
             }
         }
     }
 
-    private static string setSlashEnd(
-        string path,
+    private static string? setSlashEnd(
+        string? path,
         bool setSlash,
         char directorySeparatorChar)
     {
@@ -1004,7 +1027,7 @@ public static class ZspPathHelper
             }
             else
             {
-                if (path[path.Length - 1] == directorySeparatorChar)
+                if (path?[path.Length - 1] == directorySeparatorChar)
                 {
                     return path;
                 }
@@ -1022,12 +1045,12 @@ public static class ZspPathHelper
             }
             else
             {
-                return path[path.Length - 1] == directorySeparatorChar ? path.Substring(0, path.Length - 1) : path;
+                return path?[path.Length - 1] == directorySeparatorChar ? path.Substring(0, path.Length - 1) : path;
             }
         }
     }
 
-    public static bool AreSameFilePaths(string filePath1, string filePath2)
+    public static bool AreSameFilePaths(string? filePath1, string? filePath2)
     {
         if (IsNullOrEmpty(filePath1) || IsNullOrEmpty(filePath2))
         {
@@ -1055,7 +1078,7 @@ public static class ZspPathHelper
         }
     }
 
-    public static bool AreSameFolderPaths(string folder1, string folder2)
+    public static bool AreSameFolderPaths(string? folder1, string? folder2)
     {
         return !IsNullOrEmpty(folder1) && !IsNullOrEmpty(folder2) &&
                Path.GetFullPath(folder1).TrimEnd('\\')

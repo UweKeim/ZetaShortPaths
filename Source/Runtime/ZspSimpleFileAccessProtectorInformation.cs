@@ -15,7 +15,7 @@ public class ZspSimpleFileAccessProtectorInformation
 
     [PublicAPI] public bool Use { get; set; } = true;
 
-    [PublicAPI] public string Info { get; set; }
+    [PublicAPI] public string? Info { get; set; }
 
     [PublicAPI] public int RetryCount { get; set; } = DefaultRetryCount;
 
@@ -23,5 +23,5 @@ public class ZspSimpleFileAccessProtectorInformation
 
     [PublicAPI] public bool DoGarbageCollectBeforeSleep { get; set; } = true;
 
-    [PublicAPI] public ZspHandleExceptionDelegate HandleException { get; set; }
+    [PublicAPI] public ZspHandleExceptionDelegate? HandleException { get; set; }
 }

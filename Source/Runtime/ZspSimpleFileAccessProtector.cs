@@ -15,7 +15,7 @@ public static class ZspSimpleFileAccessProtector
     /// throw it.
     /// </summary>
     [PublicAPI]
-    public static Exception MarkAsPassThroughZspProtector(this Exception x)
+    public static Exception? MarkAsPassThroughZspProtector(this Exception? x)
     {
         if (x == null) return null;
 
@@ -29,8 +29,8 @@ public static class ZspSimpleFileAccessProtector
     /// </summary>
     [PublicAPI]
     public static void Protect(
-        Action action,
-        ZspSimpleFileAccessProtectorInformation info = null)
+        Action? action,
+        ZspSimpleFileAccessProtectorInformation? info = null)
     {
         info ??= new ZspSimpleFileAccessProtectorInformation();
 
@@ -107,7 +107,7 @@ public static class ZspSimpleFileAccessProtector
     [PublicAPI]
     public static T Protect<T>(
         Func<T> func,
-        ZspSimpleFileAccessProtectorInformation info = null)
+        ZspSimpleFileAccessProtectorInformation? info = null)
     {
         info ??= new ZspSimpleFileAccessProtectorInformation();
 

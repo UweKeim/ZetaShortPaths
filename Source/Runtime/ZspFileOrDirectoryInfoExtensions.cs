@@ -4,7 +4,7 @@
 public static class ZspFileOrDirectoryInfoExtensions
 {
     [PublicAPI]
-    public static bool SafeExists(this ZspFileOrDirectoryInfo i)
+    public static bool SafeExists(this ZspFileOrDirectoryInfo? i)
     {
         if (i == null || i.IsEmpty) return false;
         else if (i.IsDirectory) return ZspSafeFileOperations.SafeDirectoryExists(i.Directory);

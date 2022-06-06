@@ -53,7 +53,7 @@ public static class FileInfoExtensions
     }
 
     [PublicAPI]
-    public static string MD5Hash(this FileInfo i)
+    public static string? MD5Hash(this FileInfo i)
     {
         return ZspIOHelper.CalculateMD5Hash(i.FullName);
     }

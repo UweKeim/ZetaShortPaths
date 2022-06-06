@@ -10,14 +10,14 @@ public static class ZspIOHelper
 
     [PublicAPI]
     public static bool IsDirectoryEmpty(
-        DirectoryInfo directoryPath)
+        DirectoryInfo? directoryPath)
     {
         return directoryPath == null || IsDirectoryEmpty(directoryPath.FullName);
     }
 
     [PublicAPI]
     public static bool IsDirectoryEmpty(
-        string directoryPath)
+        string? directoryPath)
     {
         return
             string.IsNullOrEmpty(directoryPath) ||
@@ -31,9 +31,11 @@ public static class ZspIOHelper
     /// with 'md5' as the first parameter.
     /// </summary>
     [PublicAPI]
-    public static string CalculateMD5Hash(
-        string path)
+    public static string? CalculateMD5Hash(
+        string? path)
     {
+        if (string.IsNullOrEmpty(path)) return null;
+
         // https://stackoverflow.com/a/10520086/107625
 
         using var fs = new FileStream(path, FileMode.Open, FileAccess.Read);
@@ -130,7 +132,7 @@ public static class ZspIOHelper
     }
 
     [PublicAPI]
-    public static long GetFileLength(string filePath)
+    public static long GetFileLength(string? filePath)
     {
         if (string.IsNullOrEmpty(filePath)) return 0;
         else if (!File.Exists(filePath)) return 0;
@@ -138,19 +140,19 @@ public static class ZspIOHelper
     }
 
     [PublicAPI]
-    public static FileInfo[] GetFiles(string directoryPath, string pattern = @"*.*")
+    public static FileInfo[] GetFiles(string? directoryPath, string? pattern = @"*.*")
     {
         return GetFiles(directoryPath, pattern, SearchOption.TopDirectoryOnly);
     }
 
     [PublicAPI]
-    public static FileInfo[] GetFiles(string directoryPath, SearchOption searchOption)
+    public static FileInfo[] GetFiles(string? directoryPath, SearchOption searchOption)
     {
         return GetFiles(directoryPath, @"*.*", searchOption);
     }
 
     [PublicAPI]
-    public static FileInfo[] GetFiles(string directoryPath, string pattern, SearchOption searchOption)
+    public static FileInfo[] GetFiles(string? directoryPath, string? pattern, SearchOption searchOption)
     {
         if (directoryPath == null) throw new ArgumentNullException(nameof(directoryPath));
         if (pattern == null) throw new ArgumentNullException(nameof(pattern));
@@ -159,19 +161,19 @@ public static class ZspIOHelper
     }
 
     [PublicAPI]
-    public static DirectoryInfo[] GetDirectories(string directoryPath, string pattern = @"*")
+    public static DirectoryInfo[] GetDirectories(string? directoryPath, string? pattern = @"*")
     {
         return GetDirectories(directoryPath, pattern, SearchOption.TopDirectoryOnly);
     }
 
     [PublicAPI]
-    public static DirectoryInfo[] GetDirectories(string directoryPath, SearchOption searchOption)
+    public static DirectoryInfo[] GetDirectories(string? directoryPath, SearchOption searchOption)
     {
         return GetDirectories(directoryPath, @"*", searchOption);
     }
 
     [PublicAPI]
-    public static DirectoryInfo[] GetDirectories(string directoryPath, string pattern, SearchOption searchOption)
+    public static DirectoryInfo[] GetDirectories(string? directoryPath, string? pattern, SearchOption searchOption)
     {
         if (directoryPath == null) throw new ArgumentNullException(nameof(directoryPath));
         if (pattern == null) throw new ArgumentNullException(nameof(pattern));

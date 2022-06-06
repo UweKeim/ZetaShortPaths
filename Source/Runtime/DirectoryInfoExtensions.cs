@@ -36,7 +36,7 @@ public static class DirectoryInfoExtensions
 
             // ADD Unique File Name Check to Below.
             var dest = ZspPathHelper.Combine(destFolder, name);
-            File.Copy(file, dest, ovewriteExisting);
+            if (dest != null) File.Copy(file, dest, ovewriteExisting);
         }
 
         // Get dirs recursively and copy files
@@ -45,7 +45,7 @@ public static class DirectoryInfoExtensions
         {
             var name = Path.GetFileName(folder);
             var dest = ZspPathHelper.Combine(destFolder, name);
-            doCopyDir(folder, dest, ovewriteExisting);
+            if (dest != null) doCopyDir(folder, dest, ovewriteExisting);
         }
     }
 }

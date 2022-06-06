@@ -8,95 +8,99 @@ using Properties;
 public static class ZspExtensions
 {
     [PublicAPI]
-    public static string MakeRelativeTo(
-        this DirectoryInfo pathToMakeRelative,
-        DirectoryInfo pathToWhichToMakeRelativeTo)
+    public static string? MakeRelativeTo(
+        this DirectoryInfo? pathToMakeRelative,
+        DirectoryInfo? pathToWhichToMakeRelativeTo)
     {
-        return ZspPathHelper.GetRelativePath(pathToWhichToMakeRelativeTo.FullName, pathToMakeRelative.FullName);
+        return ZspPathHelper.GetRelativePath(pathToWhichToMakeRelativeTo?.FullName, pathToMakeRelative?.FullName);
     }
 
     [PublicAPI]
-    public static string NameWithoutExtension(
-        this FileInfo filePath)
+    public static string? NameWithoutExtension(
+        this FileInfo? filePath)
     {
-        return Path.GetFileNameWithoutExtension(filePath.Name);
+        return Path.GetFileNameWithoutExtension(filePath?.Name);
     }
 
     [PublicAPI]
-    public static string MakeRelativeTo(
-        this DirectoryInfo pathToMakeRelative,
-        string pathToWhichToMakeRelativeTo)
+    public static string? MakeRelativeTo(
+        this DirectoryInfo? pathToMakeRelative,
+        string? pathToWhichToMakeRelativeTo)
     {
-        return ZspPathHelper.GetRelativePath(pathToWhichToMakeRelativeTo, pathToMakeRelative.FullName);
+        return ZspPathHelper.GetRelativePath(pathToWhichToMakeRelativeTo, pathToMakeRelative?.FullName);
     }
 
     [PublicAPI]
-    public static string MakeRelativeTo(
-        this FileInfo pathToMakeRelative,
-        DirectoryInfo pathToWhichToMakeRelativeTo)
+    public static string? MakeRelativeTo(
+        this FileInfo? pathToMakeRelative,
+        DirectoryInfo? pathToWhichToMakeRelativeTo)
     {
-        return ZspPathHelper.GetRelativePath(pathToWhichToMakeRelativeTo.FullName, pathToMakeRelative.FullName);
+        return ZspPathHelper.GetRelativePath(pathToWhichToMakeRelativeTo?.FullName, pathToMakeRelative?.FullName);
     }
 
     [PublicAPI]
-    public static string MakeRelativeTo(
-        this FileInfo pathToMakeRelative,
-        string pathToWhichToMakeRelativeTo)
+    public static string? MakeRelativeTo(
+        this FileInfo? pathToMakeRelative,
+        string? pathToWhichToMakeRelativeTo)
     {
-        return ZspPathHelper.GetRelativePath(pathToWhichToMakeRelativeTo, pathToMakeRelative.FullName);
+        return ZspPathHelper.GetRelativePath(pathToWhichToMakeRelativeTo, pathToMakeRelative?.FullName);
     }
 
     [PublicAPI]
-    public static string MakeAbsoluteTo(
-        this DirectoryInfo pathToMakeAbsolute,
-        DirectoryInfo basePathToWhichToMakeAbsoluteTo)
+    public static string? MakeAbsoluteTo(
+        this DirectoryInfo? pathToMakeAbsolute,
+        DirectoryInfo? basePathToWhichToMakeAbsoluteTo)
     {
-        return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute.FullName, basePathToWhichToMakeAbsoluteTo.FullName);
+        return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute?.FullName, basePathToWhichToMakeAbsoluteTo?.FullName);
     }
 
     [PublicAPI]
-    public static string MakeAbsoluteTo(
-        this string pathToMakeAbsolute,
+    public static string? MakeAbsoluteTo(
+        this string? pathToMakeAbsolute,
         DirectoryInfo basePathToWhichToMakeAbsoluteTo)
     {
         return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute, basePathToWhichToMakeAbsoluteTo.FullName);
     }
 
     [PublicAPI]
-    public static string MakeAbsoluteTo(
-        this DirectoryInfo pathToMakeAbsolute,
+    public static string? MakeAbsoluteTo(
+        this DirectoryInfo? pathToMakeAbsolute,
         string basePathToWhichToMakeAbsoluteTo)
     {
-        return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute.FullName, basePathToWhichToMakeAbsoluteTo);
+        return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute?.FullName, basePathToWhichToMakeAbsoluteTo);
     }
 
     [PublicAPI]
-    public static string MakeAbsoluteTo(
-        this FileInfo pathToMakeAbsolute,
+    public static string? MakeAbsoluteTo(
+        this FileInfo? pathToMakeAbsolute,
         DirectoryInfo basePathToWhichToMakeAbsoluteTo)
     {
-        return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute.FullName, basePathToWhichToMakeAbsoluteTo.FullName);
+        return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute?.FullName, basePathToWhichToMakeAbsoluteTo.FullName);
     }
 
     [PublicAPI]
-    public static string MakeAbsoluteTo(
-        this FileInfo pathToMakeAbsolute,
+    public static string? MakeAbsoluteTo(
+        this FileInfo? pathToMakeAbsolute,
         string basePathToWhichToMakeAbsoluteTo)
     {
-        return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute.FullName, basePathToWhichToMakeAbsoluteTo);
+        return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute?.FullName, basePathToWhichToMakeAbsoluteTo);
     }
 
     [PublicAPI]
-    public static DirectoryInfo CombineDirectory(this DirectoryInfo one, DirectoryInfo two)
+    public static DirectoryInfo? CombineDirectory(this DirectoryInfo? one, DirectoryInfo? two)
     {
         if (one == null) return two;
         else if (two == null) return one;
 
-        else return new DirectoryInfo(ZspPathHelper.Combine(one.FullName, two.FullName));
+        else
+        {
+            var r = ZspPathHelper.Combine(one.FullName, two.FullName);
+            return r == null ? null : new DirectoryInfo(r);
+        }
     }
 
     [PublicAPI]
-    public static DirectoryInfo CombineDirectory(this DirectoryInfo one,
+    public static DirectoryInfo? CombineDirectory(this DirectoryInfo? one,
         DirectoryInfo two,
         DirectoryInfo three,
         params DirectoryInfo[] fours)
@@ -108,20 +112,24 @@ public static class ZspExtensions
         return result;
     }
 
-    public static DirectoryInfo CombineDirectory(this DirectoryInfo one, string two)
+    public static DirectoryInfo? CombineDirectory(this DirectoryInfo? one, string? two)
     {
         if (one == null && two == null) return null;
         else if (two == null) return one;
         else if (one == null) return new DirectoryInfo(two);
 
-        else return new DirectoryInfo(ZspPathHelper.Combine(one.FullName, two));
+        else
+        {
+            var r = ZspPathHelper.Combine(one.FullName, two);
+            return r == null ? null : new DirectoryInfo(r);
+        }
     }
 
     [PublicAPI]
-    public static DirectoryInfo CombineDirectory(this DirectoryInfo one,
-        string two,
-        string three,
-        params string[] fours)
+    public static DirectoryInfo? CombineDirectory(this DirectoryInfo? one,
+        string? two,
+        string? three,
+        params string?[] fours)
     {
         var result = CombineDirectory(one, two);
         result = CombineDirectory(result, three);
@@ -131,30 +139,38 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static DirectoryInfo CombineDirectory( /*this*/ string one, string two)
+    public static DirectoryInfo? CombineDirectory( /*this*/ string? one, string? two)
     {
         if (one == null && two == null) return null;
-        else if (two == null) return new DirectoryInfo(one);
+        else if (two == null) return new DirectoryInfo(one!);
         else if (one == null) return new DirectoryInfo(two);
 
-        else return new DirectoryInfo(ZspPathHelper.Combine(one, two));
+        else
+        {
+            var r = ZspPathHelper.Combine(one, two);
+            return r == null ? null : new DirectoryInfo(r);
+        }
     }
 
     [PublicAPI]
-    public static FileInfo CombineFile(this DirectoryInfo one, FileInfo two)
+    public static FileInfo? CombineFile(this DirectoryInfo? one, FileInfo? two)
     {
         if (one == null) return two;
         else if (two == null) return null;
 
-        else return new FileInfo(ZspPathHelper.Combine(one.FullName, two.FullName));
+        else
+        {
+            var r = ZspPathHelper.Combine(one.FullName, two.FullName);
+            return r == null ? null : new FileInfo(r);
+        }
     }
 
     [PublicAPI]
-    public static FileInfo CombineFile(
-        this DirectoryInfo one,
-        FileInfo two,
-        FileInfo three,
-        params FileInfo[] fours)
+    public static FileInfo? CombineFile(
+        this DirectoryInfo? one,
+        FileInfo? two,
+        FileInfo? three,
+        params FileInfo?[] fours)
     {
         var result = CombineFile(one, two);
         result = CombineFile(result?.FullName, three?.FullName);
@@ -164,18 +180,25 @@ public static class ZspExtensions
                 CombineFile(current?.FullName, four?.FullName));
     }
 
-    public static FileInfo CombineFile(this DirectoryInfo one, string two)
+    public static FileInfo? CombineFile(this DirectoryInfo? one, string? two)
     {
         if (one == null && two == null) return null;
         else if (two == null) return null;
         else if (one == null) return new FileInfo(two);
 
-        else return new FileInfo(ZspPathHelper.Combine(one.FullName, two));
+        else
+        {
+            var r = ZspPathHelper.Combine(one.FullName, two);
+            return r == null ? null : new FileInfo(r);
+        }
     }
 
     [PublicAPI]
-    public static FileInfo CombineFile(this DirectoryInfo one, string two, string three,
-        params string[] fours)
+    public static FileInfo? CombineFile(
+        this DirectoryInfo? one,
+        string? two,
+        string? three,
+        params string?[] fours)
     {
         var result = CombineFile(one, two);
         result = CombineFile(result?.FullName, three);
@@ -186,13 +209,17 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static FileInfo CombineFile( /*this*/ string one, string two)
+    public static FileInfo? CombineFile( /*this*/ string? one, string? two)
     {
         if (one == null && two == null) return null;
         else if (two == null) return null;
         else if (one == null) return new FileInfo(two);
 
-        else return new FileInfo(ZspPathHelper.Combine(one, two));
+        else
+        {
+            var r = ZspPathHelper.Combine(one, two);
+            return r == null ? null : new FileInfo(r);
+        }
     }
 
     /// <summary>
@@ -200,47 +227,31 @@ public static class ZspExtensions
     /// This calling instance remains unmodified.
     /// </summary>
     [PublicAPI]
-    public static FileInfo ChangeExtension(
-        this FileInfo o,
-        string extension)
+    public static FileInfo? ChangeExtension(
+        this FileInfo? o,
+        string? extension)
     {
-        return new(ZspPathHelper.ChangeExtension(o.FullName, extension));
+        var r = ZspPathHelper.ChangeExtension(o?.FullName, extension);
+        return r == null ? null : new(r);
     }
 
     [PublicAPI]
-    public static DirectoryInfo CreateSubdirectory(this DirectoryInfo o, string name)
+    public static DirectoryInfo? CreateSubdirectory(this DirectoryInfo? o, string? name)
     {
-        var path = ZspPathHelper.Combine(o.FullName, name);
-        Directory.CreateDirectory(path);
-        return new DirectoryInfo(path);
+        var path = ZspPathHelper.Combine(o?.FullName, name);
+        if (path == null)
+        {
+            return null;
+        }
+        else
+        {
+            Directory.CreateDirectory(path);
+            return new DirectoryInfo(path);
+        }
     }
 
     [PublicAPI]
-    public static bool EqualsNoCase(this DirectoryInfo o, DirectoryInfo p)
-    {
-        if (o == null && p == null) return true;
-        else if (o == null || p == null) return false;
-
-        return string.Equals(
-            o.FullName.TrimEnd('\\', '/'),
-            p.FullName.TrimEnd('\\', '/'),
-            StringComparison.OrdinalIgnoreCase);
-    }
-
-    [PublicAPI]
-    public static bool EqualsNoCase(this DirectoryInfo o, string p)
-    {
-        if (o == null && p == null) return true;
-        else if (o == null || p == null) return false;
-
-        return string.Equals(
-            o.FullName.TrimEnd('\\', '/'),
-            p.TrimEnd('\\', '/'),
-            StringComparison.OrdinalIgnoreCase);
-    }
-
-    [PublicAPI]
-    public static bool EqualsNoCase(this FileInfo o, FileInfo p)
+    public static bool EqualsNoCase(this DirectoryInfo? o, DirectoryInfo? p)
     {
         if (o == null && p == null) return true;
         else if (o == null || p == null) return false;
@@ -252,7 +263,7 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static bool EqualsNoCase(this FileInfo o, string p)
+    public static bool EqualsNoCase(this DirectoryInfo? o, string? p)
     {
         if (o == null && p == null) return true;
         else if (o == null || p == null) return false;
@@ -264,7 +275,31 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static string ReplaceNoCase(this string s1, string s2, string s3)
+    public static bool EqualsNoCase(this FileInfo? o, FileInfo? p)
+    {
+        if (o == null && p == null) return true;
+        else if (o == null || p == null) return false;
+
+        return string.Equals(
+            o.FullName.TrimEnd('\\', '/'),
+            p.FullName.TrimEnd('\\', '/'),
+            StringComparison.OrdinalIgnoreCase);
+    }
+
+    [PublicAPI]
+    public static bool EqualsNoCase(this FileInfo? o, string? p)
+    {
+        if (o == null && p == null) return true;
+        else if (o == null || p == null) return false;
+
+        return string.Equals(
+            o.FullName.TrimEnd('\\', '/'),
+            p.TrimEnd('\\', '/'),
+            StringComparison.OrdinalIgnoreCase);
+    }
+
+    [PublicAPI]
+    public static string? ReplaceNoCase(this string? s1, string? s2, string? s3)
     {
         if (s1 == null && s2 == null) return null;
         else if (s1 == null || s2 == null) return null;
@@ -274,9 +309,9 @@ public static class ZspExtensions
 
     [PublicAPI]
     public static string Replace(
-        this string str,
+        this string? str,
         string oldValue,
-        string newValue,
+        string? newValue,
         StringComparison comparison)
     {
         // http://stackoverflow.com/questions/244531/is-there-an-alternative-to-string-replace-that-is-case-insensitive
@@ -284,41 +319,42 @@ public static class ZspExtensions
         var sb = new StringBuilder();
 
         var previousIndex = 0;
-        var index = str.IndexOf(oldValue, comparison);
+        var index = str?.IndexOf(oldValue, comparison) ?? -1;
         while (index != -1)
         {
-            sb.Append(str.Substring(previousIndex, index - previousIndex));
+            sb.Append(str?.Substring(previousIndex, index - previousIndex));
             sb.Append(newValue);
             index += oldValue.Length;
 
             previousIndex = index;
-            index = str.IndexOf(oldValue, index, comparison);
+            index = str?.IndexOf(oldValue, index, comparison) ?? -1;
         }
-        sb.Append(str.Substring(previousIndex));
+
+        sb.Append(str?.Substring(previousIndex));
 
         return sb.ToString();
     }
 
     [PublicAPI]
-    public static string IfNullOrEmpty(this string s, string fallBack)
+    public static string? IfNullOrEmpty(this string? s, string? fallBack)
     {
         return string.IsNullOrEmpty(s) ? fallBack : s;
     }
 
     [PublicAPI]
-    public static string IfNullOrEmpty(this string s, Func<string> fallBack)
+    public static string? IfNullOrEmpty(this string? s, Func<string?>? fallBack)
     {
         return string.IsNullOrEmpty(s) ? fallBack?.Invoke() : s;
     }
 
     [PublicAPI]
-    public static string IfNullOrWhiteSpace(this string s, string fallBack)
+    public static string? IfNullOrWhiteSpace(this string? s, string? fallBack)
     {
         return string.IsNullOrWhiteSpace(s) ? fallBack : s;
     }
 
     [PublicAPI]
-    public static string IfNullOrWhiteSpace(this string s, Func<string> fallBack)
+    public static string? IfNullOrWhiteSpace(this string? s, Func<string?>? fallBack)
     {
         return string.IsNullOrWhiteSpace(s) ? fallBack?.Invoke() : s;
     }
@@ -329,13 +365,13 @@ public static class ZspExtensions
     /// </summary>
     /// <returns>Returns S2 if S1 is NULL or empty, returns S1 otherwise.</returns>
     [PublicAPI]
-    public static string NullOrEmptyOther(this string s1, string s2)
+    public static string? NullOrEmptyOther(this string? s1, string? s2)
     {
         return string.IsNullOrEmpty(s1) ? s2 : s1;
     }
 
     [PublicAPI]
-    public static int IndexOfNoCase(this string s1, string s2)
+    public static int IndexOfNoCase(this string? s1, string? s2)
     {
         if (s1 == null && s2 == null) return 0;
         else if (s1 == null || s2 == null) return -1;
@@ -343,7 +379,7 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static int IndexOfNoCase(this string s1, string s2, int startIndex)
+    public static int IndexOfNoCase(this string? s1, string? s2, int startIndex)
     {
         if (s1 == null && s2 == null) return 0;
         else if (s1 == null || s2 == null) return -1;
@@ -351,7 +387,7 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static int IndexOfNoCase(this string s1, string s2, int startIndex, int count)
+    public static int IndexOfNoCase(this string? s1, string? s2, int startIndex, int count)
     {
         if (s1 == null && s2 == null) return 0;
         else if (s1 == null || s2 == null) return -1;
@@ -359,7 +395,7 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static int LastIndexOfNoCase(this string s1, string s2)
+    public static int LastIndexOfNoCase(this string? s1, string? s2)
     {
         if (s1 == null && s2 == null) return 0;
         else if (s1 == null || s2 == null) return -1;
@@ -367,7 +403,7 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static bool EqualsNoCase(this string s1, string s2)
+    public static bool EqualsNoCase(this string? s1, string? s2)
     {
         if (s1 == null && s2 == null) return true;
         else if (s1 == null || s2 == null) return false;
@@ -375,7 +411,7 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static bool StartsWithNoCase(this string s1, string s2)
+    public static bool StartsWithNoCase(this string? s1, string? s2)
     {
         if (s1 == null && s2 == null) return true;
         else if (s1 == null || s2 == null) return false;
@@ -383,7 +419,7 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static bool ContainsNoCase(this string s1, string s2)
+    public static bool ContainsNoCase(this string? s1, string? s2)
     {
         if (s1 == null && s2 == null) return true;
         else if (s1 == null || s2 == null) return false;
@@ -391,7 +427,7 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static bool ContainsNoCase(this string s1, string s2, int startIndex)
+    public static bool ContainsNoCase(this string? s1, string? s2, int startIndex)
     {
         if (s1 == null && s2 == null) return true;
         else if (s1 == null || s2 == null) return false;
@@ -399,7 +435,7 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static bool EndsWithNoCase(this string s1, string s2)
+    public static bool EndsWithNoCase(this string? s1, string? s2)
     {
         if (s1 == null && s2 == null) return true;
         else if (s1 == null || s2 == null) return false;
@@ -407,19 +443,19 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static bool IsNullOrEmpty(this string s)
+    public static bool IsNullOrEmpty(this string? s)
     {
         return string.IsNullOrEmpty(s);
     }
 
     [PublicAPI]
-    public static bool IsNullOrWhiteSpace(this string s)
+    public static bool IsNullOrWhiteSpace(this string? s)
     {
         return string.IsNullOrWhiteSpace(s);
     }
 
     [PublicAPI]
-    public static int CompareNoCase(this string s1, string s2)
+    public static int CompareNoCase(this string? s1, string? s2)
     {
         switch (s1)
         {
@@ -436,14 +472,14 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static bool EndsWithAnyNoCase(this string s1, params string[] s2)
+    public static bool EndsWithAnyNoCase(this string? s1, params string?[] s2)
     {
-        if (s1 == null || s2 == null) return false;
+        if (s1 == null || s2.Length <= 0) return false;
         return s2.Any(s22 => !string.IsNullOrEmpty(s22) && s1.EndsWithNoCase(s22));
     }
 
     [PublicAPI]
-    public static FileInfo CheckExists(this FileInfo file)
+    public static FileInfo CheckExists(this FileInfo? file)
     {
         if (file == null) throw new ArgumentNullException(nameof(file));
 
@@ -456,7 +492,7 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static DirectoryInfo CheckExists(this DirectoryInfo folder)
+    public static DirectoryInfo CheckExists(this DirectoryInfo? folder)
     {
         if (folder == null) throw new ArgumentNullException(nameof(folder));
 
@@ -468,7 +504,7 @@ public static class ZspExtensions
         return folder;
     }
 
-    public static DirectoryInfo CheckCreate(this DirectoryInfo folder)
+    public static DirectoryInfo CheckCreate(this DirectoryInfo? folder)
     {
         if (folder == null) throw new ArgumentNullException(nameof(folder));
 
@@ -478,41 +514,42 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
-    public static bool IsSame(this DirectoryInfo folder1, DirectoryInfo folder2)
+    public static bool IsSame(this DirectoryInfo? folder1, DirectoryInfo? folder2)
     {
         return IsSame(folder1, folder2?.FullName);
     }
 
     [PublicAPI]
-    public static bool IsSame(this DirectoryInfo folder1, string folder2)
+    public static bool IsSame(this DirectoryInfo? folder1, string? folder2)
     {
-        return ZspPathHelper.AreSameFolderPaths(folder1.FullName, folder2);
+        return ZspPathHelper.AreSameFolderPaths(folder1?.FullName, folder2);
     }
 
     [PublicAPI]
-    public static bool IsSame(this FileInfo file1, FileInfo file2)
+    public static bool IsSame(this FileInfo? file1, FileInfo? file2)
     {
         return IsSame(file1, file2?.FullName);
     }
 
     [PublicAPI]
-    public static bool IsSame(this FileInfo file1, string file2)
+    public static bool IsSame(this FileInfo? file1, string? file2)
     {
-        return ZspPathHelper.AreSameFilePaths(file1.FullName, file2);
+        return ZspPathHelper.AreSameFilePaths(file1?.FullName, file2);
     }
 
     [PublicAPI]
-    public static bool StartsWith(this DirectoryInfo folder1, DirectoryInfo folder2)
+    public static bool StartsWith(this DirectoryInfo? folder1, DirectoryInfo? folder2)
     {
         return StartsWith(folder1, folder2?.FullName);
     }
 
     [PublicAPI]
-    public static bool StartsWith(this DirectoryInfo folder1, string folder2)
+    public static bool StartsWith(this DirectoryInfo? folder1, string? folder2)
     {
         var f1 = folder1?.FullName;
 
         return !string.IsNullOrEmpty(f1) && !string.IsNullOrEmpty(folder2) &&
-               f1.TrimEnd('\\').ToLowerInvariant().StartsWith(folder2.TrimEnd('\\').ToLowerInvariant());
+               (f1?.TrimEnd('\\').ToLowerInvariant()
+                   .StartsWith(folder2?.TrimEnd('\\').ToLowerInvariant() ?? string.Empty) ?? false);
     }
 }

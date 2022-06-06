@@ -1,17 +1,16 @@
-﻿namespace ZetaShortPaths.UnitTests.Helper
+﻿namespace ZetaShortPaths.UnitTests.Helper;
+
+public static class AssertOwn
 {
-    public static class AssertOwn
+    public static void DoesNotThrow(Action? a)
     {
-        public static void DoesNotThrow(Action a)
+        try
         {
-            try
-            {
-                a?.Invoke();
-            }
-            catch (Exception e)
-            {
-                Assert.Fail(e.Message);
-            }
+            a?.Invoke();
+        }
+        catch (Exception e)
+        {
+            Assert.Fail(e.Message);
         }
     }
 }

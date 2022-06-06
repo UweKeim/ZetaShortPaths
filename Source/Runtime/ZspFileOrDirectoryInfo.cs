@@ -18,7 +18,7 @@ public sealed class ZspFileOrDirectoryInfo
     }
 
     public ZspFileOrDirectoryInfo(
-        string fullPath)
+        string? fullPath)
     {
         _preferedType = PreferedType.Unspecified;
         FullName = fullPath;
@@ -27,7 +27,7 @@ public sealed class ZspFileOrDirectoryInfo
 
     [PublicAPI]
     public ZspFileOrDirectoryInfo(
-        string fullPath,
+        string? fullPath,
         bool detectTypeFromFileSystem)
     {
         FullName = fullPath;
@@ -49,7 +49,7 @@ public sealed class ZspFileOrDirectoryInfo
     }
 
     public ZspFileOrDirectoryInfo(
-        string fullPath,
+        string? fullPath,
         PreferedType preferedType)
     {
         _preferedType = preferedType;
@@ -58,31 +58,31 @@ public sealed class ZspFileOrDirectoryInfo
     }
 
     public ZspFileOrDirectoryInfo(
-        ZspFileOrDirectoryInfo info)
+        ZspFileOrDirectoryInfo? info)
     {
-        _preferedType = info._preferedType;
-        FullName = info.FullName;
-        OriginalPath = info.OriginalPath;
+        _preferedType = info?._preferedType ?? PreferedType.Unspecified;
+        FullName = info?.FullName;
+        OriginalPath = info?.OriginalPath;
     }
 
     public ZspFileOrDirectoryInfo(
             // ReSharper disable SuggestBaseTypeForParameter
-            FileInfo info)
+            FileInfo? info)
         // ReSharper restore SuggestBaseTypeForParameter
     {
         _preferedType = PreferedType.File;
-        FullName = info.FullName;
-        OriginalPath = info.ToString();
+        FullName = info?.FullName;
+        OriginalPath = info?.ToString();
     }
 
     public ZspFileOrDirectoryInfo(
             // ReSharper disable SuggestBaseTypeForParameter
-            DirectoryInfo info)
+            DirectoryInfo? info)
         // ReSharper restore SuggestBaseTypeForParameter
     {
         _preferedType = PreferedType.Directory;
-        FullName = info.FullName;
-        OriginalPath = info.ToString();
+        FullName = info?.FullName;
+        OriginalPath = info?.ToString();
     }
 
     [PublicAPI]
@@ -93,25 +93,25 @@ public sealed class ZspFileOrDirectoryInfo
 
     public bool IsEmpty => string.IsNullOrEmpty(FullName);
 
-    public FileInfo File => new(FullName);
+    public FileInfo? File => FullName == null ? null : new(FullName);
 
-    public DirectoryInfo Directory => new(FullName);
+    public DirectoryInfo? Directory => FullName == null ? null : new(FullName);
 
     [PublicAPI]
-    public DirectoryInfo EffectiveDirectory
+    public DirectoryInfo? EffectiveDirectory
     {
         get
         {
             switch (_preferedType)
             {
                 case PreferedType.File:
-                    return File.Directory;
+                    return File?.Directory;
 
                 case PreferedType.Unspecified:
                     if (ZspSafeFileOperations.SafeDirectoryExists(Directory))
                         return Directory;
                     else if (ZspSafeFileOperations.SafeFileExists(File))
-                        return File.Directory;
+                        return File?.Directory;
                     else
                         return Directory;
 
@@ -140,306 +140,305 @@ public sealed class ZspFileOrDirectoryInfo
             {
                 return _preferedType switch
                 {
-                    PreferedType.File => File.Exists || Directory.Exists,
-                    _ => Directory.Exists || File.Exists
+                    PreferedType.File => (File?.Exists ?? false) || (Directory?.Exists ?? false),
+                    _ => (Directory?.Exists ?? false) || (File?.Exists ?? false)
                 };
             }
         }
     }
 
-    public string FullName { get; }
+    public string? FullName { get; }
 
-    [PublicAPI]
-    public string OriginalPath { get; }
+    [PublicAPI] public string? OriginalPath { get; }
 
     public ZspSplittedPath ZspSplittedPath => new(this);
 
-    [PublicAPI]
-    public string Name => IsFile ? File?.Name : Directory?.Name;
+    [PublicAPI] public string? Name => IsFile ? File?.Name : Directory?.Name;
 
     /// <summary>
     /// Gets a value indicating whether this instance is file by querying the file system
     /// whether the file exists on disk.
     /// </summary>
-    public bool IsFile => File.Exists;
+    public bool IsFile => File?.Exists ?? false;
 
     /// <summary>
     /// Gets a value indicating whether this instance is directory by quering the file system
     /// whether the directory exists on disk.
     /// </summary>
-    public bool IsDirectory => Directory.Exists;
+    public bool IsDirectory => Directory?.Exists ?? false;
 
     [PublicAPI]
     public static int Compare(
-        DirectoryInfo one,
-        DirectoryInfo two)
+        DirectoryInfo? one,
+        DirectoryInfo? two)
     {
-        return string.Compare(one.FullName.TrimEnd('\\'), two.FullName.TrimEnd('\\'),
+        return string.Compare(one?.FullName.TrimEnd('\\'), two?.FullName.TrimEnd('\\'),
             StringComparison.OrdinalIgnoreCase);
     }
 
     [PublicAPI]
     public static int Compare(
-        FileInfo one,
-        FileInfo two)
+        FileInfo? one,
+        FileInfo? two)
     {
-        return string.Compare(one.FullName.TrimEnd('\\'), two.FullName.TrimEnd('\\'),
+        return string.Compare(one?.FullName.TrimEnd('\\'), two?.FullName.TrimEnd('\\'),
             StringComparison.OrdinalIgnoreCase);
+    }
+
+    [PublicAPI]
+    public static int Compare(
+        ZspFileOrDirectoryInfo? one,
+        ZspFileOrDirectoryInfo? two)
+    {
+        return string.Compare(one?.FullName?.TrimEnd('\\'), two?.FullName?.TrimEnd('\\'),
+            StringComparison.OrdinalIgnoreCase);
+    }
+
+    [PublicAPI]
+    public static int Compare(
+        ZspFileOrDirectoryInfo? one,
+        FileInfo? two)
+    {
+        return string.Compare(one?.FullName?.TrimEnd('\\'), two?.FullName.TrimEnd('\\'),
+            StringComparison.OrdinalIgnoreCase);
+    }
+
+    [PublicAPI]
+    public static int Compare(
+        ZspFileOrDirectoryInfo? one,
+        DirectoryInfo? two)
+    {
+        return string.Compare(one?.FullName?.TrimEnd('\\'), two?.FullName.TrimEnd('\\'),
+            StringComparison.OrdinalIgnoreCase);
+    }
+
+    [PublicAPI]
+    public static int Compare(
+        string? one,
+        DirectoryInfo? two)
+    {
+        return new ZspFileOrDirectoryInfo(one).Compare(two);
+    }
+
+    [PublicAPI]
+    public static int Compare(
+        string? one,
+        FileInfo? two)
+    {
+        return new ZspFileOrDirectoryInfo(one).Compare(two);
+    }
+
+    [PublicAPI]
+    public static int Compare(
+        string? one,
+        ZspFileOrDirectoryInfo? two)
+    {
+        return new ZspFileOrDirectoryInfo(one).Compare(two);
+    }
+
+    [PublicAPI]
+    public static int Compare(
+        DirectoryInfo? one,
+        string? two)
+    {
+        return new ZspFileOrDirectoryInfo(one).Compare(two);
+    }
+
+    [PublicAPI]
+    public static int Compare(
+        FileInfo? one,
+        string? two)
+    {
+        return new ZspFileOrDirectoryInfo(one).Compare(two);
     }
 
     [PublicAPI]
     public static int Compare(
         ZspFileOrDirectoryInfo one,
-        ZspFileOrDirectoryInfo two)
-    {
-        return string.Compare(one.FullName.TrimEnd('\\'), two.FullName.TrimEnd('\\'),
-            StringComparison.OrdinalIgnoreCase);
-    }
-
-    [PublicAPI]
-    public static int Compare(
-        ZspFileOrDirectoryInfo one,
-        FileInfo two)
-    {
-        return string.Compare(one.FullName.TrimEnd('\\'), two.FullName.TrimEnd('\\'),
-            StringComparison.OrdinalIgnoreCase);
-    }
-
-    [PublicAPI]
-    public static int Compare(
-        ZspFileOrDirectoryInfo one,
-        DirectoryInfo two)
-    {
-        return string.Compare(one.FullName.TrimEnd('\\'), two.FullName.TrimEnd('\\'),
-            StringComparison.OrdinalIgnoreCase);
-    }
-
-    [PublicAPI]
-    public static int Compare(
-        string one,
-        DirectoryInfo two)
+        string? two)
     {
         return new ZspFileOrDirectoryInfo(one).Compare(two);
     }
 
     [PublicAPI]
     public static int Compare(
-        string one,
-        FileInfo two)
-    {
-        return new ZspFileOrDirectoryInfo(one).Compare(two);
-    }
-
-    [PublicAPI]
-    public static int Compare(
-        string one,
-        ZspFileOrDirectoryInfo two)
-    {
-        return new ZspFileOrDirectoryInfo(one).Compare(two);
-    }
-
-    [PublicAPI]
-    public static int Compare(
-        DirectoryInfo one,
-        string two)
-    {
-        return new ZspFileOrDirectoryInfo(one).Compare(two);
-    }
-
-    [PublicAPI]
-    public static int Compare(
-        FileInfo one,
-        string two)
-    {
-        return new ZspFileOrDirectoryInfo(one).Compare(two);
-    }
-
-    [PublicAPI]
-    public static int Compare(
-        ZspFileOrDirectoryInfo one,
-        string two)
-    {
-        return new ZspFileOrDirectoryInfo(one).Compare(two);
-    }
-
-    [PublicAPI]
-    public static int Compare(
-        string one,
-        string two)
+        string? one,
+        string? two)
     {
         return new ZspFileOrDirectoryInfo(one).Compare(two);
     }
 
     [PublicAPI]
     public int Compare(
-        string b)
+        string? b)
     {
         return Compare(this, new ZspFileOrDirectoryInfo(b));
     }
 
     [PublicAPI]
     public int Compare(
-        FileInfo b)
+        FileInfo? b)
     {
-        return Compare(b.FullName);
+        return Compare(b?.FullName);
     }
 
     [PublicAPI]
     public int Compare(
-        DirectoryInfo b)
+        DirectoryInfo? b)
     {
-        return Compare(b.FullName);
+        return Compare(b?.FullName);
     }
 
     [PublicAPI]
     public int Compare(
-        ZspFileOrDirectoryInfo b)
+        ZspFileOrDirectoryInfo? b)
     {
-        return Compare(b.FullName);
+        return Compare(b?.FullName);
     }
 
     [PublicAPI]
-    public static ZspFileOrDirectoryInfo Combine(
-        DirectoryInfo one,
-        DirectoryInfo two)
+    public static ZspFileOrDirectoryInfo? Combine(
+        DirectoryInfo? one,
+        DirectoryInfo? two)
     {
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
     [PublicAPI]
-    public static ZspFileOrDirectoryInfo Combine(
-        FileInfo one,
-        FileInfo two)
+    public static ZspFileOrDirectoryInfo? Combine(
+        FileInfo? one,
+        FileInfo? two)
     {
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
     [PublicAPI]
-    public static ZspFileOrDirectoryInfo Combine(
-        ZspFileOrDirectoryInfo one,
-        ZspFileOrDirectoryInfo two)
+    public static ZspFileOrDirectoryInfo? Combine(
+        ZspFileOrDirectoryInfo? one,
+        ZspFileOrDirectoryInfo? two)
     {
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
     [PublicAPI]
-    public static ZspFileOrDirectoryInfo Combine(
-        ZspFileOrDirectoryInfo one,
-        FileInfo two)
+    public static ZspFileOrDirectoryInfo? Combine(
+        ZspFileOrDirectoryInfo? one,
+        FileInfo? two)
     {
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
     [PublicAPI]
-    public static ZspFileOrDirectoryInfo Combine(
-        ZspFileOrDirectoryInfo one,
-        DirectoryInfo two)
+    public static ZspFileOrDirectoryInfo? Combine(
+        ZspFileOrDirectoryInfo? one,
+        DirectoryInfo? two)
     {
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
     [PublicAPI]
-    public static ZspFileOrDirectoryInfo Combine(
-        string one,
-        DirectoryInfo two)
+    public static ZspFileOrDirectoryInfo? Combine(
+        string? one,
+        DirectoryInfo? two)
     {
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
     [PublicAPI]
-    public static ZspFileOrDirectoryInfo Combine(
-        string one,
-        FileInfo two)
+    public static ZspFileOrDirectoryInfo? Combine(
+        string? one,
+        FileInfo? two)
     {
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
     [PublicAPI]
-    public static ZspFileOrDirectoryInfo Combine(
-        string one,
-        ZspFileOrDirectoryInfo two)
+    public static ZspFileOrDirectoryInfo? Combine(
+        string? one,
+        ZspFileOrDirectoryInfo? two)
     {
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
     [PublicAPI]
-    public static ZspFileOrDirectoryInfo Combine(
-        DirectoryInfo one,
-        string two)
+    public static ZspFileOrDirectoryInfo? Combine(
+        DirectoryInfo? one,
+        string? two)
     {
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
     [PublicAPI]
-    public static ZspFileOrDirectoryInfo Combine(
-        FileInfo one,
-        string two)
+    public static ZspFileOrDirectoryInfo? Combine(
+        FileInfo? one,
+        string? two)
     {
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
     [PublicAPI]
-    public static ZspFileOrDirectoryInfo Combine(
-        ZspFileOrDirectoryInfo one,
-        string two)
+    public static ZspFileOrDirectoryInfo? Combine(
+        ZspFileOrDirectoryInfo? one,
+        string? two)
     {
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
     [PublicAPI]
-    public static ZspFileOrDirectoryInfo Combine(
-        string one,
-        string two)
+    public static ZspFileOrDirectoryInfo? Combine(
+        string? one,
+        string? two)
     {
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
     [PublicAPI]
-    public ZspFileOrDirectoryInfo Combine(
-        ZspFileOrDirectoryInfo info)
+    public ZspFileOrDirectoryInfo? Combine(
+        ZspFileOrDirectoryInfo? info)
     {
-        return
-            new(
-                ZspPathHelper.Combine(
-                    EffectiveDirectory.FullName,
-                    info.FullName));
+        var r = ZspPathHelper.Combine(
+            EffectiveDirectory?.FullName,
+            info?.FullName);
+
+        return r == null ? null : new(r);
     }
 
     [PublicAPI]
-    public ZspFileOrDirectoryInfo Combine(
-        string path)
+    public ZspFileOrDirectoryInfo? Combine(
+        string? path)
     {
-        return
-            new(
-                ZspPathHelper.Combine(
-                    EffectiveDirectory.FullName,
-                    path));
+        var r =
+            ZspPathHelper.Combine(
+                EffectiveDirectory?.FullName,
+                path);
+
+        return r == null ? null : new(r);
     }
 
     [PublicAPI]
-    public ZspFileOrDirectoryInfo Combine(
-        FileInfo info)
+    public ZspFileOrDirectoryInfo? Combine(
+        FileInfo? info)
     {
-        return
-            new(
-                ZspPathHelper.Combine(
-                    EffectiveDirectory.FullName,
-                    // According to Reflector, "ToString()" returns the 
-                    // "OriginalPath". This is what we need here.
-                    info.ToString()));
-    }
+        var r = ZspPathHelper.Combine(
+            EffectiveDirectory?.FullName,
+            // According to Reflector, "ToString()" returns the 
+            // "OriginalPath". This is what we need here.
+            info?.ToString());
 
+        return r == null ? null : new(r);
+    }
+     
     [PublicAPI]
-    public ZspFileOrDirectoryInfo Combine(
-        DirectoryInfo info)
+    public ZspFileOrDirectoryInfo? Combine(
+        DirectoryInfo? info)
     {
-        return
-            new(
-                ZspPathHelper.Combine(
-                    EffectiveDirectory.FullName,
-                    // According to Reflector, "ToString()" returns the 
-                    // "OriginalPath". This is what we need here.
-                    info.ToString()));
+        var r = ZspPathHelper.Combine(
+            EffectiveDirectory?.FullName,
+            // According to Reflector, "ToString()" returns the 
+            // "OriginalPath". This is what we need here.
+            info?.ToString());
+
+        return r == null ? null : new(r);
     }
 
     /// <summary>
@@ -460,7 +459,7 @@ public sealed class ZspFileOrDirectoryInfo
         }
     }
 
-    public override string ToString()
+    public override string? ToString()
     {
         return string.IsNullOrEmpty(OriginalPath)
             ? FullName

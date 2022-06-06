@@ -14,7 +14,7 @@
 public static class ZspSafeFileOperations
 {
     public static void SafeDeleteFile(
-        FileInfo filePath)
+        FileInfo? filePath)
     {
         if (filePath != null)
         {
@@ -24,7 +24,7 @@ public static class ZspSafeFileOperations
 
     [PublicAPI]
     public static void SafeDeleteFile(
-        string filePath)
+        string? filePath)
     {
 #if WANT_TRACE
             Trace.TraceInformation(@"About to safe-delete file '{0}'.", filePath);
@@ -47,7 +47,11 @@ public static class ZspSafeFileOperations
 
                 File.Delete(filePath);
             }
-            catch (UnauthorizedAccessException x)
+            catch (UnauthorizedAccessException
+#if WANT_TRACE
+                   x
+#endif
+                   )
             {
                 var newFilePath =
                     $@"{filePath}.{Guid.NewGuid():N}.deleted";
@@ -63,17 +67,25 @@ public static class ZspSafeFileOperations
 
                     File.Move(filePath, newFilePath);
                 }
-                catch (Exception x2)
+                catch (Exception
+#if WANT_TRACE
+                   x2
+#endif
+                       )
                 {
 #if WANT_TRACE
                         Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting file '{0}'. " +
                                            @"Renaming now to '{1}'. {2}", filePath, newFilePath, x2.Message);
-#else 
+#else
                     // Ignore.
 #endif
                 }
             }
-            catch (Exception x)
+            catch (Exception
+#if WANT_TRACE
+                   x
+#endif
+                   )
             {
                 var newFilePath =
                     $@"{filePath}.{Guid.NewGuid():N}.deleted";
@@ -90,12 +102,16 @@ public static class ZspSafeFileOperations
                     if (File.Exists(newFilePath)) File.Delete(newFilePath);
                     File.Move(filePath, newFilePath);
                 }
-                catch (Exception x2)
+                catch (Exception
+#if WANT_TRACE
+                   x2
+#endif
+                       )
                 {
 #if WANT_TRACE
                         Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting file '{0}'. " +
                                            @"Renaming now to '{1}'. {2}", filePath, newFilePath, x2.Message);
-#else 
+#else
                     // Ignore.
 #endif
                 }
@@ -111,14 +127,14 @@ public static class ZspSafeFileOperations
     }
 
     public static bool SafeFileExists(
-        FileInfo filePath)
+        FileInfo? filePath)
     {
         return filePath != null && SafeFileExists(filePath.FullName);
     }
 
     [PublicAPI]
     public static bool SafeFileExists(
-        string filePath)
+        string? filePath)
     {
         return !string.IsNullOrEmpty(filePath) && File.Exists(filePath);
     }
@@ -127,7 +143,7 @@ public static class ZspSafeFileOperations
     /// Deep-deletes the contents, as well as the folder itself.
     /// </summary>
     public static void SafeDeleteDirectory(
-        DirectoryInfo folderPath)
+        DirectoryInfo? folderPath)
     {
         if (folderPath != null)
         {
@@ -140,7 +156,7 @@ public static class ZspSafeFileOperations
     /// </summary>
     [PublicAPI]
     public static void SafeDeleteDirectory(
-        string folderPath)
+        string? folderPath)
     {
 #if WANT_TRACE
             Trace.TraceInformation(@"About to safe-delete directory '{0}'.", folderPath);
@@ -152,7 +168,11 @@ public static class ZspSafeFileOperations
             {
                 Directory.Delete(folderPath, true);
             }
-            catch (Exception x)
+            catch (Exception
+#if WANT_TRACE
+                   x
+#endif
+                   )
             {
                 var newFilePath = $@"{folderPath}.{Guid.NewGuid():B}.deleted";
 
@@ -165,8 +185,13 @@ public static class ZspSafeFileOperations
                 {
                     Directory.Move(folderPath, newFilePath);
                 }
-                catch (Exception x2)
+                catch (Exception
+#if WANT_TRACE
+                   x2
+#endif
+                       )
                 {
+                    // Catch intentionally.
 #if WANT_TRACE
                         Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting directory '{0}'. " +
                                            @"Renaming now to '{1}'. {2}", folderPath, newFilePath, x2.Message);
@@ -184,21 +209,21 @@ public static class ZspSafeFileOperations
     }
 
     public static bool SafeDirectoryExists(
-        DirectoryInfo folderPath)
+        DirectoryInfo? folderPath)
     {
         return folderPath != null && SafeDirectoryExists(folderPath.FullName);
     }
 
     [PublicAPI]
     public static bool SafeDirectoryExists(
-        string folderPath)
+        string? folderPath)
     {
         return !string.IsNullOrEmpty(folderPath) && Directory.Exists(folderPath);
     }
 
     public static void SafeMoveFile(
-        FileInfo sourcePath,
-        string dstFilePath)
+        FileInfo? sourcePath,
+        string? dstFilePath)
     {
         SafeMoveFile(
             sourcePath?.FullName,
@@ -207,8 +232,8 @@ public static class ZspSafeFileOperations
 
     [PublicAPI]
     public static void SafeMoveFile(
-        string sourcePath,
-        FileInfo dstFilePath)
+        string? sourcePath,
+        FileInfo? dstFilePath)
     {
         SafeMoveFile(
             sourcePath,
@@ -216,8 +241,8 @@ public static class ZspSafeFileOperations
     }
 
     public static void SafeMoveFile(
-        FileInfo sourcePath,
-        FileInfo dstFilePath)
+        FileInfo? sourcePath,
+        FileInfo? dstFilePath)
     {
         SafeMoveFile(
             sourcePath?.FullName,
@@ -226,8 +251,8 @@ public static class ZspSafeFileOperations
 
     [PublicAPI]
     public static void SafeMoveFile(
-        string sourcePath,
-        string dstFilePath)
+        string? sourcePath,
+        string? dstFilePath)
     {
 #if WANT_TRACE
             Trace.TraceInformation(@"About to safe-move file from '{0}' to '{1}'.", sourcePath, dstFilePath);
@@ -251,7 +276,7 @@ public static class ZspSafeFileOperations
 
                 var d = ZspPathHelper.GetDirectoryPathNameFromFilePath(dstFilePath);
 
-                if (!Directory.Exists(d))
+                if (d != null && !Directory.Exists(d))
                 {
 #if WANT_TRACE
                         Trace.TraceInformation(@"Creating non-existing folder '{0}'.", d);
@@ -272,8 +297,8 @@ public static class ZspSafeFileOperations
     }
 
     public static void SafeCopyFile(
-        FileInfo sourcePath,
-        string dstFilePath,
+        FileInfo? sourcePath,
+        string? dstFilePath,
         bool overwrite = true)
     {
         SafeCopyFile(sourcePath?.FullName, dstFilePath, overwrite);
@@ -281,16 +306,16 @@ public static class ZspSafeFileOperations
 
     [PublicAPI]
     public static void SafeCopyFile(
-        string sourcePath,
-        FileInfo dstFilePath,
+        string? sourcePath,
+        FileInfo? dstFilePath,
         bool overwrite = true)
     {
         SafeCopyFile(sourcePath, dstFilePath?.FullName, overwrite);
     }
 
     public static void SafeCopyFile(
-        FileInfo sourcePath,
-        FileInfo dstFilePath,
+        FileInfo? sourcePath,
+        FileInfo? dstFilePath,
         bool overwrite = true)
     {
         SafeCopyFile(
@@ -301,8 +326,8 @@ public static class ZspSafeFileOperations
 
     [PublicAPI]
     public static void SafeCopyFile(
-        string sourcePath,
-        string dstFilePath,
+        string? sourcePath,
+        string? dstFilePath,
         bool overwrite = true)
     {
 #if WANT_TRACE
@@ -340,7 +365,7 @@ public static class ZspSafeFileOperations
 
                     var d = ZspPathHelper.GetDirectoryPathNameFromFilePath(dstFilePath);
 
-                    if (!Directory.Exists(d))
+                    if (d != null && !Directory.Exists(d))
                     {
 #if WANT_TRACE
                             Trace.TraceInformation(@"Creating non-existing folder '{0}'.", d);
@@ -365,8 +390,10 @@ public static class ZspSafeFileOperations
     /// </summary>
     [PublicAPI]
     public static void SafeDeleteDirectoryContents(
-        string folderPath)
+        string? folderPath)
     {
+        if (string.IsNullOrEmpty(folderPath)) return;
+
         var info = new DirectoryInfo(folderPath);
         SafeDeleteDirectoryContents(info);
     }
@@ -375,9 +402,9 @@ public static class ZspSafeFileOperations
     /// Deep-deletes the contents, but not the folder itself.
     /// </summary>
     public static void SafeDeleteDirectoryContents(
-        DirectoryInfo folderPath)
+        DirectoryInfo? folderPath)
     {
-        if (folderPath is {Exists: true})
+        if (folderPath is { Exists: true })
         {
             foreach (var filePath in folderPath.GetFiles())
             {
@@ -401,14 +428,14 @@ public static class ZspSafeFileOperations
     }
 
     public static void SafeCheckCreateDirectory(
-        DirectoryInfo folderPath)
+        DirectoryInfo? folderPath)
     {
         SafeCheckCreateDirectory(folderPath?.FullName);
     }
 
     [PublicAPI]
     public static void SafeCheckCreateDirectory(
-        string folderPath)
+        string? folderPath)
     {
 #if WANT_TRACE
             Trace.TraceInformation(@"About to safe check-create folder '{0}'.", folderPath);
@@ -420,7 +447,11 @@ public static class ZspSafeFileOperations
             {
                 Directory.CreateDirectory(folderPath);
             }
-            catch (UnauthorizedAccessException x)
+            catch (UnauthorizedAccessException
+#if WANT_TRACE
+                   x
+#endif
+                   )
             {
 #if WANT_TRACE
                     Trace.TraceWarning(
@@ -428,8 +459,13 @@ public static class ZspSafeFileOperations
                         x.Message);
 #endif
             }
-            catch (Exception x)
+            catch (Exception
+#if WANT_TRACE
+                   x
+#endif
+                   )
             {
+                // Catch intentionally.
 #if WANT_TRACE
                     Trace.TraceWarning(@"Caught IOException while safe check-creating folder '{0}'. {1}", folderPath,
                         x.Message);
