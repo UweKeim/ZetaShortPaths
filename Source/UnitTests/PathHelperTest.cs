@@ -132,7 +132,7 @@ public class PathHelperTest
 
         Assert.AreEqual(s3, s4);
 
-        var s5 = s1.MakeAbsoluteTo(new DirectoryInfo(s2));
+        var s5 = s1.MakeAbsoluteTo(new(s2));
 
         Assert.AreEqual(s3, s5);
 

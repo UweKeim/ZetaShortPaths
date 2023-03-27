@@ -147,8 +147,8 @@ public class DirectoryInfoTest
 
         // --
 
-        a = new DirectoryInfo(@"C:\ablage\");
-        b = new DirectoryInfo(@"C:\ablage\");
+        a = new(@"C:\ablage\");
+        b = new(@"C:\ablage\");
 
         x = a.ToString();
         y = b.ToString();
@@ -157,8 +157,8 @@ public class DirectoryInfoTest
 
         // --
 
-        a = new DirectoryInfo(@"test.txt");
-        b = new DirectoryInfo(@"test.txt");
+        a = new(@"test.txt");
+        b = new(@"test.txt");
 
         x = a.ToString();
         y = b.ToString();
@@ -167,8 +167,8 @@ public class DirectoryInfoTest
 
         // --
 
-        a = new DirectoryInfo(@"c:\ablage\..\ablage\test.txt");
-        b = new DirectoryInfo(@"c:\ablage\..\ablage\test.txt");
+        a = new(@"c:\ablage\..\ablage\test.txt");
+        b = new(@"c:\ablage\..\ablage\test.txt");
 
         x = a.ToString();
         y = b.ToString();
@@ -177,8 +177,8 @@ public class DirectoryInfoTest
 
         // --
 
-        a = new DirectoryInfo(@"\ablage\test.txt");
-        b = new DirectoryInfo(@"\ablage\test.txt");
+        a = new(@"\ablage\test.txt");
+        b = new(@"\ablage\test.txt");
 
         x = a.ToString();
         y = b.ToString();
@@ -187,8 +187,8 @@ public class DirectoryInfoTest
 
         // --
 
-        a = new DirectoryInfo(@"ablage\test.txt");
-        b = new DirectoryInfo(@"ablage\test.txt");
+        a = new(@"ablage\test.txt");
+        b = new(@"ablage\test.txt");
 
         x = a.ToString();
         y = b.ToString();

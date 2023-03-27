@@ -14,41 +14,38 @@ public static class ZspPathHelper
     [PublicAPI]
     public static string? ChangeExtension(string? path, string? extension)
     {
-        if (path != null)
+	    if (path == null) return null;
+
+	    var text = path;
+        var num = path.Length;
+
+        while (--num >= 0)
         {
-            var text = path;
-            var num = path.Length;
+	        var c = path[num];
+	        if (c == '.')
+	        {
+		        text = path.Substring(0, num);
+		        break;
+	        }
 
-            while (--num >= 0)
-            {
-                var c = path[num];
-                if (c == '.')
-                {
-                    text = path.Substring(0, num);
-                    break;
-                }
-
-                if (c == Path.DirectorySeparatorChar || c == Path.AltDirectorySeparatorChar ||
-                    c == Path.VolumeSeparatorChar)
-                {
-                    break;
-                }
-            }
-
-            if (extension != null && path.Length != 0)
-            {
-                if (extension.Length == 0 || extension[0] != '.')
-                {
-                    text += ".";
-                }
-
-                text += extension;
-            }
-
-            return text;
+	        if (c == Path.DirectorySeparatorChar || c == Path.AltDirectorySeparatorChar ||
+	            c == Path.VolumeSeparatorChar)
+	        {
+		        break;
+	        }
         }
 
-        return null;
+        if (extension == null || path.Length == 0) return text;
+
+        if (extension.Length == 0 || extension[0] != '.')
+        {
+	        text += ".";
+        }
+
+        text += extension;
+
+        return text;
+
     }
 
     [PublicAPI]

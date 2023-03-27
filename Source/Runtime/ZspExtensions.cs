@@ -116,7 +116,7 @@ public static class ZspExtensions
     {
         if (one == null && two == null) return null;
         else if (two == null) return one;
-        else if (one == null) return new DirectoryInfo(two);
+        else if (one == null) return new(two);
 
         else
         {
@@ -142,8 +142,8 @@ public static class ZspExtensions
     public static DirectoryInfo? CombineDirectory( /*this*/ string? one, string? two)
     {
         if (one == null && two == null) return null;
-        else if (two == null) return new DirectoryInfo(one!);
-        else if (one == null) return new DirectoryInfo(two);
+        else if (two == null) return new(one!);
+        else if (one == null) return new(two);
 
         else
         {
@@ -184,7 +184,7 @@ public static class ZspExtensions
     {
         if (one == null && two == null) return null;
         else if (two == null) return null;
-        else if (one == null) return new FileInfo(two);
+        else if (one == null) return new(two);
 
         else
         {
@@ -213,7 +213,7 @@ public static class ZspExtensions
     {
         if (one == null && two == null) return null;
         else if (two == null) return null;
-        else if (one == null) return new FileInfo(two);
+        else if (one == null) return new(two);
 
         else
         {
@@ -246,7 +246,7 @@ public static class ZspExtensions
         else
         {
             Directory.CreateDirectory(path);
-            return new DirectoryInfo(path);
+            return new(path);
         }
     }
 

@@ -58,13 +58,13 @@ public class IOHelperTest
 
             // --
 
-            AssertOwn.DoesNotThrow(() => File.SetLastWriteTime(filePath, new DateTime(1986, 1, 1)));
-            AssertOwn.DoesNotThrow(() => File.SetLastAccessTime(filePath, new DateTime(1987, 1, 1)));
-            AssertOwn.DoesNotThrow(() => File.SetCreationTime(filePath, new DateTime(1988, 1, 1)));
+            AssertOwn.DoesNotThrow(() => File.SetLastWriteTime(filePath, new(1986, 1, 1)));
+            AssertOwn.DoesNotThrow(() => File.SetLastAccessTime(filePath, new(1987, 1, 1)));
+            AssertOwn.DoesNotThrow(() => File.SetCreationTime(filePath, new(1988, 1, 1)));
 
-            AssertOwn.DoesNotThrow(() => Directory.SetLastWriteTime(tempPath, new DateTime(1986, 1, 1)));
-            AssertOwn.DoesNotThrow(() => Directory.SetLastAccessTime(tempPath, new DateTime(1987, 1, 1)));
-            AssertOwn.DoesNotThrow(() => Directory.SetCreationTime(tempPath, new DateTime(1988, 1, 1)));
+            AssertOwn.DoesNotThrow(() => Directory.SetLastWriteTime(tempPath, new(1986, 1, 1)));
+            AssertOwn.DoesNotThrow(() => Directory.SetLastAccessTime(tempPath, new(1987, 1, 1)));
+            AssertOwn.DoesNotThrow(() => Directory.SetCreationTime(tempPath, new(1988, 1, 1)));
 
             var anotherFile = ZspPathHelper.Combine(tempPath, "test2.zsp");
             File.WriteAllText(anotherFile!, @"הצü.");

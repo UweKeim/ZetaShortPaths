@@ -7,13 +7,13 @@ public sealed class ZspSplittedPath
     public ZspSplittedPath(
         string? path)
     {
-        Info = new ZspFileOrDirectoryInfo(path);
+        Info = new(path);
     }
 
     public ZspSplittedPath(
         ZspFileOrDirectoryInfo path)
     {
-        Info = new ZspFileOrDirectoryInfo(path);
+        Info = new(path);
     }
 
     [PublicAPI] public string? FullPath => Info.FullName;

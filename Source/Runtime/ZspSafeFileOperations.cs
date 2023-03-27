@@ -404,27 +404,26 @@ public static class ZspSafeFileOperations
     public static void SafeDeleteDirectoryContents(
         DirectoryInfo? folderPath)
     {
-        if (folderPath is { Exists: true })
-        {
-            foreach (var filePath in folderPath.GetFiles())
-            {
-                SafeDeleteFile(filePath);
-            }
+	    if (folderPath is not { Exists: true }) return;
 
-            foreach (var childFolderPath in
-                     folderPath.GetDirectories())
-            {
-                SafeDeleteDirectoryContents(childFolderPath);
+	    foreach (var filePath in folderPath.GetFiles())
+	    {
+		    SafeDeleteFile(filePath);
+	    }
 
-                // If empty now, remove.
-                // Only for childs, not for the root.
-                if (childFolderPath.GetFiles().Length <= 0 &&
-                    childFolderPath.GetDirectories().Length <= 0)
-                {
-                    childFolderPath.Delete(true);
-                }
-            }
-        }
+	    foreach (var childFolderPath in
+	             folderPath.GetDirectories())
+	    {
+		    SafeDeleteDirectoryContents(childFolderPath);
+
+		    // If empty now, remove.
+		    // Only for childs, not for the root.
+		    if (childFolderPath.GetFiles().Length <= 0 &&
+		        childFolderPath.GetDirectories().Length <= 0)
+		    {
+			    childFolderPath.Delete(true);
+		    }
+	    }
     }
 
     public static void SafeCheckCreateDirectory(

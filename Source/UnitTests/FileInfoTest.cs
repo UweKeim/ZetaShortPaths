@@ -9,7 +9,7 @@ public class FileInfoTest
         var a = new FileInfo(@"C:\ablage\test.txt");
 
         var x = a.NameWithoutExtension();
-        var y = @"test";
+        const string y = @"test";
 
         Assert.AreEqual(x, y);
     }
@@ -27,8 +27,8 @@ public class FileInfoTest
 
         // --
 
-        a = new FileInfo(@"C:\ablage\");
-        b = new FileInfo(@"C:\ablage\");
+        a = new(@"C:\ablage\");
+        b = new(@"C:\ablage\");
 
         x = a.ToString();
         y = b.ToString();
@@ -37,8 +37,8 @@ public class FileInfoTest
 
         // --
 
-        a = new FileInfo(@"test.txt");
-        b = new FileInfo(@"test.txt");
+        a = new(@"test.txt");
+        b = new(@"test.txt");
 
         x = a.ToString();
         y = b.ToString();
@@ -47,8 +47,8 @@ public class FileInfoTest
 
         // --
 
-        a = new FileInfo(@"c:\ablage\..\ablage\test.txt");
-        b = new FileInfo(@"c:\ablage\..\ablage\test.txt");
+        a = new(@"c:\ablage\..\ablage\test.txt");
+        b = new(@"c:\ablage\..\ablage\test.txt");
 
         x = a.ToString();
         y = b.ToString();
@@ -57,8 +57,8 @@ public class FileInfoTest
 
         // --
 
-        a = new FileInfo(@"\ablage\test.txt");
-        b = new FileInfo(@"\ablage\test.txt");
+        a = new(@"\ablage\test.txt");
+        b = new(@"\ablage\test.txt");
 
         x = a.ToString();
         y = b.ToString();
@@ -67,8 +67,8 @@ public class FileInfoTest
 
         // --
 
-        a = new FileInfo(@"ablage\test.txt");
-        b = new FileInfo(@"ablage\test.txt");
+        a = new(@"ablage\test.txt");
+        b = new(@"ablage\test.txt");
 
         x = a.ToString();
         y = b.ToString();

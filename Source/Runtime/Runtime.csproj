@@ -8,15 +8,15 @@
     <Authors>Zeta Software GmbH</Authors>
     <Product>Zeta Short Paths</Product>
     <Description>A .NET Standard library with all the goodies from ZetaLongPaths to work with files and folders for paths with less than 260 characters.</Description>
-    <Copyright>© 1999-2022 Zeta Software GmbH</Copyright>
+    <Copyright>© 1999-2023 Zeta Software GmbH</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/UweKeim/ZetaShortPaths</PackageProjectUrl>
     <PackageIconUrl></PackageIconUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl>https://github.com/UweKeim/ZetaShortPaths</RepositoryUrl>
-    <AssemblyVersion>1.0.20.0</AssemblyVersion>
-    <FileVersion>1.0.20.0</FileVersion>
-    <Version>1.0.20.0</Version>
+    <AssemblyVersion>1.0.22.0</AssemblyVersion>
+    <FileVersion>1.0.22.0</FileVersion>
+    <Version>1.0.22.0</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -32,8 +32,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>

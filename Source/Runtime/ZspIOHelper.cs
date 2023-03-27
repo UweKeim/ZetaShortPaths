@@ -111,24 +111,20 @@ public static class ZspIOHelper
     [PublicAPI]
     public static void DeleteDirectoryContents(string folderPath, bool recursive)
     {
-        if (Directory.Exists(folderPath))
-        {
-            if (recursive)
-            {
-                var files = Directory.GetFiles(folderPath);
-                var dirs = Directory.GetDirectories(folderPath);
+	    if (!Directory.Exists(folderPath)) return;
 
-                foreach (var file in files)
-                {
-                    File.Delete(file);
-                }
+	    var files = Directory.GetFiles(folderPath);
+	    var dirs = Directory.GetDirectories(folderPath);
 
-                foreach (var dir in dirs)
-                {
-                    Directory.Delete(dir, true);
-                }
-            }
-        }
+	    foreach (var file in files)
+	    {
+		    File.Delete(file);
+	    }
+
+	    foreach (var dir in dirs)
+	    {
+		    if (recursive || IsDirectoryEmpty(dir)) Directory.Delete(dir, recursive);
+	    }
     }
 
     [PublicAPI]
