@@ -511,6 +511,16 @@ public static class ZspPathHelper
         return IsNullOrEmpty(text) ? text : text?.Replace('/', '\\');
     }
 
+    /// <summary>
+    /// Converts a path with forward or backward slashs to use the platform's directory separator character.
+    /// </summary>
+    [PublicAPI]
+    public static string? ConvertSlashsToPlatform(
+	    string? text)
+    {
+	    return IsNullOrEmpty(text) ? text : text?.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+    }
+
     public static string? GetDrive(
         string? path)
     {

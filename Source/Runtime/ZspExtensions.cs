@@ -552,4 +552,14 @@ public static class ZspExtensions
                (f1?.TrimEnd('\\').ToLowerInvariant()
                    .StartsWith(folder2?.TrimEnd('\\').ToLowerInvariant() ?? string.Empty) ?? false);
     }
+
+    /// <summary>
+    /// Converts a path with forward or backward slashs to use the platform's directory separator character.
+    /// </summary>
+    [PublicAPI]
+    public static string? ConvertSlashsToPlatform(
+	    this string? path)
+    {
+	    return ZspPathHelper.ConvertSlashsToPlatform(path);
+    }
 }
