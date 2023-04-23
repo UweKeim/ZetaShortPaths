@@ -23,6 +23,14 @@ public static class ZspExtensions
 	}
 
 	[PublicAPI]
+	public static void Touch(
+		this FileInfo? filePath)
+	{
+		if (filePath == null) throw new ArgumentNullException(nameof(filePath));
+		ZspIOHelper.Touch(filePath.Name);
+	}
+
+	[PublicAPI]
 	public static void CopyToExact(
 		this FileInfo? filePath,
 		FileInfo destinationFilePath,
@@ -30,6 +38,16 @@ public static class ZspExtensions
 	{
 		if (filePath == null) throw new ArgumentNullException(nameof(filePath));
 		ZspIOHelper.CopyFileExact(filePath.FullName, destinationFilePath.FullName, overwriteExisting);
+	}
+
+	[PublicAPI]
+	public static void CopyToExact(
+		this FileInfo? filePath,
+		string destinationFilePath,
+		bool overwriteExisting)
+	{
+		if (filePath == null) throw new ArgumentNullException(nameof(filePath));
+		ZspIOHelper.CopyFileExact(filePath.FullName, destinationFilePath, overwriteExisting);
 	}
 
 	[PublicAPI]
