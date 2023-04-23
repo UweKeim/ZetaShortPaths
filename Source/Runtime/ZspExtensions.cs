@@ -606,6 +606,18 @@ public static class ZspExtensions
 	}
 
 	[PublicAPI]
+	public static ZspFileDateInfos GetDateInfos(this FileInfo? file)
+	{
+		return ZspIOHelper.GetFileDateInfos(file?.FullName);
+	}
+
+	[PublicAPI]
+	public static void SetDateInfos(this FileInfo? file, ZspFileDateInfos? infos)
+	{
+		ZspIOHelper.SetFileDateInfos(file?.FullName, infos);
+	}
+
+	[PublicAPI]
 	public static FileInfo[] GetFiles(this DirectoryInfo? folder)
 	{
 		if (folder == null) throw new ArgumentNullException(nameof(folder));
