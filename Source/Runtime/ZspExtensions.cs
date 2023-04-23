@@ -584,4 +584,25 @@ public static class ZspExtensions
 		if (file == null) throw new ArgumentNullException(nameof(file));
 		file.CopyTo(other.FullName, overwrite);
 	}
+
+	[PublicAPI]
+	public static FileInfo[] GetFiles(this DirectoryInfo? folder)
+	{
+		if (folder == null) throw new ArgumentNullException(nameof(folder));
+		return ZspIOHelper.GetFiles(folder.FullName);
+	}
+
+	[PublicAPI]
+	public static FileInfo[] GetFiles(this DirectoryInfo? folder, SearchOption searchOption)
+	{
+		if (folder == null) throw new ArgumentNullException(nameof(folder));
+		return ZspIOHelper.GetFiles(folder.FullName, searchOption);
+	}
+
+	[PublicAPI]
+	public static FileInfo[] GetFiles(this DirectoryInfo? folder, string? pattern, SearchOption searchOption)
+	{
+		if (folder == null) throw new ArgumentNullException(nameof(folder));
+		return ZspIOHelper.GetFiles(folder.FullName, pattern, searchOption);
+	}
 }
