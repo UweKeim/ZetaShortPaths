@@ -5,7 +5,13 @@ public static class ZspIOHelper
     [PublicAPI]
     public static DirectoryInfo GetTempDirectory()
     {
-        return new(Path.GetTempPath());
+        return new(ZspPathHelper.GetTempDirectoryPath());
+    }
+
+    [PublicAPI]
+    public static FileInfo GetTempFile()
+    {
+        return new(ZspPathHelper.GetTempFilePath());
     }
 
     [PublicAPI]

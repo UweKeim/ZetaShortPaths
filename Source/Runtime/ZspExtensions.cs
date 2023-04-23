@@ -23,6 +23,14 @@ public static class ZspExtensions
     }
 
     [PublicAPI]
+    public static void CopyToExact(
+	    this FileInfo destinationFilePath,
+	    bool overwriteExisting)
+    {
+	    ZspIOHelper.CopyFileExact(destinationFilePath.FullName, destinationFilePath.FullName, overwriteExisting);
+    }
+
+	[PublicAPI]
     public static string? MakeRelativeTo(
         this DirectoryInfo? pathToMakeRelative,
         string? pathToWhichToMakeRelativeTo)
