@@ -24,10 +24,12 @@ public static class ZspExtensions
 
 	[PublicAPI]
 	public static void CopyToExact(
-		this FileInfo destinationFilePath,
+		this FileInfo? filePath,
+		FileInfo destinationFilePath,
 		bool overwriteExisting)
 	{
-		ZspIOHelper.CopyFileExact(destinationFilePath.FullName, destinationFilePath.FullName, overwriteExisting);
+		if (filePath == null) throw new ArgumentNullException(nameof(filePath));
+		ZspIOHelper.CopyFileExact(filePath.FullName, destinationFilePath.FullName, overwriteExisting);
 	}
 
 	[PublicAPI]
