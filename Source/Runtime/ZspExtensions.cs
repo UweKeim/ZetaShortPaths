@@ -19,7 +19,7 @@ public static class ZspExtensions
 	public static string? NameWithoutExtension(
 		this FileInfo? filePath)
 	{
-		return Path.GetFileNameWithoutExtension(filePath?.Name);
+		return Path.GetFileNameWithoutExtension(filePath?.FullName);
 	}
 
 	[PublicAPI]
@@ -27,7 +27,7 @@ public static class ZspExtensions
 		this FileInfo? filePath)
 	{
 		if (filePath == null) throw new ArgumentNullException(nameof(filePath));
-		ZspIOHelper.Touch(filePath.Name);
+		ZspIOHelper.Touch(filePath.FullName);
 	}
 
 	[PublicAPI]
