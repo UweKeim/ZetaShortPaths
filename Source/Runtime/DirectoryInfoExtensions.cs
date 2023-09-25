@@ -25,6 +25,9 @@ public static class DirectoryInfoExtensions
     {
         // https://stackoverflow.com/a/3911658/107625
 
+		if(!Directory.Exists(sourceFolder))
+			return;
+
         if (!Directory.Exists(destFolder))
             Directory.CreateDirectory(destFolder);
 

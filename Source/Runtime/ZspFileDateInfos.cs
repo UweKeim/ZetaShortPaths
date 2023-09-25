@@ -1,5 +1,6 @@
 ﻿namespace ZetaShortPaths;
 
+[PublicAPI]
 public sealed class ZspFileDateInfos
 {
 	public DateTime CreationTime { get; set; }

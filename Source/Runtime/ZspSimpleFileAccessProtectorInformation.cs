@@ -1,23 +1,19 @@
 ﻿namespace ZetaShortPaths;
 
+[PublicAPI]
 public class ZspSimpleFileAccessProtectorInformation
 {
-    [PublicAPI]
-    public static ZspSimpleFileAccessProtectorInformation Default => new();
+	/// <summary>
+	/// Always creates a new instance, does not reuse a previous one.
+	/// </summary>
+	public static ZspSimpleFileAccessProtectorInformation Default => new();
 
-    [PublicAPI] public static int DefaultRetryCount => 3;
-
-    [PublicAPI] public static int DefaultSleepDelaySeconds => 2;
-
-    [PublicAPI] public bool Use { get; set; } = true;
-
-    [PublicAPI] public string? Info { get; set; }
-
-    [PublicAPI] public int RetryCount { get; set; } = DefaultRetryCount;
-
-    [PublicAPI] public int SleepDelaySeconds { get; set; } = DefaultSleepDelaySeconds;
-
-    [PublicAPI] public bool DoGarbageCollectBeforeSleep { get; set; } = true;
-
-    [PublicAPI] public ZspHandleExceptionDelegate? HandleException { get; set; }
+	public static int DefaultRetryCount => 3;
+	public static int DefaultSleepDelaySeconds => 2;
+	public bool Use { get; set; } = true;
+	public string? Info { get; set; }
+	public int RetryCount { get; set; } = DefaultRetryCount;
+	public int SleepDelaySeconds { get; set; } = DefaultSleepDelaySeconds;
+	public bool DoGarbageCollectBeforeSleep { get; set; } = true;
+	public ZspHandleExceptionDelegate? HandleException { get; set; }
 }

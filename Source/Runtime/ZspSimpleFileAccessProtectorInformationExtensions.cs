@@ -3,7 +3,6 @@
 [PublicAPI]
 public static class ZspSimpleFileAccessProtectorInformationExtensions
 {
-    [PublicAPI]
     public static ZspSimpleFileAccessProtectorInformation SetUse(
         this ZspSimpleFileAccessProtectorInformation @this,
         bool use)
@@ -12,7 +11,6 @@ public static class ZspSimpleFileAccessProtectorInformationExtensions
         return @this;
     }
 
-    [PublicAPI]
     public static ZspSimpleFileAccessProtectorInformation SetInfo(
         this ZspSimpleFileAccessProtectorInformation @this,
         string info)
@@ -21,7 +19,6 @@ public static class ZspSimpleFileAccessProtectorInformationExtensions
         return @this;
     }
 
-    [PublicAPI]
     public static ZspSimpleFileAccessProtectorInformation SetRetryCount(
         this ZspSimpleFileAccessProtectorInformation @this,
         int retryCount)
@@ -30,7 +27,6 @@ public static class ZspSimpleFileAccessProtectorInformationExtensions
         return @this;
     }
 
-    [PublicAPI]
     public static ZspSimpleFileAccessProtectorInformation SetSleepDelaySeconds(
         this ZspSimpleFileAccessProtectorInformation @this,
         int sleepDelaySeconds)
@@ -39,7 +35,6 @@ public static class ZspSimpleFileAccessProtectorInformationExtensions
         return @this;
     }
 
-    [PublicAPI]
     public static ZspSimpleFileAccessProtectorInformation DoGarbageCollectBeforeSleep(
         this ZspSimpleFileAccessProtectorInformation @this,
         bool doGarbageCollectBeforeSleep)
@@ -48,7 +43,6 @@ public static class ZspSimpleFileAccessProtectorInformationExtensions
         return @this;
     }
 
-    [PublicAPI]
     public static ZspSimpleFileAccessProtectorInformation SetHandleException(
         this ZspSimpleFileAccessProtectorInformation @this,
         ZspHandleExceptionDelegate handleException)

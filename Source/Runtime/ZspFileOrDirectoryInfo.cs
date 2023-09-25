@@ -1,5 +1,6 @@
 ﻿namespace ZetaShortPaths;
 
+[PublicAPI]
 public sealed class ZspFileOrDirectoryInfo
 {
     public enum PreferedType
@@ -11,7 +12,6 @@ public sealed class ZspFileOrDirectoryInfo
 
     private PreferedType _preferedType;
 
-    [PublicAPI]
     public ZspFileOrDirectoryInfo()
     {
         _preferedType = PreferedType.Unspecified;
@@ -25,7 +25,6 @@ public sealed class ZspFileOrDirectoryInfo
         OriginalPath = fullPath;
     }
 
-    [PublicAPI]
     public ZspFileOrDirectoryInfo(
         string? fullPath,
         bool detectTypeFromFileSystem)
@@ -85,7 +84,6 @@ public sealed class ZspFileOrDirectoryInfo
         OriginalPath = info?.ToString();
     }
 
-    [PublicAPI]
     public ZspFileOrDirectoryInfo Clone()
     {
         return new(this);
@@ -97,7 +95,6 @@ public sealed class ZspFileOrDirectoryInfo
 
     public DirectoryInfo? Directory => FullName == null ? null : new(FullName);
 
-    [PublicAPI]
     public DirectoryInfo? EffectiveDirectory
     {
         get
@@ -127,7 +124,6 @@ public sealed class ZspFileOrDirectoryInfo
     /// <summary>
     /// Get a value indicating whether the file or the directory exists.
     /// </summary>
-    [PublicAPI]
     public bool Exists
     {
         get
@@ -149,11 +145,11 @@ public sealed class ZspFileOrDirectoryInfo
 
     public string? FullName { get; }
 
-    [PublicAPI] public string? OriginalPath { get; }
+    public string? OriginalPath { get; }
 
     public ZspSplittedPath ZspSplittedPath => new(this);
 
-    [PublicAPI] public string? Name => IsFile ? File?.Name : Directory?.Name;
+    public string? Name => IsFile ? File?.Name : Directory?.Name;
 
     /// <summary>
     /// Gets a value indicating whether this instance is file by querying the file system
@@ -167,7 +163,6 @@ public sealed class ZspFileOrDirectoryInfo
     /// </summary>
     public bool IsDirectory => Directory?.Exists ?? false;
 
-    [PublicAPI]
     public static int Compare(
         DirectoryInfo? one,
         DirectoryInfo? two)
@@ -176,7 +171,6 @@ public sealed class ZspFileOrDirectoryInfo
             StringComparison.OrdinalIgnoreCase);
     }
 
-    [PublicAPI]
     public static int Compare(
         FileInfo? one,
         FileInfo? two)
@@ -185,7 +179,6 @@ public sealed class ZspFileOrDirectoryInfo
             StringComparison.OrdinalIgnoreCase);
     }
 
-    [PublicAPI]
     public static int Compare(
         ZspFileOrDirectoryInfo? one,
         ZspFileOrDirectoryInfo? two)
@@ -194,7 +187,6 @@ public sealed class ZspFileOrDirectoryInfo
             StringComparison.OrdinalIgnoreCase);
     }
 
-    [PublicAPI]
     public static int Compare(
         ZspFileOrDirectoryInfo? one,
         FileInfo? two)
@@ -203,7 +195,6 @@ public sealed class ZspFileOrDirectoryInfo
             StringComparison.OrdinalIgnoreCase);
     }
 
-    [PublicAPI]
     public static int Compare(
         ZspFileOrDirectoryInfo? one,
         DirectoryInfo? two)
@@ -212,7 +203,6 @@ public sealed class ZspFileOrDirectoryInfo
             StringComparison.OrdinalIgnoreCase);
     }
 
-    [PublicAPI]
     public static int Compare(
         string? one,
         DirectoryInfo? two)
@@ -220,7 +210,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Compare(two);
     }
 
-    [PublicAPI]
     public static int Compare(
         string? one,
         FileInfo? two)
@@ -228,7 +217,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Compare(two);
     }
 
-    [PublicAPI]
     public static int Compare(
         string? one,
         ZspFileOrDirectoryInfo? two)
@@ -236,7 +224,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Compare(two);
     }
 
-    [PublicAPI]
     public static int Compare(
         DirectoryInfo? one,
         string? two)
@@ -244,7 +231,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Compare(two);
     }
 
-    [PublicAPI]
     public static int Compare(
         FileInfo? one,
         string? two)
@@ -252,7 +238,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Compare(two);
     }
 
-    [PublicAPI]
     public static int Compare(
         ZspFileOrDirectoryInfo one,
         string? two)
@@ -260,7 +245,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Compare(two);
     }
 
-    [PublicAPI]
     public static int Compare(
         string? one,
         string? two)
@@ -268,35 +252,30 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Compare(two);
     }
 
-    [PublicAPI]
     public int Compare(
         string? b)
     {
         return Compare(this, new ZspFileOrDirectoryInfo(b));
     }
 
-    [PublicAPI]
     public int Compare(
         FileInfo? b)
     {
         return Compare(b?.FullName);
     }
 
-    [PublicAPI]
     public int Compare(
         DirectoryInfo? b)
     {
         return Compare(b?.FullName);
     }
 
-    [PublicAPI]
     public int Compare(
         ZspFileOrDirectoryInfo? b)
     {
         return Compare(b?.FullName);
     }
 
-    [PublicAPI]
     public static ZspFileOrDirectoryInfo? Combine(
         DirectoryInfo? one,
         DirectoryInfo? two)
@@ -304,7 +283,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
-    [PublicAPI]
     public static ZspFileOrDirectoryInfo? Combine(
         FileInfo? one,
         FileInfo? two)
@@ -312,7 +290,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
-    [PublicAPI]
     public static ZspFileOrDirectoryInfo? Combine(
         ZspFileOrDirectoryInfo? one,
         ZspFileOrDirectoryInfo? two)
@@ -320,7 +297,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
-    [PublicAPI]
     public static ZspFileOrDirectoryInfo? Combine(
         ZspFileOrDirectoryInfo? one,
         FileInfo? two)
@@ -328,7 +304,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
-    [PublicAPI]
     public static ZspFileOrDirectoryInfo? Combine(
         ZspFileOrDirectoryInfo? one,
         DirectoryInfo? two)
@@ -336,7 +311,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
-    [PublicAPI]
     public static ZspFileOrDirectoryInfo? Combine(
         string? one,
         DirectoryInfo? two)
@@ -344,7 +318,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
-    [PublicAPI]
     public static ZspFileOrDirectoryInfo? Combine(
         string? one,
         FileInfo? two)
@@ -352,7 +325,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
-    [PublicAPI]
     public static ZspFileOrDirectoryInfo? Combine(
         string? one,
         ZspFileOrDirectoryInfo? two)
@@ -360,7 +332,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
-    [PublicAPI]
     public static ZspFileOrDirectoryInfo? Combine(
         DirectoryInfo? one,
         string? two)
@@ -368,7 +339,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
-    [PublicAPI]
     public static ZspFileOrDirectoryInfo? Combine(
         FileInfo? one,
         string? two)
@@ -376,7 +346,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
-    [PublicAPI]
     public static ZspFileOrDirectoryInfo? Combine(
         ZspFileOrDirectoryInfo? one,
         string? two)
@@ -384,7 +353,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
-    [PublicAPI]
     public static ZspFileOrDirectoryInfo? Combine(
         string? one,
         string? two)
@@ -392,7 +360,6 @@ public sealed class ZspFileOrDirectoryInfo
         return new ZspFileOrDirectoryInfo(one).Combine(two);
     }
 
-    [PublicAPI]
     public ZspFileOrDirectoryInfo? Combine(
         ZspFileOrDirectoryInfo? info)
     {
@@ -403,7 +370,6 @@ public sealed class ZspFileOrDirectoryInfo
         return r == null ? null : new(r);
     }
 
-    [PublicAPI]
     public ZspFileOrDirectoryInfo? Combine(
         string? path)
     {
@@ -415,7 +381,6 @@ public sealed class ZspFileOrDirectoryInfo
         return r == null ? null : new(r);
     }
 
-    [PublicAPI]
     public ZspFileOrDirectoryInfo? Combine(
         FileInfo? info)
     {
@@ -428,7 +393,6 @@ public sealed class ZspFileOrDirectoryInfo
         return r == null ? null : new(r);
     }
      
-    [PublicAPI]
     public ZspFileOrDirectoryInfo? Combine(
         DirectoryInfo? info)
     {
@@ -445,7 +409,6 @@ public sealed class ZspFileOrDirectoryInfo
     /// Schaut ins Dateisystem, wenn der Typ "unspecified" ist und versucht den
     /// korreten Typ festzustellen.
     /// </summary>
-    [PublicAPI]
     public void LookupType()
     {
         if (_preferedType == PreferedType.Unspecified)

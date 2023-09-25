@@ -193,6 +193,12 @@ App_Data/*.ldf
 
 # Windows image file caches
 Thumbs.db
+
+*.cs.nuget.cs
+
+**/.nuget/**
+**/.nuget/*
+**/.nuget/
 ehthumbs.db
 
 # Folder config file

@@ -6,6 +6,7 @@ using Properties;
 /// Execute an action. On error retry multiple times, sleep between the retries.
 /// </summary>
 // ReSharper disable once UnusedMember.Global
+[PublicAPI]
 public static class ZspSimpleFileAccessProtector
 {
 	private const string PassThroughProtector = @"zsp-pass-through-protector";
@@ -14,7 +15,6 @@ public static class ZspSimpleFileAccessProtector
 	/// Call on an exception instance that you do NOT want to retry in this class but immediately
 	/// throw it.
 	/// </summary>
-	[PublicAPI]
 	public static Exception? MarkAsPassThroughZspProtector(this Exception? x)
 	{
 		if (x == null) return null;
@@ -27,7 +27,6 @@ public static class ZspSimpleFileAccessProtector
 	/// <summary>
 	/// Execute an action. On error retry multiple times, sleep between the retries.
 	/// </summary>
-	[PublicAPI]
 	public static void Protect(
 		Action? action,
 		ZspSimpleFileAccessProtectorInformation? info = null)
@@ -53,10 +52,11 @@ public static class ZspSimpleFileAccessProtector
 					if (count++ > info.RetryCount)
 					{
 						throw new ZspSimpleFileAccessProtectorException(
-							string.Format(
-								info.RetryCount == 1
-									? Resources.TriedTooOftenSingular
-									: Resources.TriedTooOftenPlural, info.RetryCount), x);
+								string.Format(
+									info.RetryCount == 1
+										? Resources.TriedTooOftenSingular
+										: Resources.TriedTooOftenPlural, info.RetryCount), x)
+							{ Data = { { nameof(info.Info), info.Info } } };
 					}
 					else
 					{
@@ -66,10 +66,11 @@ public static class ZspSimpleFileAccessProtector
 						if (p.WantThrow)
 						{
 							throw new ZspSimpleFileAccessProtectorException(
-								string.Format(
-									info.RetryCount == 1
-										? Resources.TriedTooOftenSingular
-										: Resources.TriedTooOftenPlural, info.RetryCount), x);
+									string.Format(
+										info.RetryCount == 1
+											? Resources.TriedTooOftenSingular
+											: Resources.TriedTooOftenPlural, info.RetryCount), x)
+								{ Data = { { nameof(info.Info), info.Info } } };
 						}
 
 						if (info.DoGarbageCollectBeforeSleep)
@@ -104,7 +105,6 @@ public static class ZspSimpleFileAccessProtector
 	/// <summary>
 	/// Execute an action. On error retry multiple times, sleep between the retries.
 	/// </summary>
-	[PublicAPI]
 	public static T Protect<T>(
 		Func<T> func,
 		ZspSimpleFileAccessProtectorInformation? info = null)
@@ -132,10 +132,11 @@ public static class ZspSimpleFileAccessProtector
 					if (count++ > info.RetryCount)
 					{
 						throw new ZspSimpleFileAccessProtectorException(
-							string.Format(
-								info.RetryCount == 1
-									? Resources.TriedTooOftenSingular
-									: Resources.TriedTooOftenPlural, info.RetryCount), x);
+								string.Format(
+									info.RetryCount == 1
+										? Resources.TriedTooOftenSingular
+										: Resources.TriedTooOftenPlural, info.RetryCount), x)
+							{ Data = { { nameof(info.Info), info.Info } } };
 					}
 					else
 					{
@@ -145,10 +146,11 @@ public static class ZspSimpleFileAccessProtector
 						if (p.WantThrow)
 						{
 							throw new ZspSimpleFileAccessProtectorException(
-								string.Format(
-									info.RetryCount == 1
-										? Resources.TriedTooOftenSingular
-										: Resources.TriedTooOftenPlural, info.RetryCount), x);
+									string.Format(
+										info.RetryCount == 1
+											? Resources.TriedTooOftenSingular
+											: Resources.TriedTooOftenPlural, info.RetryCount), x)
+								{ Data = { { nameof(info.Info), info.Info } } };
 						}
 
 						if (info.DoGarbageCollectBeforeSleep)
@@ -180,7 +182,6 @@ public static class ZspSimpleFileAccessProtector
 		}
 	}
 
-	[PublicAPI]
 	public static void DoGarbageCollect(bool waitForPendingFinalizers = true)
 	{
 		GC.Collect();

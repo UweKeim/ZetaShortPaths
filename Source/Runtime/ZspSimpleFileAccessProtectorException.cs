@@ -1,30 +1,27 @@
 ﻿namespace ZetaShortPaths;
 
+[PublicAPI]
 [Serializable]
 public class ZspSimpleFileAccessProtectorException :
 	Exception
 {
 	private const string MagicKey = @"a08c7921-3b9f-4d48-bd82-280636202e40";
 
-	[PublicAPI]
 	public ZspSimpleFileAccessProtectorException()
 	{
 		setMagicKey();
 	}
 
-	[PublicAPI]
 	public ZspSimpleFileAccessProtectorException(string message) : base(message)
 	{
 		setMagicKey();
 	}
 
-	[PublicAPI]
 	public ZspSimpleFileAccessProtectorException(string message, Exception inner) : base(message, inner)
 	{
 		setMagicKey();
 	}
 
-	[PublicAPI]
 	protected ZspSimpleFileAccessProtectorException(
 		SerializationInfo info,
 		StreamingContext context) : base(info, context)
