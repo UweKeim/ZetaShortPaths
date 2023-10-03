@@ -26,6 +26,36 @@ public static class ZspSafeFileExtensions
         return ZspSafeFileOperations.SafeDirectoryExists(folderPath);
     }
 
+    public static DirectoryInfo[] SafeGetDirectories(this DirectoryInfo? folderPath)
+    {
+        return ZspSafeFileOperations.SafeGetDirectories(folderPath);
+    }
+
+    public static DirectoryInfo[] SafeGetDirectories(this DirectoryInfo? folderPath, string searchPattern)
+    {
+        return ZspSafeFileOperations.SafeGetDirectories(folderPath, searchPattern);
+    }
+
+    public static DirectoryInfo[] SafeGetDirectories(this DirectoryInfo? folderPath, string searchPattern, SearchOption searchOption)
+    {
+        return ZspSafeFileOperations.SafeGetDirectories(folderPath, searchPattern, searchOption);
+    }
+
+    public static FileInfo[] SafeGetFiles(this DirectoryInfo? folderPath)
+    {
+        return ZspSafeFileOperations.SafeGetFiles(folderPath);
+    }
+
+    public static FileInfo[] SafeGetFiles(this DirectoryInfo? folderPath, string searchPattern)
+    {
+        return ZspSafeFileOperations.SafeGetFiles(folderPath, searchPattern);
+    }
+
+    public static FileInfo[] SafeGetFiles(this DirectoryInfo? folderPath, string searchPattern, SearchOption searchOption)
+    {
+        return ZspSafeFileOperations.SafeGetFiles(folderPath, searchPattern, searchOption);
+    }
+
     public static bool SafeExists(this FileInfo? filePath)
     {
         return ZspSafeFileOperations.SafeFileExists(filePath);

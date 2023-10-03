@@ -50,7 +50,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-				   )
+			      )
 			{
 				var newFilePath =
 					$@"{filePath}.{Guid.NewGuid():N}.deleted";
@@ -70,7 +70,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x2
 #endif
-					   )
+				      )
 				{
 #if WANT_TRACE
                         Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting file '{0}'. " +
@@ -84,7 +84,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-				   )
+			      )
 			{
 				var newFilePath =
 					$@"{filePath}.{Guid.NewGuid():N}.deleted";
@@ -105,7 +105,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x2
 #endif
-					   )
+				      )
 				{
 #if WANT_TRACE
                         Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting file '{0}'. " +
@@ -169,7 +169,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-				   )
+			      )
 			{
 				var newFilePath = $@"{folderPath}.{Guid.NewGuid():B}.deleted";
 
@@ -186,7 +186,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x2
 #endif
-					   )
+				      )
 				{
 					// Catch intentionally.
 #if WANT_TRACE
@@ -447,7 +447,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-				   )
+			      )
 			{
 #if WANT_TRACE
                     Trace.TraceWarning(
@@ -459,7 +459,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-				   )
+			      )
 			{
 				// Catch intentionally.
 #if WANT_TRACE
@@ -475,5 +475,48 @@ public static class ZspSafeFileOperations
                     @"Not safe check-creating folder '{0}', because the folder is null or already exists.", folderPath);
 #endif
 		}
+	}
+
+	public static DirectoryInfo[] SafeGetDirectories(DirectoryInfo? folderPath)
+	{
+		if (folderPath == null || string.IsNullOrEmpty(folderPath.FullName) || !folderPath.Exists)
+			return Array.Empty<DirectoryInfo>();
+		return folderPath.GetDirectories();
+	}
+
+	public static DirectoryInfo[] SafeGetDirectories(DirectoryInfo? folderPath, string searchPattern)
+	{
+		if (folderPath == null || string.IsNullOrEmpty(folderPath.FullName) || !folderPath.Exists)
+			return Array.Empty<DirectoryInfo>();
+		return folderPath.GetDirectories(searchPattern);
+	}
+
+	public static DirectoryInfo[] SafeGetDirectories(DirectoryInfo? folderPath, string searchPattern,
+		SearchOption searchOption)
+	{
+		if (folderPath == null || string.IsNullOrEmpty(folderPath.FullName) || !folderPath.Exists)
+			return Array.Empty<DirectoryInfo>();
+		return folderPath.GetDirectories(searchPattern, searchOption);
+	}
+
+	public static FileInfo[] SafeGetFiles(DirectoryInfo? folderPath)
+	{
+		if (folderPath == null || string.IsNullOrEmpty(folderPath.FullName) || !folderPath.Exists)
+			return Array.Empty<FileInfo>();
+		return folderPath.GetFiles();
+	}
+
+	public static FileInfo[] SafeGetFiles(DirectoryInfo? folderPath, string searchPattern)
+	{
+		if (folderPath == null || string.IsNullOrEmpty(folderPath.FullName) || !folderPath.Exists)
+			return Array.Empty<FileInfo>();
+		return folderPath.GetFiles(searchPattern);
+	}
+
+	public static FileInfo[] SafeGetFiles(DirectoryInfo? folderPath, string searchPattern, SearchOption searchOption)
+	{
+		if (folderPath == null || string.IsNullOrEmpty(folderPath.FullName) || !folderPath.Exists)
+			return Array.Empty<FileInfo>();
+		return folderPath.GetFiles(searchPattern, searchOption);
 	}
 }
