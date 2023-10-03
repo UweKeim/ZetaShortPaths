@@ -50,7 +50,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-			      )
+				  )
 			{
 				var newFilePath =
 					$@"{filePath}.{Guid.NewGuid():N}.deleted";
@@ -70,7 +70,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x2
 #endif
-				      )
+					  )
 				{
 #if WANT_TRACE
                         Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting file '{0}'. " +
@@ -84,7 +84,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-			      )
+				  )
 			{
 				var newFilePath =
 					$@"{filePath}.{Guid.NewGuid():N}.deleted";
@@ -105,7 +105,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x2
 #endif
-				      )
+					  )
 				{
 #if WANT_TRACE
                         Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting file '{0}'. " +
@@ -169,7 +169,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-			      )
+				  )
 			{
 				var newFilePath = $@"{folderPath}.{Guid.NewGuid():B}.deleted";
 
@@ -186,7 +186,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x2
 #endif
-				      )
+					  )
 				{
 					// Catch intentionally.
 #if WANT_TRACE
@@ -416,8 +416,8 @@ public static class ZspSafeFileOperations
 			childFolderPath.Refresh();
 
 			if (childFolderPath.Exists &&
-			    childFolderPath.GetFiles().Length <= 0 &&
-			    childFolderPath.GetDirectories().Length <= 0)
+				childFolderPath.GetFiles().Length <= 0 &&
+				childFolderPath.GetDirectories().Length <= 0)
 			{
 				childFolderPath.Delete(true);
 			}
@@ -447,7 +447,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-			      )
+				  )
 			{
 #if WANT_TRACE
                     Trace.TraceWarning(
@@ -459,7 +459,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-			      )
+				  )
 			{
 				// Catch intentionally.
 #if WANT_TRACE
@@ -496,6 +496,12 @@ public static class ZspSafeFileOperations
 		return Directory.GetDirectories(folderPath, searchPattern, searchOption);
 	}
 
+	public static string[] SafeGetDirectories(string? folderPath, SearchOption searchOption)
+	{
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<string>();
+		return Directory.GetDirectories(folderPath, @"*", searchOption);
+	}
+
 	public static DirectoryInfo[] SafeGetDirectories(DirectoryInfo? folderPath)
 	{
 		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<DirectoryInfo>();
@@ -513,6 +519,12 @@ public static class ZspSafeFileOperations
 	{
 		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<DirectoryInfo>();
 		return folderPath.GetDirectories(searchPattern, searchOption);
+	}
+
+	public static DirectoryInfo[] SafeGetDirectories(DirectoryInfo? folderPath, SearchOption searchOption)
+	{
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<DirectoryInfo>();
+		return folderPath.GetDirectories(@"*", searchOption);
 	}
 
 	public static string[] SafeGetFiles(string? folderPath)
@@ -533,6 +545,12 @@ public static class ZspSafeFileOperations
 		return Directory.GetFiles(folderPath, searchPattern, searchOption);
 	}
 
+	public static string[] SafeGetFiles(string? folderPath, SearchOption searchOption)
+	{
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<string>();
+		return Directory.GetFiles(folderPath, @"*", searchOption);
+	}
+
 	public static FileInfo[] SafeGetFiles(DirectoryInfo? folderPath)
 	{
 		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<FileInfo>();
@@ -549,5 +567,11 @@ public static class ZspSafeFileOperations
 	{
 		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<FileInfo>();
 		return folderPath.GetFiles(searchPattern, searchOption);
+	}
+
+	public static FileInfo[] SafeGetFiles(DirectoryInfo? folderPath, SearchOption searchOption)
+	{
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<FileInfo>();
+		return folderPath.GetFiles(@"*", searchOption);
 	}
 }

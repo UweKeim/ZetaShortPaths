@@ -110,14 +110,14 @@ public static class ZspIOHelper
 		else return new FileInfo(filePath).Length;
 	}
 
-	public static FileInfo[] GetFiles(string? directoryPath, string? pattern = @"*.*")
+	public static FileInfo[] GetFiles(string? directoryPath, string? pattern = @"*")
 	{
 		return GetFiles(directoryPath, pattern, SearchOption.TopDirectoryOnly);
 	}
 
 	public static FileInfo[] GetFiles(string? directoryPath, SearchOption searchOption)
 	{
-		return GetFiles(directoryPath, @"*.*", searchOption);
+		return GetFiles(directoryPath, @"*", searchOption);
 	}
 
 	public static FileInfo[] GetFiles(string? directoryPath, string? pattern, SearchOption searchOption)
