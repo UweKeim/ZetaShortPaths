@@ -161,7 +161,7 @@ public static class ZspIOHelper
 
 		var fi = new FileInfo(filePath);
 		return new()
-			{ CreationTime = fi.CreationTime, LastAccessTime = fi.LastAccessTime, LastWriteTime = fi.LastWriteTime };
+		{ CreationTime = fi.CreationTime, LastAccessTime = fi.LastAccessTime, LastWriteTime = fi.LastWriteTime };
 	}
 
 	public static void SetFileDateInfos(FileInfo? filePath, ZspFileDateInfos? infos)
@@ -177,11 +177,116 @@ public static class ZspIOHelper
 		if (infos == null) throw new ArgumentNullException(nameof(infos));
 
 		// ReSharper disable once UnusedVariable
+#pragma warning disable IDE0059
 		var fi = new FileInfo(filePath)
+#pragma warning restore IDE0059
 		{
 			CreationTime = infos.CreationTime,
 			LastAccessTime = infos.LastAccessTime,
 			LastWriteTime = infos.LastWriteTime
 		};
+	}
+
+	/// <summary>
+	/// Die maximale Zeichenlänge. Hier bewusst auf 247 gesetzt, siehe:
+	/// https://web.archive.org/web/20140503163140/http://zetalongpaths.codeplex.com/discussions/230652
+	/// </summary>
+	public const int MAX_PATH = 247;
+
+	/// <summary>
+	/// The is current path longer, then supported by standard System.IO methods
+	/// </summary>
+	/// <param name="path">
+	/// The path to check.
+	/// </param>
+	/// <returns>
+	/// True, if path longer then MAX_PATH constant, or is UNC path, else - False
+	/// </returns>
+	public static bool IsPathLong(string? path)
+	{
+		return MustBeLongPath(path);
+	}
+
+	public static bool MustBeLongPath(string? path)
+	{
+		if (path == null || string.IsNullOrEmpty(path))
+		{
+			return false;
+		}
+		else if (path.StartsWith(@"\\?\"))
+		{
+			return true;
+		}
+		else if (path.Contains(@"~"))
+		{
+			// See https://github.com/UweKeim/ZetaLongPaths/issues/12
+			// Example: "C:\\Users\\cliente\\Desktop\\DRIVES~2\\mdzip\\PASTAC~1\\SUBPAS~1\\PASTAC~1\\SUBPAS~1\\SUBDAS~1\\bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.txt"
+			return true;
+		}
+		else if (path.Length > MAX_PATH)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public static string? CheckAddLongPathPrefix(string? path)
+	{
+		if (path == null || string.IsNullOrEmpty(path) || path.StartsWith(@"\\?\"))
+		{
+			return path;
+		}
+		else if (path.Length > MAX_PATH ||
+				 // See https://github.com/UweKeim/ZetaLongPaths/issues/12
+				 // Example: "C:\\Users\\cliente\\Desktop\\DRIVES~2\\mdzip\\PASTAC~1\\SUBPAS~1\\PASTAC~1\\SUBPAS~1\\SUBDAS~1\\bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.txt"
+				 path.Contains(@"~"))
+		{
+			return ForceAddLongPathPrefix(path);
+		}
+		else
+		{
+			return path;
+		}
+	}
+
+	public static string? ForceRemoveLongPathPrefix(string? path)
+	{
+		if (path==null||string.IsNullOrEmpty(path) || !path.StartsWith(@"\\?\"))
+		{
+			return path;
+		}
+		else if (path.StartsWith(@"\\?\UNC\", StringComparison.OrdinalIgnoreCase))
+		{
+			return @"\\" + path.Substring(@"\\?\UNC\".Length);
+		}
+		else
+		{
+			return path.Substring(@"\\?\".Length);
+		}
+	}
+
+	public static string? ForceAddLongPathPrefix(string? path)
+	{
+		if (path == null || string.IsNullOrEmpty(path) || path.StartsWith(@"\\?\"))
+		{
+			return path;
+		}
+		else
+		{
+			// http://msdn.microsoft.com/en-us/library/aa365247.aspx
+
+			if (path.StartsWith(@"\\"))
+			{
+				// UNC.
+				return @"\\?\UNC\" + path.Substring(2);
+			}
+			else
+			{
+				return @"\\?\" + path;
+			}
+		}
 	}
 }
