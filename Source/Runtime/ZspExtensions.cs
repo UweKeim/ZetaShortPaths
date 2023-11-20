@@ -330,7 +330,7 @@ public static class ZspExtensions
 			index = str?.IndexOf(oldValue, index, comparison) ?? -1;
 		}
 
-		sb.Append(str?.Substring(previousIndex));
+		sb.Append(str?[previousIndex..]);
 
 		return sb.ToString();
 	}
@@ -523,8 +523,8 @@ public static class ZspExtensions
 		var f1 = folder1?.FullName;
 
 		return !string.IsNullOrEmpty(f1) && !string.IsNullOrEmpty(folder2) &&
-		       (f1?.TrimEnd('\\').ToLowerInvariant()
-			       .StartsWith(folder2?.TrimEnd('\\').ToLowerInvariant() ?? string.Empty) ?? false);
+		       f1.TrimEnd('\\').ToLowerInvariant()
+			       .StartsWith(folder2.TrimEnd('\\').ToLowerInvariant() );
 	}
 
 	/// <summary>

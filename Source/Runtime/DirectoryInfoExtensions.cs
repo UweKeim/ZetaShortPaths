@@ -16,7 +16,7 @@ public static class DirectoryInfoExtensions
     }
 
     [PublicAPI]
-    public static bool IsEmpty(this DirectoryInfo i)
+    public static bool IsEmpty(this DirectoryInfo? i)
     {
         return ZspIOHelper.IsDirectoryEmpty(i);
     }

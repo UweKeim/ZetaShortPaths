@@ -260,11 +260,11 @@ public static class ZspIOHelper
 		}
 		else if (path.StartsWith(@"\\?\UNC\", StringComparison.OrdinalIgnoreCase))
 		{
-			return @"\\" + path.Substring(@"\\?\UNC\".Length);
+			return @"\\" + path[@"\\?\UNC\".Length..];
 		}
 		else
 		{
-			return path.Substring(@"\\?\".Length);
+			return path[@"\\?\".Length..];
 		}
 	}
 
@@ -281,7 +281,7 @@ public static class ZspIOHelper
 			if (path.StartsWith(@"\\"))
 			{
 				// UNC.
-				return @"\\?\UNC\" + path.Substring(2);
+				return @"\\?\UNC\" + path[2..];
 			}
 			else
 			{

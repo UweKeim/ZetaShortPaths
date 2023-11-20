@@ -15,10 +15,4 @@ public class ZspException : Exception
     public ZspException(string message, Exception inner) : base(message, inner)
     {
     }
-
-    protected ZspException(
-        SerializationInfo info,
-        StreamingContext context) : base(info, context)
-    {
-    }
 }

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>ZetaShortPaths</AssemblyName>
     <RootNamespace>ZetaShortPaths</RootNamespace>
     <Configurations>Release</Configurations>
@@ -14,9 +14,9 @@
     <PackageIconUrl></PackageIconUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl>https://github.com/UweKeim/ZetaShortPaths</RepositoryUrl>
-    <AssemblyVersion>1.0.43.0</AssemblyVersion>
-    <FileVersion>1.0.43.0</FileVersion>
-    <Version>1.0.43.0</Version>
+    <AssemblyVersion>2.0.1.0</AssemblyVersion>
+    <FileVersion>2.0.1.0</FileVersion>
+    <Version>2.0.1.0</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -32,7 +32,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2023.2.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
   </ItemGroup>
 
   <ItemGroup>

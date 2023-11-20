@@ -22,13 +22,6 @@ public class ZspSimpleFileAccessProtectorException :
 		setMagicKey();
 	}
 
-	protected ZspSimpleFileAccessProtectorException(
-		SerializationInfo info,
-		StreamingContext context) : base(info, context)
-	{
-		setMagicKey();
-	}
-
 	/// <summary>
 	/// Sometimes, e.g. when serializing to JSON and later deserializing,
 	/// one might loose the exact type. Therefore another marker is set
