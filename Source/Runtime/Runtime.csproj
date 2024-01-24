@@ -8,15 +8,15 @@
     <Authors>Zeta Software GmbH</Authors>
     <Product>Zeta Short Paths</Product>
     <Description>A .NET Standard library with all the goodies from ZetaLongPaths to work with files and folders for paths with less than 260 characters.</Description>
-    <Copyright>© 1999-2023 Zeta Software GmbH</Copyright>
+    <Copyright>© Zeta Software GmbH</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/UweKeim/ZetaShortPaths</PackageProjectUrl>
     <PackageIconUrl></PackageIconUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl>https://github.com/UweKeim/ZetaShortPaths</RepositoryUrl>
-    <AssemblyVersion>2.0.6.0</AssemblyVersion>
-    <FileVersion>2.0.6.0</FileVersion>
-    <Version>2.0.6.0</Version>
+    <AssemblyVersion>2.0.7.0</AssemblyVersion>
+    <FileVersion>2.0.7.0</FileVersion>
+    <Version>2.0.7.0</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
