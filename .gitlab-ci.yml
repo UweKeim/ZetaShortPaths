@@ -1,0 +1,108 @@
+# Anmerkungen ganz unten.
+
+image: mcr.microsoft.com/dotnet/sdk:latest
+
+default:
+  tags:
+    - ubuntu # Damit auf dem Ubuntu-Runner ausgeführt wird. 
+
+stages:
+  - build
+  - test
+  - nuget
+
+variables:
+  # Diese Variablen sind notwendig, auch wenn sie nicht selbst verwendet werden.
+  GIT_SUBMODULE_DEPTH: 1
+  GIT_SUBMODULE_STRATEGY: recursive
+
+  OBJECTS_DIRECTORY: 'obj'
+  NUGET_PACKAGES_DIRECTORY: '.nuget'
+  SOURCE_CODE_PATH: '${CI_PROJECT_DIR}/Source'
+
+cache:
+  key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
+  paths:
+    - $SOURCE_CODE_PATH/$OBJECTS_DIRECTORY/project.assets.json
+    - $SOURCE_CODE_PATH/$OBJECTS_DIRECTORY/*.csproj.nuget.*
+    - $NUGET_PACKAGES_DIRECTORY
+  policy: pull-push
+
+before_script: 
+  # Immer die besonderen NuGet-Referenzen ergänzen.
+  - dotnet nuget remove source "$GITLAB_ZETA_NUGET_NAME" >nul || exit_code=$?
+  - dotnet nuget add source $GITLAB_ZETA_NUGET_URL -n "$GITLAB_ZETA_NUGET_NAME" -u $GITLAB_ZETA_NUGET_USER -p $GITLAB_ZETA_NUGET_PASSWORD --store-password-in-clear-text >nul
+  - dotnet nuget remove source "DevExpress Uwe" >nul || exit_code=$?
+  - dotnet nuget add source "https://nuget.devexpress.com/$DEVEXPRESS_NUGETKEY_UWEKEIM/api" -n "DevExpress Uwe"
+
+  # Pakete wiederherstellen.
+  - cd $SOURCE_CODE_PATH
+  - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY
+
+  # CS-Skript installieren/Update.
+  - dotnet tool install --global cs-script.cli
+  - dotnet tool update --global cs-script.cli
+
+  # CS-Skript-NuGet-Verarbeitung umstellen.
+  - ~/.dotnet/tools/css -config:set:LegacyNugetSupport=false
+
+build:
+  stage: build
+  script:
+    # Skript aufrufen um Versionsnummer zu erhöhen.
+    - ~/.dotnet/tools/css ${CI_PROJECT_DIR}/Source/cicd-increase-versionnumber.cs
+
+    - cd $SOURCE_CODE_PATH
+    - dotnet build --no-restore
+
+    # Geänderte Versionsnummer zurück pushen.
+    # https://stackoverflow.com/a/65265124/107625
+    # https://stackoverflow.com/a/73394648/107625
+    # Falls hier eine Fehlermeldung auftritt, wurden oben keine Versionsnummern geändert,
+    # mutmaßlich, weil in den CSPROJ-Dateien keine Versionsinformationen enthalten sind.
+    - git config --global user.name "$AUTO_COMMITTER_NAME"
+    - git config --global user.email "$AUTO_COMMITTER_EMAIL"
+    - git add .
+    - git commit -m "feat Versionsnummer in Pipeline erhöht"
+    - git push -o ci.skip "https://${GITLAB_USER_LOGIN}:${GIT_PUSH_TOKEN}@${CI_REPOSITORY_URL#*@}" HEAD:$CI_COMMIT_REF_NAME 
+
+test:
+    rules:
+        - if: '$CI_COMMIT_BRANCH == "main"'
+    stage: test
+    script:
+        - echo "dummy"
+        #- dotnet test --no-restore
+    
+# Das NuGet sollte automatisch gebaut worden sein während des Builds. 
+# Jetzt nur noch nach NuGet.org senden.
+nuget:
+    rules:
+        - if: '$CI_COMMIT_BRANCH == "main"'
+    stage: nuget
+    script:
+        # Zur Sicherheit nochmals builden. Ggf. unnötig, wenn ich das
+        # Konzept der Artefakte besser verstehe, damit arbeiten.
+        - cd $SOURCE_CODE_PATH
+        - dotnet build --no-restore
+        
+        # Einen lokalen Folder-Publish via DOTNET ausführen.
+        - dotnet publish "$SOURCE_CODE_PATH/Runtime/Runtime.csproj" -c Release
+        
+        # CS-Skript installieren/Update.
+        - dotnet tool install --global cs-script.cli >nul || exit_code=$?
+        - dotnet tool update --global cs-script.cli >nul || exit_code=$?
+        
+        # CS-Skript-NuGet-Verarbeitung umstellen.
+        - ~/.dotnet/tools/css -config:set:LegacyNugetSupport=false >nul || exit_code=$?
+        
+        # Skripte aufrufen.
+        - ~/.dotnet/tools/css ${CI_PROJECT_DIR}/Deploy/Build/cicd-build.cs
+
+# -------------------------
+
+# Ursprünglich von https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/dotNET-Core.gitlab-ci.yml viel übernommen.
+# Exit-Codes ignorieren mit "|| exit_code=$?", siehe unten, via https://docs.gitlab.com/ee/ci/yaml/script.html#ignore-non-zero-exit-codes.
+# Syntax-Referenz: https://docs.gitlab.com/ee/ci/yaml/.
+# Submodules clonen: https://docs.gitlab.com/ee/ci/git_submodules.html
+# Submodule aktuell holen: https://dzone.com/articles/using-git-submodules-with-gitlab-cicd
