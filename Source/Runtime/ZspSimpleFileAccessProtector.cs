@@ -60,7 +60,7 @@ public static class ZspSimpleFileAccessProtector
 					}
 					else
 					{
-						var p = new ZspHandleExceptionInfo(x, count);
+						var p = new ZspHandleExceptionInfo(x, count, info);
 						info.HandleException?.Invoke(p);
 
 						if (p.WantThrow)
@@ -140,7 +140,7 @@ public static class ZspSimpleFileAccessProtector
 					}
 					else
 					{
-						var p = new ZspHandleExceptionInfo(x, count);
+						var p = new ZspHandleExceptionInfo(x, count, info);
 						info.HandleException?.Invoke(p);
 
 						if (p.WantThrow)
