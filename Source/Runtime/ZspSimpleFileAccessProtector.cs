@@ -128,6 +128,7 @@ public static class ZspSimpleFileAccessProtector
 
 					// Bestimmte Fehler direkt durchlassen.
 					if (x.Data[PassThroughProtector] is true) throw;
+					if (x is OperationCanceledException) throw;
 
 					if (count++ > info.RetryCount)
 					{
