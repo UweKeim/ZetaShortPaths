@@ -49,6 +49,10 @@ public static class ZspSimpleFileAccessProtector
                         Trace.TraceWarning($@"Error during file operation. ('{info.Info}'): {x.Message}");
 #endif
 
+					// Bestimmte Fehler direkt durchlassen.
+					if (x.Data[PassThroughProtector] is true) throw;
+					if (x is OperationCanceledException) throw;
+
 					if (count++ > info.RetryCount)
 					{
 						throw new ZspSimpleFileAccessProtectorException(
