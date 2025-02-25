@@ -49,7 +49,7 @@ public class ZspSimpleFileAccessProtectorException :
 		MarkAsSimpleFileAccessProtectorException(this);
 	}
 
-	private static bool hasKey(Exception? exception, string key)
+	private static bool hasKey(Exception? exception, string? key)
 	{
 		if (exception == null || string.IsNullOrEmpty(key)) return false;
 

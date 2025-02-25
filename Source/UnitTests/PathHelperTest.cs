@@ -3,7 +3,27 @@ namespace ZetaShortPaths.UnitTests;
 [TestClass]
 public class PathHelperTest
 {
-    [TestMethod]
+	[TestMethod]
+	public void TestCombine01()
+	{
+		var a1 = ZspPathHelper.Combine(string.Empty, @"a");
+		Assert.AreEqual(a1, @"a");
+
+		var a2 = ZspPathHelper.Combine(@"b", string.Empty, @"a");
+		Assert.AreEqual(a2, @"b\a");
+	}
+
+	[TestMethod]
+	public void TestCombine02()
+	{
+		var a1 = ZspPathHelper.CombineVirtual(@"a", @"b", @"c", @"d");
+		Assert.AreEqual(a1, @"a/b/c/d");
+
+		var a2 = ZspPathHelper.Combine(@"a", @"b", @"c", @"d");
+		Assert.AreEqual(a2, @"a\b\c\d");
+	}
+
+	[TestMethod]
     public void TestGeneral4()
     {
         var s1 = @"a";

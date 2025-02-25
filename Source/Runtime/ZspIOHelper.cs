@@ -1,5 +1,8 @@
 ﻿namespace ZetaShortPaths;
 
+/// <summary>
+/// 
+/// </summary>
 [PublicAPI]
 public static class ZspIOHelper
 {
@@ -48,16 +51,22 @@ public static class ZspIOHelper
 	}
 
 	public static void CopyFileExact(
-		string sourceFilePath,
-		string destinationFilePath,
+		string? sourceFilePath,
+		string? destinationFilePath,
 		bool overwriteExisting)
 	{
+		if (string.IsNullOrEmpty(sourceFilePath)) throw new ArgumentNullException(nameof(sourceFilePath));
+		if (string.IsNullOrEmpty(destinationFilePath)) throw new ArgumentNullException(nameof(destinationFilePath));
+
 		File.Copy(sourceFilePath, destinationFilePath, overwriteExisting);
 		CloneDates(sourceFilePath, destinationFilePath);
 	}
 
-	private static void CloneDates(string sourceFilePath, string destinationFilePath)
+	private static void CloneDates(string? sourceFilePath, string? destinationFilePath)
 	{
+		if (string.IsNullOrEmpty(sourceFilePath)) throw new ArgumentNullException(nameof(sourceFilePath));
+		if (string.IsNullOrEmpty(destinationFilePath)) throw new ArgumentNullException(nameof(destinationFilePath));
+
 		var s = new FileInfo(sourceFilePath);
 		var d = new FileInfo(destinationFilePath);
 
@@ -76,8 +85,10 @@ public static class ZspIOHelper
 			di.Name.StartsWith($@"{driveLetter}:", StringComparison.InvariantCultureIgnoreCase));
 	}
 
-	public static void Touch(string filePath)
+	public static void Touch(string? filePath)
 	{
+		if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException(nameof(filePath));
+
 		var now = DateTime.Now;
 
 		File.SetCreationTime(filePath, now);
@@ -85,7 +96,7 @@ public static class ZspIOHelper
 		File.SetLastWriteTime(filePath, now);
 	}
 
-	public static void DeleteDirectoryContents(string folderPath, bool recursive)
+	public static void DeleteDirectoryContents(string? folderPath, bool recursive)
 	{
 		if (!Directory.Exists(folderPath)) return;
 
@@ -124,7 +135,7 @@ public static class ZspIOHelper
 	{
 		if (directoryPath == null) throw new ArgumentNullException(nameof(directoryPath));
 		if (pattern == null) throw new ArgumentNullException(nameof(pattern));
-		if (string.IsNullOrEmpty(directoryPath) || !Directory.Exists(directoryPath)) return Array.Empty<FileInfo>();
+		if (string.IsNullOrEmpty(directoryPath) || !Directory.Exists(directoryPath)) return [];
 
 		return new DirectoryInfo(directoryPath).GetFiles(pattern, searchOption);
 	}
@@ -144,7 +155,7 @@ public static class ZspIOHelper
 		if (directoryPath == null) throw new ArgumentNullException(nameof(directoryPath));
 		if (pattern == null) throw new ArgumentNullException(nameof(pattern));
 		if (string.IsNullOrEmpty(directoryPath) || !Directory.Exists(directoryPath))
-			return Array.Empty<DirectoryInfo>();
+			return [];
 
 		return new DirectoryInfo(directoryPath).GetDirectories(pattern, searchOption);
 	}
@@ -161,7 +172,7 @@ public static class ZspIOHelper
 
 		var fi = new FileInfo(filePath);
 		return new()
-		{ CreationTime = fi.CreationTime, LastAccessTime = fi.LastAccessTime, LastWriteTime = fi.LastWriteTime };
+			{ CreationTime = fi.CreationTime, LastAccessTime = fi.LastAccessTime, LastWriteTime = fi.LastWriteTime };
 	}
 
 	public static void SetFileDateInfos(FileInfo? filePath, ZspFileDateInfos? infos)
@@ -240,9 +251,9 @@ public static class ZspIOHelper
 			return path;
 		}
 		else if (path.Length > MAX_PATH ||
-				 // See https://github.com/UweKeim/ZetaLongPaths/issues/12
-				 // Example: "C:\\Users\\cliente\\Desktop\\DRIVES~2\\mdzip\\PASTAC~1\\SUBPAS~1\\PASTAC~1\\SUBPAS~1\\SUBDAS~1\\bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.txt"
-				 path.Contains(@"~"))
+		         // See https://github.com/UweKeim/ZetaLongPaths/issues/12
+		         // Example: "C:\\Users\\cliente\\Desktop\\DRIVES~2\\mdzip\\PASTAC~1\\SUBPAS~1\\PASTAC~1\\SUBPAS~1\\SUBDAS~1\\bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.txt"
+		         path.Contains(@"~"))
 		{
 			return ForceAddLongPathPrefix(path);
 		}
@@ -254,7 +265,7 @@ public static class ZspIOHelper
 
 	public static string? ForceRemoveLongPathPrefix(string? path)
 	{
-		if (path==null||string.IsNullOrEmpty(path) || !path.StartsWith(@"\\?\"))
+		if (path == null || string.IsNullOrEmpty(path) || !path.StartsWith(@"\\?\"))
 		{
 			return path;
 		}

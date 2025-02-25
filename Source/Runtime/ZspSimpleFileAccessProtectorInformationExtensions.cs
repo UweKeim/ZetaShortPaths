@@ -45,7 +45,7 @@ public static class ZspSimpleFileAccessProtectorInformationExtensions
 
     public static ZspSimpleFileAccessProtectorInformation SetHandleException(
         this ZspSimpleFileAccessProtectorInformation @this,
-        ZspHandleExceptionDelegate handleException)
+        ZspHandleExceptionDelegate? handleException)
     {
         @this.HandleException = handleException;
         return @this;

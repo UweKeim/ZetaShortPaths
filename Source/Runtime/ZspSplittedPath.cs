@@ -8,28 +8,28 @@ public sealed class ZspSplittedPath
 		Info = new(path);
 	}
 
-	public ZspSplittedPath(ZspFileOrDirectoryInfo path)
+	public ZspSplittedPath(ZspFileOrDirectoryInfo? path)
 	{
 		Info = new(path);
 	}
 
-	public string? FullPath => Info.FullName;
+	public string? FullPath => Info?.FullName;
 
-	public ZspFileOrDirectoryInfo Info { get; }
+	public ZspFileOrDirectoryInfo? Info { get; }
 
-	public string? Drive => ZspPathHelper.GetDrive(Info.FullName);
+	public string? Drive => ZspPathHelper.GetDrive(Info?.FullName);
 
-	public string? Share => ZspPathHelper.GetShare(Info.FullName);
+	public string? Share => ZspPathHelper.GetShare(Info?.FullName);
 
-	public string? DriveOrShare => ZspPathHelper.GetDriveOrShare(Info.FullName);
+	public string? DriveOrShare => ZspPathHelper.GetDriveOrShare(Info?.FullName);
 
-	public string? Directory => ZspPathHelper.GetDirectory(Info.FullName);
+	public string? Directory => ZspPathHelper.GetDirectory(Info?.FullName);
 
-	public string? NameWithoutExtension => ZspPathHelper.GetNameWithoutExtension(Info.FullName);
+	public string? NameWithoutExtension => ZspPathHelper.GetNameWithoutExtension(Info?.FullName);
 
-	public string? NameWithExtension => ZspPathHelper.GetNameWithExtension(Info.FullName);
+	public string? NameWithExtension => ZspPathHelper.GetNameWithExtension(Info?.FullName);
 
-	public string? Extension => ZspPathHelper.GetExtension(Info.FullName);
+	public string? Extension => ZspPathHelper.GetExtension(Info?.FullName);
 
 	public string? DriveOrShareAndDirectory => ZspPathHelper.Combine(DriveOrShare, Directory);
 

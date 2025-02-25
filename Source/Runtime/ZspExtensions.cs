@@ -30,16 +30,16 @@ public static class ZspExtensions
 
 	public static void CopyToExact(
 		this FileInfo? filePath,
-		FileInfo destinationFilePath,
+		FileInfo? destinationFilePath,
 		bool overwriteExisting)
 	{
 		if (filePath == null) throw new ArgumentNullException(nameof(filePath));
-		ZspIOHelper.CopyFileExact(filePath.FullName, destinationFilePath.FullName, overwriteExisting);
+		ZspIOHelper.CopyFileExact(filePath.FullName, destinationFilePath?.FullName, overwriteExisting);
 	}
 
 	public static void CopyToExact(
 		this FileInfo? filePath,
-		string destinationFilePath,
+		string? destinationFilePath,
 		bool overwriteExisting)
 	{
 		if (filePath == null) throw new ArgumentNullException(nameof(filePath));
@@ -76,28 +76,28 @@ public static class ZspExtensions
 
 	public static string? MakeAbsoluteTo(
 		this string? pathToMakeAbsolute,
-		DirectoryInfo basePathToWhichToMakeAbsoluteTo)
+		DirectoryInfo? basePathToWhichToMakeAbsoluteTo)
 	{
-		return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute, basePathToWhichToMakeAbsoluteTo.FullName);
+		return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute, basePathToWhichToMakeAbsoluteTo?.FullName);
 	}
 
 	public static string? MakeAbsoluteTo(
 		this DirectoryInfo? pathToMakeAbsolute,
-		string basePathToWhichToMakeAbsoluteTo)
+		string? basePathToWhichToMakeAbsoluteTo)
 	{
 		return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute?.FullName, basePathToWhichToMakeAbsoluteTo);
 	}
 
 	public static string? MakeAbsoluteTo(
 		this FileInfo? pathToMakeAbsolute,
-		DirectoryInfo basePathToWhichToMakeAbsoluteTo)
+		DirectoryInfo? basePathToWhichToMakeAbsoluteTo)
 	{
-		return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute?.FullName, basePathToWhichToMakeAbsoluteTo.FullName);
+		return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute?.FullName, basePathToWhichToMakeAbsoluteTo?.FullName);
 	}
 
 	public static string? MakeAbsoluteTo(
 		this FileInfo? pathToMakeAbsolute,
-		string basePathToWhichToMakeAbsoluteTo)
+		string? basePathToWhichToMakeAbsoluteTo)
 	{
 		return ZspPathHelper.GetAbsolutePath(pathToMakeAbsolute?.FullName, basePathToWhichToMakeAbsoluteTo);
 	}
@@ -447,10 +447,10 @@ public static class ZspExtensions
 			case null:
 				return 1;
 			default:
-			{
-				if (s2 == null) return -1;
-				else return string.Compare(s1, s2, StringComparison.OrdinalIgnoreCase);
-			}
+				{
+					if (s2 == null) return -1;
+					else return string.Compare(s1, s2, StringComparison.OrdinalIgnoreCase);
+				}
 		}
 	}
 
@@ -523,8 +523,8 @@ public static class ZspExtensions
 		var f1 = folder1?.FullName;
 
 		return !string.IsNullOrEmpty(f1) && !string.IsNullOrEmpty(folder2) &&
-		       f1.TrimEnd('\\').ToLowerInvariant()
-			       .StartsWith(folder2.TrimEnd('\\').ToLowerInvariant() );
+			   f1.TrimEnd('\\').ToLowerInvariant()
+				   .StartsWith(folder2.TrimEnd('\\').ToLowerInvariant());
 	}
 
 	/// <summary>

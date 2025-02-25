@@ -479,99 +479,99 @@ public static class ZspSafeFileOperations
 
 	public static string[] SafeGetDirectories(string? folderPath)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<string>();
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
 		return Directory.GetDirectories(folderPath);
 	}
 
-	public static string[] SafeGetDirectories(string? folderPath, string searchPattern)
+	public static string[] SafeGetDirectories(string? folderPath, string? searchPattern)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<string>();
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
 		return Directory.GetDirectories(folderPath, searchPattern);
 	}
 
-	public static string[] SafeGetDirectories(string? folderPath, string searchPattern,
+	public static string[] SafeGetDirectories(string? folderPath, string? searchPattern,
 		SearchOption searchOption)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<string>();
-		return Directory.GetDirectories(folderPath, searchPattern, searchOption);
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
+		return Directory.GetDirectories(folderPath, searchPattern??string.Empty, searchOption);
 	}
 
 	public static string[] SafeGetDirectories(string? folderPath, SearchOption searchOption)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<string>();
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
 		return Directory.GetDirectories(folderPath, @"*", searchOption);
 	}
 
 	public static DirectoryInfo[] SafeGetDirectories(DirectoryInfo? folderPath)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<DirectoryInfo>();
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
 		return folderPath.GetDirectories();
 	}
 
-	public static DirectoryInfo[] SafeGetDirectories(DirectoryInfo? folderPath, string searchPattern)
+	public static DirectoryInfo[] SafeGetDirectories(DirectoryInfo? folderPath, string? searchPattern)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<DirectoryInfo>();
-		return folderPath.GetDirectories(searchPattern);
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
+		return folderPath.GetDirectories(searchPattern ?? string.Empty);
 	}
 
-	public static DirectoryInfo[] SafeGetDirectories(DirectoryInfo? folderPath, string searchPattern,
+	public static DirectoryInfo[] SafeGetDirectories(DirectoryInfo? folderPath, string? searchPattern,
 		SearchOption searchOption)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<DirectoryInfo>();
-		return folderPath.GetDirectories(searchPattern, searchOption);
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
+		return folderPath.GetDirectories(searchPattern??string.Empty, searchOption);
 	}
 
 	public static DirectoryInfo[] SafeGetDirectories(DirectoryInfo? folderPath, SearchOption searchOption)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<DirectoryInfo>();
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
 		return folderPath.GetDirectories(@"*", searchOption);
 	}
 
 	public static string[] SafeGetFiles(string? folderPath)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<string>();
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
 		return Directory.GetFiles(folderPath);
 	}
 
-	public static string[] SafeGetFiles(string? folderPath, string searchPattern)
+	public static string[] SafeGetFiles(string? folderPath, string? searchPattern)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<string>();
-		return Directory.GetFiles(folderPath, searchPattern);
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
+		return Directory.GetFiles(folderPath, searchPattern ?? string.Empty);
 	}
 
-	public static string[] SafeGetFiles(string? folderPath, string searchPattern, SearchOption searchOption)
+	public static string[] SafeGetFiles(string? folderPath, string? searchPattern, SearchOption searchOption)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<string>();
-		return Directory.GetFiles(folderPath, searchPattern, searchOption);
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
+		return Directory.GetFiles(folderPath, searchPattern ?? string.Empty, searchOption);
 	}
 
 	public static string[] SafeGetFiles(string? folderPath, SearchOption searchOption)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<string>();
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
 		return Directory.GetFiles(folderPath, @"*", searchOption);
 	}
 
 	public static FileInfo[] SafeGetFiles(DirectoryInfo? folderPath)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<FileInfo>();
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
 		return folderPath.GetFiles();
 	}
 
-	public static FileInfo[] SafeGetFiles(DirectoryInfo? folderPath, string searchPattern)
+	public static FileInfo[] SafeGetFiles(DirectoryInfo? folderPath, string? searchPattern)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<FileInfo>();
-		return folderPath.GetFiles(searchPattern);
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
+		return folderPath.GetFiles(searchPattern ?? string.Empty);
 	}
 
-	public static FileInfo[] SafeGetFiles(DirectoryInfo? folderPath, string searchPattern, SearchOption searchOption)
+	public static FileInfo[] SafeGetFiles(DirectoryInfo? folderPath, string? searchPattern, SearchOption searchOption)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<FileInfo>();
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
 		return folderPath.GetFiles(searchPattern, searchOption);
 	}
 
 	public static FileInfo[] SafeGetFiles(DirectoryInfo? folderPath, SearchOption searchOption)
 	{
-		if (folderPath == null || !SafeDirectoryExists(folderPath)) return Array.Empty<FileInfo>();
+		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
 		return folderPath.GetFiles(@"*", searchOption);
 	}
 }

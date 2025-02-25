@@ -31,12 +31,12 @@ public static class ZspSafeFileExtensions
         return ZspSafeFileOperations.SafeGetDirectories(folderPath);
     }
 
-    public static DirectoryInfo[] SafeGetDirectories(this DirectoryInfo? folderPath, string searchPattern)
+    public static DirectoryInfo[] SafeGetDirectories(this DirectoryInfo? folderPath, string? searchPattern)
     {
         return ZspSafeFileOperations.SafeGetDirectories(folderPath, searchPattern);
     }
 
-    public static DirectoryInfo[] SafeGetDirectories(this DirectoryInfo? folderPath, string searchPattern, SearchOption searchOption)
+    public static DirectoryInfo[] SafeGetDirectories(this DirectoryInfo? folderPath, string? searchPattern, SearchOption searchOption)
     {
         return ZspSafeFileOperations.SafeGetDirectories(folderPath, searchPattern, searchOption);
     }
@@ -51,12 +51,12 @@ public static class ZspSafeFileExtensions
         return ZspSafeFileOperations.SafeGetFiles(folderPath);
     }
 
-    public static FileInfo[] SafeGetFiles(this DirectoryInfo? folderPath, string searchPattern)
+    public static FileInfo[] SafeGetFiles(this DirectoryInfo? folderPath, string? searchPattern)
     {
         return ZspSafeFileOperations.SafeGetFiles(folderPath, searchPattern);
     }
 
-    public static FileInfo[] SafeGetFiles(this DirectoryInfo? folderPath, string searchPattern, SearchOption searchOption)
+    public static FileInfo[] SafeGetFiles(this DirectoryInfo? folderPath, string? searchPattern, SearchOption searchOption)
     {
         return ZspSafeFileOperations.SafeGetFiles(folderPath, searchPattern, searchOption);
     }

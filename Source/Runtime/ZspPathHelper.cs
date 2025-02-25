@@ -64,8 +64,8 @@ public static class ZspPathHelper
 	{
 		if (filePath == null) return null;
 
-		var ls = filePath.LastIndexOfAny(new[]
-			{ Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar, Path.VolumeSeparatorChar });
+		var ls = filePath.LastIndexOfAny([Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar, Path.VolumeSeparatorChar
+		]);
 		return ls < 0 ? filePath : filePath[(ls + 1)..];
 	}
 
@@ -117,8 +117,8 @@ public static class ZspPathHelper
 		if (filePath == null) return null;
 		//filePath = filePath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
 
-		var ls = filePath.LastIndexOfAny(new[]
-			{ Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar /*, Path.VolumeSeparatorChar*/ });
+		var ls = filePath.LastIndexOfAny([Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar /*, Path.VolumeSeparatorChar*/
+		]);
 
 		if (ls < 0)
 		{
@@ -477,7 +477,7 @@ public static class ZspPathHelper
 		var resultPath = Combine(path1, path2);
 		resultPath = Combine(resultPath, path3);
 
-		resultPath = paths.Aggregate(resultPath, Combine);
+		if (paths.Length > 0) resultPath = paths.Aggregate(resultPath, Combine);
 
 		return resultPath;
 	}
@@ -564,7 +564,7 @@ public static class ZspPathHelper
 			// Kann z.B. "\\server\share\" sein,
 			// aber auch "http:\\www.xyz.com\".
 			const string dblslsh = @"\\";
-			var n = str.IndexOf(dblslsh, StringComparison.Ordinal) ;
+			var n = str.IndexOf(dblslsh, StringComparison.Ordinal);
 			if (n < 0)
 			{
 				return Empty;
@@ -578,7 +578,7 @@ public static class ZspPathHelper
 
 				// Jetzt nach Slash nach Server-Name suchen.
 				// Dieser Slash darf nicht unmittelbar nach den 2 Anfangsslash stehen.
-				n = str.IndexOf('\\') ;
+				n = str.IndexOf('\\');
 				if (n <= 0)
 				{
 					return Empty;
@@ -943,10 +943,7 @@ public static class ZspPathHelper
 		var resultPath = CombineVirtual(path1, path2);
 		resultPath = CombineVirtual(resultPath, path3);
 
-		if (paths.Length <= 0)
-		{
-			resultPath = paths.Aggregate(resultPath, CombineVirtual);
-		}
+		if (paths.Length > 0) resultPath = paths.Aggregate(resultPath, CombineVirtual);
 
 		return resultPath;
 	}
