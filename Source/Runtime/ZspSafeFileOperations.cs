@@ -50,7 +50,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-				  )
+			      )
 			{
 				var newFilePath =
 					$@"{filePath}.{Guid.NewGuid():N}.deleted";
@@ -70,7 +70,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x2
 #endif
-					  )
+				      )
 				{
 #if WANT_TRACE
                         Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting file '{0}'. " +
@@ -84,7 +84,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-				  )
+			      )
 			{
 				var newFilePath =
 					$@"{filePath}.{Guid.NewGuid():N}.deleted";
@@ -105,7 +105,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x2
 #endif
-					  )
+				      )
 				{
 #if WANT_TRACE
                         Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting file '{0}'. " +
@@ -169,7 +169,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-				  )
+			      )
 			{
 				var newFilePath = $@"{folderPath}.{Guid.NewGuid():B}.deleted";
 
@@ -186,7 +186,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x2
 #endif
-					  )
+				      )
 				{
 					// Catch intentionally.
 #if WANT_TRACE
@@ -396,30 +396,63 @@ public static class ZspSafeFileOperations
 	public static void SafeDeleteDirectoryContents(
 		DirectoryInfo? folderPath)
 	{
-		folderPath?.Refresh();
-		if (folderPath is not { Exists: true }) return;
-
-		foreach (var filePath in folderPath.GetFiles())
+		try
 		{
-			SafeDeleteFile(filePath);
-		}
+			folderPath?.Refresh();
+			if (folderPath is not { Exists: true }) return;
 
-		folderPath.Refresh();
-		if (!folderPath.Exists) return;
-
-		foreach (var childFolderPath in folderPath.GetDirectories())
-		{
-			SafeDeleteDirectoryContents(childFolderPath);
-
-			// If empty now, remove.
-			// Only for childs, not for the root.
-			childFolderPath.Refresh();
-
-			if (childFolderPath.Exists &&
-				childFolderPath.GetFiles().Length <= 0 &&
-				childFolderPath.GetDirectories().Length <= 0)
+			foreach (var filePath in folderPath.GetFiles())
 			{
-				childFolderPath.Delete(true);
+				SafeDeleteFile(filePath);
+			}
+
+			folderPath.Refresh();
+			if (!folderPath.Exists) return;
+
+			foreach (var childFolderPath in folderPath.GetDirectories())
+			{
+				SafeDeleteDirectoryContents(childFolderPath);
+
+				// If empty now, remove.
+				// Only for childs, not for the root.
+				childFolderPath.Refresh();
+
+				if (childFolderPath.Exists &&
+				    childFolderPath.GetFiles().Length <= 0 &&
+				    childFolderPath.GetDirectories().Length <= 0)
+				{
+					SafeDeleteDirectory(childFolderPath);
+				}
+			}
+		}
+		catch (Exception
+#if WANT_TRACE
+                   x
+#endif
+		      )
+		{
+			var newFilePath = $@"{folderPath}.{Guid.NewGuid():B}.deleted";
+
+#if WANT_TRACE
+                    Trace.TraceWarning(@"Caught IOException while deleting directory '{0}'. " +
+                                       @"Renaming now to '{1}'. {2}", folderPath, newFilePath, x.Message);
+#endif
+
+			try
+			{
+				if (folderPath != null) Directory.Move(folderPath.FullName, newFilePath);
+			}
+			catch (Exception
+#if WANT_TRACE
+                   x2
+#endif
+			      )
+			{
+				// Catch intentionally.
+#if WANT_TRACE
+                        Trace.TraceWarning(@"Caught IOException while renaming upon failed deleting directory '{0}'. " +
+                                           @"Renaming now to '{1}'. {2}", folderPath, newFilePath, x2.Message);
+#endif
 			}
 		}
 	}
@@ -447,7 +480,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-				  )
+			      )
 			{
 #if WANT_TRACE
                     Trace.TraceWarning(
@@ -459,7 +492,7 @@ public static class ZspSafeFileOperations
 #if WANT_TRACE
                    x
 #endif
-				  )
+			      )
 			{
 				// Catch intentionally.
 #if WANT_TRACE
@@ -493,7 +526,7 @@ public static class ZspSafeFileOperations
 		SearchOption searchOption)
 	{
 		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
-		return Directory.GetDirectories(folderPath, searchPattern??string.Empty, searchOption);
+		return Directory.GetDirectories(folderPath, searchPattern ?? string.Empty, searchOption);
 	}
 
 	public static string[] SafeGetDirectories(string? folderPath, SearchOption searchOption)
@@ -518,7 +551,7 @@ public static class ZspSafeFileOperations
 		SearchOption searchOption)
 	{
 		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
-		return folderPath.GetDirectories(searchPattern??string.Empty, searchOption);
+		return folderPath.GetDirectories(searchPattern ?? string.Empty, searchOption);
 	}
 
 	public static DirectoryInfo[] SafeGetDirectories(DirectoryInfo? folderPath, SearchOption searchOption)
