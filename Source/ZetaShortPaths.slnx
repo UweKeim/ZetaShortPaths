@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Release" />
+  </Configurations>
+  <Project Path="Runtime/Runtime.csproj" />
+  <Project Path="UnitTests/UnitTests.csproj" />
+</Solution>
