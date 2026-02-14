@@ -1,4 +1,4 @@
-namespace ZetaShortPaths.UnitTests;
+﻿namespace ZetaShortPaths.UnitTests;
 
 [TestClass]
 public class PathHelperTest
@@ -7,20 +7,20 @@ public class PathHelperTest
 	public void TestCombine01()
 	{
 		var a1 = ZspPathHelper.Combine(string.Empty, @"a");
-		Assert.AreEqual(a1, @"a");
+		Assert.AreEqual(@"a", a1);
 
 		var a2 = ZspPathHelper.Combine(@"b", string.Empty, @"a");
-		Assert.AreEqual(a2, @"b\a");
+		Assert.AreEqual(@"b\a", a2);
 	}
 
 	[TestMethod]
 	public void TestCombine02()
 	{
 		var a1 = ZspPathHelper.CombineVirtual(@"a", @"b", @"c", @"d");
-		Assert.AreEqual(a1, @"a/b/c/d");
+		Assert.AreEqual(@"a/b/c/d", a1);
 
 		var a2 = ZspPathHelper.Combine(@"a", @"b", @"c", @"d");
-		Assert.AreEqual(a2, @"a\b\c\d");
+		Assert.AreEqual(@"a\b\c\d", a2);
 	}
 
 	[TestMethod]
@@ -322,13 +322,13 @@ public class PathHelperTest
     public void TestEvenMoreFunctions()
     {
         var r = Path.GetFileNameWithoutExtension(@"\\?\C:\Simulazioni\Albero\scratch_file.txt");
-        Assert.AreEqual(r, @"scratch_file");
+        Assert.AreEqual(@"scratch_file", r);
 
         r = Path.GetFileNameWithoutExtension(@"\\?\C:\Simulazioni\Albero\scratch_file.");
-        Assert.AreEqual(r, @"scratch_file");
+        Assert.AreEqual(@"scratch_file", r);
 
         r = Path.GetFileNameWithoutExtension(@"\\?\C:\Simulazioni\Albero\scratch_file");
-        Assert.AreEqual(r, @"scratch_file");
+        Assert.AreEqual(@"scratch_file", r);
     }
 
     [TestMethod]
@@ -337,12 +337,12 @@ public class PathHelperTest
         var s1 = @"c:\folder1\folder2\folder3\file1.txt";
         var s2 = ZspPathHelper.ChangeFileNameWithoutExtension(s1, @"file2");
 
-        Assert.AreEqual(s2, @"c:\folder1\folder2\folder3\file2.txt");
+        Assert.AreEqual(@"c:\folder1\folder2\folder3\file2.txt", s2);
 
         s1 = @"c:\folder1\folder2\folder3\file1.txt";
         s2 = ZspPathHelper.ChangeFileName(s1, @"file2.md");
 
-        Assert.AreEqual(s2, @"c:\folder1\folder2\folder3\file2.md");
+        Assert.AreEqual(@"c:\folder1\folder2\folder3\file2.md", s2);
     }
 
     [TestMethod]

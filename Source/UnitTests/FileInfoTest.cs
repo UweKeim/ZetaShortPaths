@@ -1,4 +1,4 @@
-namespace ZetaShortPaths.UnitTests;
+﻿namespace ZetaShortPaths.UnitTests;
 
 [TestClass]
 public class FileInfoTest
@@ -11,7 +11,7 @@ public class FileInfoTest
         var x = a.NameWithoutExtension();
         const string y = @"test";
 
-        Assert.AreEqual(x, y);
+        Assert.AreEqual(y, x);
     }
 
     [TestMethod]

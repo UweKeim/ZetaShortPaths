@@ -63,7 +63,7 @@ public static class ZspSimpleFileAccessProtector
 					if (x.Data[PassThroughProtector] is true) throw;
 					if (x is OperationCanceledException) throw;
 
-					if (count++ > info.RetryCount)
+					if (++count > info.RetryCount)
 					{
 						var p = new ZspHandleExceptionInfo(x, count, info);
 						info.HandleException?.Invoke(p);
@@ -157,7 +157,7 @@ public static class ZspSimpleFileAccessProtector
 					if (x.Data[PassThroughProtector] is true) throw;
 					if (x is OperationCanceledException) throw;
 
-					if (count++ > info.RetryCount)
+					if (++count > info.RetryCount)
 					{
 						var p = new ZspHandleExceptionInfo(x, count, info);
 						info.HandleException?.Invoke(p);
@@ -253,7 +253,7 @@ public static class ZspSimpleFileAccessProtector
 					if (x.Data[PassThroughProtector] is true) throw;
 					if (x is OperationCanceledException) throw;
 
-					if (count++ > info.RetryCount)
+					if (++count > info.RetryCount)
 					{
 						var p = new ZspHandleExceptionInfo(x, count, info);
 						info.HandleException?.Invoke(p);
@@ -348,7 +348,7 @@ public static class ZspSimpleFileAccessProtector
 					if (x.Data[PassThroughProtector] is true) throw;
 					if (x is OperationCanceledException) throw;
 
-					if (count++ > info.RetryCount)
+					if (++count > info.RetryCount)
 					{
 						var p = new ZspHandleExceptionInfo(x, count, info);
 						info.HandleException?.Invoke(p);

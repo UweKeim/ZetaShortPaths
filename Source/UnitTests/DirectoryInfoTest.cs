@@ -1,4 +1,4 @@
-namespace ZetaShortPaths.UnitTests;
+﻿namespace ZetaShortPaths.UnitTests;
 
 using Helper;
 
@@ -54,16 +54,15 @@ public class DirectoryInfoTest
             var f1 = p1.CombineFile("1.txt");
             f1?.WriteAllText("1");
 
-            Assert.IsTrue(path.GetFileSystemInfos().Length == 2);
-            Assert.IsTrue(path.GetFileSystemInfos(SearchOption.AllDirectories).Length == 3);
-            Assert.IsTrue(
-                path.GetFileSystemInfos(SearchOption.AllDirectories).Where(f => f is FileInfo).ToList().Count ==
-                1);
-            Assert.IsTrue(
+            Assert.HasCount(2, path.GetFileSystemInfos());
+            Assert.HasCount(3, path.GetFileSystemInfos(SearchOption.AllDirectories));
+            Assert.HasCount(
+                1,
+                path.GetFileSystemInfos(SearchOption.AllDirectories).Where(f => f is FileInfo));
+            Assert.HasCount(
+                2,
                 path.GetFileSystemInfos(SearchOption.AllDirectories)
-                    .Where(f => f is DirectoryInfo)
-                    .ToList()
-                    .Count == 2);
+                    .Where(f => f is DirectoryInfo));
 
         }
         finally
@@ -98,13 +97,13 @@ public class DirectoryInfoTest
             @"C:\Users\Chris\Documents\Development\ADC\InterStore.NET\Visual Studio 2008\6.4.2\Web\central\Controls\App_LocalResources\ItemSearch";
 
         var s3 = ZspPathHelper.GetRelativePath(s1, s2);
-        Assert.AreEqual(s3, @"..\Web\central\Controls\App_LocalResources\ItemSearch");
+        Assert.AreEqual(@"..\Web\central\Controls\App_LocalResources\ItemSearch", s3);
 
         var ext = ZspPathHelper.GetExtension(s3);
-        Assert.AreEqual(ext ?? string.Empty, string.Empty);
+        Assert.AreEqual(string.Empty, ext ?? string.Empty);
 
         ext = ZspPathHelper.GetExtension(@"C:\Ablage\Uwe.txt");
-        Assert.AreEqual(ext, @".txt");
+        Assert.AreEqual(@".txt", ext);
 
         const string path = @"C:\Ablage\Test";
         Assert.AreEqual(
@@ -127,11 +126,11 @@ public class DirectoryInfoTest
 
         var fn = new DirectoryInfo(@"\\zetac11\C$\Ablage\doesnotexistjdlkfjsdlkfj2").Parent?.FullName;
 
-        Assert.AreEqual(fn, @"\\zetac11\C$\Ablage");
+        Assert.AreEqual(@"\\zetac11\C$\Ablage", fn);
 
         fn = new DirectoryInfo(@"\\zetac11\C$\Ablage\doesnotexistjdlkfjsdlkfj2\").Parent?.FullName;
 
-        Assert.AreEqual(fn, @"\\zetac11\C$\Ablage");
+        Assert.AreEqual(@"\\zetac11\C$\Ablage", fn);
     }
 
     [TestMethod]

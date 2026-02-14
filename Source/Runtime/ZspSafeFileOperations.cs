@@ -519,7 +519,7 @@ public static class ZspSafeFileOperations
 	public static string[] SafeGetDirectories(string? folderPath, string? searchPattern)
 	{
 		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
-		return Directory.GetDirectories(folderPath, searchPattern);
+		return Directory.GetDirectories(folderPath, searchPattern ?? @"*");
 	}
 
 	public static string[] SafeGetDirectories(string? folderPath, string? searchPattern,
@@ -599,7 +599,7 @@ public static class ZspSafeFileOperations
 	public static FileInfo[] SafeGetFiles(DirectoryInfo? folderPath, string? searchPattern, SearchOption searchOption)
 	{
 		if (folderPath == null || !SafeDirectoryExists(folderPath)) return [];
-		return folderPath.GetFiles(searchPattern, searchOption);
+		return folderPath.GetFiles(searchPattern ?? @"*", searchOption);
 	}
 
 	public static FileInfo[] SafeGetFiles(DirectoryInfo? folderPath, SearchOption searchOption)

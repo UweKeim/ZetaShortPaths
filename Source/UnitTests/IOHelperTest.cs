@@ -1,4 +1,4 @@
-namespace ZetaShortPaths.UnitTests;
+ï»¿namespace ZetaShortPaths.UnitTests;
 
 using Helper;
 
@@ -26,7 +26,7 @@ public class IOHelperTest
         var tempFolder = Environment.ExpandEnvironmentVariables("%temp%");
         Assert.IsTrue(Directory.Exists(tempFolder));
 
-        var tempPath = ZspPathHelper.Combine(tempFolder, "ZspTest");
+        var tempPath = ZspPathHelper.Combine(tempFolder, $@"ZspTest-{Guid.NewGuid():N}");
 
         try
         {
@@ -43,8 +43,8 @@ public class IOHelperTest
             Assert.IsTrue(File.Exists(filePath));
 
             var m = ZspIOHelper.GetFileLength(filePath);
-            Assert.IsTrue(m > 0);
-            Assert.IsTrue(m == new FileInfo(filePath).Length);
+            Assert.IsGreaterThan(0L, m);
+            Assert.AreEqual(new FileInfo(filePath).Length, m);
 
             Assert.IsTrue(File.Exists(@"c:\Windows\notepad.exe"));
             Assert.IsFalse(File.Exists(@"c:\dslfsdjklfhsd\kjsaklfjd.exe"));
@@ -67,14 +67,14 @@ public class IOHelperTest
             AssertOwn.DoesNotThrow(() => Directory.SetCreationTime(tempPath, new(1988, 1, 1)));
 
             var anotherFile = ZspPathHelper.Combine(tempPath, "test2.zsp");
-            File.WriteAllText(anotherFile!, @"äöü.");
+            File.WriteAllText(anotherFile!, @"Ã¤Ã¶Ã¼.");
             Assert.IsTrue(File.Exists(anotherFile));
 
             var time = File.GetLastWriteTime(filePath);
             Assert.IsTrue(time>DateTime.MinValue);
 
             var l = ZspIOHelper.GetFileLength(anotherFile);
-            Assert.IsTrue(l > 0);
+            Assert.IsGreaterThan(0L, l);
         }
         finally
         {
@@ -88,7 +88,7 @@ public class IOHelperTest
         var tempFolder = Environment.ExpandEnvironmentVariables("%temp%");
         Assert.IsTrue(Directory.Exists(tempFolder));
 
-        var tempPath = ZspPathHelper.Combine(tempFolder, "ZspTest");
+        var tempPath = ZspPathHelper.Combine(tempFolder, $@"ZspTest-{Guid.NewGuid():N}");
 
         try
         {
@@ -139,7 +139,7 @@ public class IOHelperTest
             file?.WriteAllText(@"Franz jagt im komplett verwahrlosten Taxi quer durch Bayern.");
 
             var hash = file?.MD5Hash();
-            Assert.AreEqual(hash, @"ba4b9da310763a91f8edc7c185a1e4bf");
+            Assert.AreEqual(@"ba4b9da310763a91f8edc7c185a1e4bf", hash);
         }
         finally
         {
@@ -152,10 +152,10 @@ public class IOHelperTest
     {
         // http://zetalongpaths.codeplex.com/discussions/396147
 
-        const string directoryPath =
-            @"c:\1234567890123456789012345678901234567890";
-        const string filePath =
-            @"c:\1234567890123456789012345678901234567890\1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345.jpg";
+        var directoryPath =
+            $@"c:\1234567890123456789012345678901234567890-{Guid.NewGuid():N}";
+        var filePath =
+            $@"{directoryPath}\1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345.jpg";
 
         AssertOwn.DoesNotThrow(() => Directory.CreateDirectory(directoryPath));
         AssertOwn.DoesNotThrow(() => File.WriteAllText(filePath, @"test"));
@@ -166,23 +166,59 @@ public class IOHelperTest
     [TestMethod]
     public void TestGitHub()
     {
-        var file = new FileInfo(@"C:\Ablage\test.txt");
+        var key = Guid.NewGuid().ToString(@"N");
+        var sourcePath = $@"C:\Ablage\test-{key}.txt";
+        var targetPath = $@"C:\Ablage\test2-{key}.txt";
+        var dTargetPath = $@"D:\Ablage\test3-{key}.txt";
+
+        var file = new FileInfo(sourcePath);
         file.Directory.CheckCreate();
-        file.WriteAllText(@"Ein Test.");
 
-        AssertOwn.DoesNotThrow(() => file.MoveTo(@"C:\Ablage\test2.txt", true));
-
-        if (DriveInfo.GetDrives().Any(
-                di =>
-                    di.DriveType == DriveType.Fixed &&
-                    di.Name.StartsWith(@"D:", StringComparison.InvariantCultureIgnoreCase)))
+        try
         {
             file.WriteAllText(@"Ein Test.");
-            new DirectoryInfo(@"D:\Ablage").Create();
-            AssertOwn.DoesNotThrow(() => file.MoveTo(@"D:\Ablage\test3.txt", true));
-        }
+            AssertOwn.DoesNotThrow(() => file.MoveTo(targetPath, true));
 
-        new FileInfo(@"C:\Ablage\test2.txt").Delete();
+            if (DriveInfo.GetDrives().Any(
+                    di =>
+                        di.DriveType == DriveType.Fixed &&
+                        di.Name.StartsWith(@"D:", StringComparison.InvariantCultureIgnoreCase)))
+            {
+                file.WriteAllText(@"Ein Test.");
+                new DirectoryInfo(@"D:\Ablage").Create();
+                AssertOwn.DoesNotThrow(() => file.MoveTo(dTargetPath, true));
+            }
+        }
+        finally
+        {
+            if (File.Exists(sourcePath)) File.Delete(sourcePath);
+            if (File.Exists(targetPath)) File.Delete(targetPath);
+            if (File.Exists(dTargetPath)) File.Delete(dTargetPath);
+        }
+    }
+
+    [TestMethod]
+    public void TestSafeGetWithNullSearchPattern()
+    {
+        var tempRootFolder = ZspIOHelper.GetTempDirectory();
+        var tempFolderPath = tempRootFolder.CombineDirectory(Guid.NewGuid().ToString(@"N"));
+        tempFolderPath.CheckCreate();
+
+        try
+        {
+            tempFolderPath.CombineDirectory(@"sub").CheckCreate();
+            tempFolderPath.CombineFile(@"one.txt")!.WriteAllText(@"test");
+
+            var dirs = ZspSafeFileOperations.SafeGetDirectories(tempFolderPath!.FullName, null);
+            Assert.HasCount(1, dirs);
+
+            var files = ZspSafeFileOperations.SafeGetFiles(tempFolderPath, null, SearchOption.TopDirectoryOnly);
+            Assert.HasCount(1, files);
+        }
+        finally
+        {
+            tempFolderPath?.Delete(true);
+        }
     }
 
     [TestMethod]
